@@ -10,14 +10,16 @@
 	<%
 	int num1 = Integer.parseInt(request.getParameter("n1"));
 	int num2 = Integer.parseInt(request.getParameter("n2"));
-	String op = request.getParameter("op");
+	String operator = request.getParameter("op");
+
+	/* request : 요청, response : 응답 text(html, css, js, 등)로 보낸다 */
 
 	int result = 0;
 
-	switch (op) {
+	switch (operator) {
 	case "+":
 		result = num1 + num2;
-	break;
+		break;
 	case "-":
 		result = num1 - num2;
 		break;
@@ -27,12 +29,11 @@
 	case "/":
 		result = num1 / num2;
 		break;
-	case "%":
+	default :
 		result = num1 % num2;
-		break;
 	}
 	%>
-	num1<%=op%>num2=<%=result%>
+	<%=num1%><%=operator%><%=num2%>=<%=result%>
 
 
 	<!-- --------------------------GPT코드----------------------------- -->

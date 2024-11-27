@@ -9,12 +9,23 @@
 <body>
 	<%
 	int dan = Integer.parseInt(request.getParameter("dan"));
+	// name : 파라미터(Parameter)명
 	%>
 
 	<%
 	for (int i = 1; i <= 9; i++) {
 	%>
 	<%=dan%>*<%=i%>=<%=dan * i%><br>
+	<%
+	}
+	%>
+
+<!-- 강사님 진행 풀이 -->
+	<h2>-- <%=dan%>단 --</h2>
+	<%
+	for (int i = 1; i < 10; i++) {
+	%>
+	<p><%=dan%>*<%=i%>=<%=dan * i%></p>
 	<%
 	}
 	%>
