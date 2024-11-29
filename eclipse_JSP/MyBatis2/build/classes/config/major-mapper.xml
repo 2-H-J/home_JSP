@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.MajorMapper">
+
+	<!-- 결과 매핑 정의, 테이블의 결과를 DTO에 매핑하는 설정 -->
+	<resultMap type="dto.MajorDTO" id="major">
+		<!-- 주요 컬럼 매핑 설정 -->
+		<!-- id : 기본키가 적용된 컬럼, column="테이블 컬럼명", property="클래스 필드명" -->
+		<id column="major_no" property="majorNo" /> <!-- major_no 컬럼을 MajorDTO의 majorNo 필드에 매핑, 기본키로 설정 -->
+		<!-- result : 일반 컬럼, column="테이블 컬럼명", property="클래스 필드명" -->
+		<result column="major_name" property="majorName" /> <!-- major_name 컬럼을 MajorDTO의 majorName 필드에 매핑 -->
+	</resultMap>
+
+	<!-- 모든 전공 정보를 조회하는 SQL 쿼리 -->
+	<select id="selectAllMajor" resultMap="major">
+		<!-- major 테이블의 모든 데이터를 조회 -->
+		select * from major
+	</select>
+
+</mapper>
