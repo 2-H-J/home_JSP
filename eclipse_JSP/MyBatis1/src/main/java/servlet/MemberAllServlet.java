@@ -32,7 +32,7 @@ public class MemberAllServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//1. DAO에서 전체 회원정보를 받음
+		//1. DTO에서 전체 회원정보를 받음
 		List<BoardMemberDTO> list = BoardMemberMapper.getInstance().selectAllMember();
 		System.out.println(list);
 		//2. request영역에 회원정보가 있는 리스트를 저장
