@@ -36,7 +36,7 @@ public class MemberAllServlet extends HttpServlet {
         // DBManager 인스턴스를 통해 BoardMemberMapper를 가져와서 데이터베이스 연결 및 사용 설정
         BoardMemberMapper mapper = DBManager.getInstance().getSession().getMapper(BoardMemberMapper.class);
         
-        // 2. DAO에서 전체 회원 정보를 가져오기
+        // 2. DAT에서 전체 회원 정보를 가져오기
         // 데이터베이스에서 전체 회원 리스트를 조회하여 List 형태로 받음
         List<BoardMemberDTO> list = mapper.selectAllMember();
         

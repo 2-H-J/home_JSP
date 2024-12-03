@@ -58,9 +58,6 @@ public class MajorSelectServlet extends HttpServlet {
         request.getRequestDispatcher("major_list.jsp").forward(request, response);
     }
 
-    /**
-     * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-     */
     // POST 요청 처리 메서드 - majorSelectList.do 경로로 POST 요청이 들어올 때 실행됨
     // 사용자가 /majorSelectList.do 경로로 POST 요청을 보낼 때 호출됩니다.
     // 이 메서드는 기본적으로 doGet 메서드를 호출하여 GET 요청과 동일하게 처리합니다.

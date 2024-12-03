@@ -4,26 +4,54 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.MajorMapper">
 
-	<!-- 결과 매핑 정의, 테이블의 결과를 DTO에 매핑하는 설정 -->
-	<resultMap type="dto.MajorDTO" id="major">
-		<!-- 주요 컬럼 매핑 설정 -->
-		<!-- id : 기본키가 적용된 컬럼, column="테이블 컬럼명", property="클래스 필드명" -->
-		<id column="major_no" property="majorNo" /> <!-- major_no 컬럼을 MajorDTO의 majorNo 필드에 매핑, 기본키로 설정 -->
-		<!-- result : 일반 컬럼, column="테이블 컬럼명", property="클래스 필드명" -->
-		<result column="major_name" property="majorName" /> <!-- major_name 컬럼을 MajorDTO의 majorName 필드에 매핑 -->
-	</resultMap>
+    <!-- 결과 매핑 정의, 테이블의 결과를 DTO에 매핑하는 설정 -->
+    <resultMap type="dto.MajorDTO" id="major">
+        <!-- 주요 컬럼 매핑 설정 -->
+        <!-- id : 기본키가 적용된 컬럼, column="테이블 컬럼명", property="클래스 필드명" -->
+        <id column="major_no" property="majorNo" /> <!-- major_no 컬럼을 MajorDTO의 majorNo 필드에 매핑, 기본키로 설정 -->
+        <!-- result : 일반 컬럼, column="테이블 컬럼명", property="클래스 필드명" -->
+        <result column="major_name" property="majorName" /> <!-- major_name 컬럼을 MajorDTO의 majorName 필드에 매핑 -->
+    </resultMap>
 
-	<!-- 모든 전공 정보를 조회하는 SQL 쿼리 -->
-	<select id="selectAllMajor" resultMap="major">
-		<!-- major 테이블의 모든 데이터를 조회 -->
-		select * from major
-	</select>
+    <!-- 모든 전공 정보를 조회하는 SQL 쿼리 -->
+    <select id="selectAllMajor" resultMap="major">
+        <!-- major 테이블의 모든 데이터를 조회하는 쿼리 -->
+        select * from major
+    </select>
 
-	<select id="selectMajorList" resultMap="major">
-		select * from major where major_no in
-		<foreach collection="array" open="(" close=")" item="item" separator=",">
-			#{item}
-		</foreach>
-	</select>
+    <!-- 특정 학과 번호 리스트로 전공을 조회하는 SQL 쿼리 -->
+    <!-- parameterType="string[]" resultMap="major" : 배열 매개변수를 이용하여 여러 전공을 조회 -->
+    <select id="selectMajorList" resultMap="major">
+        <!-- 학과 번호 배열을 받아 해당 번호에 해당하는 전공 정보를 조회 -->
+        select * from major where major_no in
+        <foreach collection="array" open="(" close=")" item="item" separator=",">
+            #{item} <!-- 각 배열 요소를 SQL 조건에 넣어줌 -->
+        </foreach>
+    </select>
+
+    <!-- 학과번호 또는 학과 이름으로 전공을 검색하는 조건부 쿼리 -->
+    <select id="searchMajor" parameterType="map" resultMap="major">
+        <!-- major 테이블에서 조건에 따라 전공 정보를 조회하는 쿼리 -->
+        select * from major
+        <!-- 검색 조건을 설정하기 위해 <choose> 문 사용 -->
+        <!-- <choose> : 여러 조건 중 하나를 선택하여 처리하는 제어문으로, Java의 switch-case와 유사 -->
+        <!-- <when> : 특정 조건이 참일 때 해당 조건문을 실행 -->
+        <!-- <otherwise> : 위의 <when> 조건이 모두 거짓일 경우 실행되는 기본 조건 -->
+        <choose>
+            <when test="type == 1">
+                where major_no = #{search} <!-- type이 1일 경우, 학과 번호로 검색 -->
+            </when>
+            <otherwise>
+                where major_name like '%' || #{search} || '%' <!-- 그 외의 경우, 학과 이름에 검색어가 포함된 항목을 조회 -->
+            </otherwise>
+        </choose>
+    </select>
+    
+    
+        <!-- 학과번호 또는 학과 이름으로 전공을 검색하는 조건부 쿼리 다른 방식 -->
+    <select id="searchMajor2" parameterType="map" resultMap="major">
+        select * from major where ${type} like '%' || #{search} || '%'
+        <!-- $ : 컬럼명으로 지정 -->
+    </select>
 
 </mapper>
