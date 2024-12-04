@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper에 접근할 클래스 명 or 인터페이스 명 -->
+<mapper namespace="mapper.UsersMapper">
+	<resultMap type="dto.UsersDTO" id="users">
+		<id column="user_number" property="userNumber" />
+		<result column="login_ID" property="loginId" />
+		<result column="nick_name" property="nickName" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="pw_update_time" property="pwUpdateTime" />
+		<result column="user_name" property="userName" />
+		<result column="user_email" property="userEmail" />
+	</resultMap>
+	<select id="selectAllUsers" resultMap="users">
+		select * from users
+	</select>
+</mapper>
