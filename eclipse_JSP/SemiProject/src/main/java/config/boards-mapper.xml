@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- MyBatis 매퍼 파일 -->
+<!-- Boardsmapper: 게시판 관련 데이터베이스 작업을 위한 Mapper -->
+<mapper namespace="mapper.Boardsmapper">
+
+    <!-- 게시판 결과를 매핑하는 resultMap -->
+    <!-- resultMap: 데이터베이스 결과를 dto.BoardsDTO 클래스의 필드에 매핑 -->
+    <resultMap type="dto.BoardsDTO" id="boards">
+        <!-- 게시물 번호 매핑 -->
+        <id column="post_number" property="postNumber" />
+        <!-- 사용자 번호 매핑 -->
+        <result column="user_number" property="userNumber" />
+        <!-- 제목 매핑 -->
+        <result column="title" property="title" />
+        <!-- 설명 매핑 -->
+        <result column="description" property="description" />
+        <!-- 생성 시간 매핑 -->
+        <result column="create_time" property="createTime" />
+        <!-- 수정 시간 매핑 -->
+        <result column="update_time" property="updateTime" />
+    </resultMap>
+
+    <!-- 전체 게시판 목록 조회 쿼리 -->
+    <!-- selectAllBoards: 모든 게시판 데이터를 조회 -->
+    <select id="selectAllBoards" resultMap="boards">
+        SELECT POST_NUMBER,
+               USER_NUMBER, TITLE, DESCRIPTION, CREATE_TIME,
+               UPDATE_TIME
+        FROM BOARDS 
+        ORDER BY post_number
+    </select>
+
+    <!-- 특정 게시물 번호로 게시판 데이터 조회 -->
+    <!-- selectBoardByPostNumber: 게시물 번호를 기준으로 데이터 조회 -->
+    <select id="selectBoardByPostNumber" resultMap="boards">
+        SELECT POST_NUMBER, USER_NUMBER, TITLE, DESCRIPTION, CREATE_TIME,
+               UPDATE_TIME
+        FROM BOARDS
+        WHERE POST_NUMBER = #{postNumber, jdbcType=INTEGER}
+    </select>
+
+    <!-- 특정 게시물 번호로 게시판 데이터 삭제 -->
+    <!-- deleteBoardByPostNumber: 게시물 번호를 기준으로 데이터 삭제 -->
+    <delete id="deleteBoardByPostNumber">
+        DELETE FROM BOARDS WHERE POST_NUMBER = #{postNumber, jdbcType=INTEGER}
+    </delete>
+
+</mapper>

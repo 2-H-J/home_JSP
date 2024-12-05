@@ -59,88 +59,117 @@
     }
 </style>
 <script>
-	//전체 회원 정보 조회 클릭하면 클릭이벤트 발생 - 경고창 하나 띄움
-	window.onload = () => {
-		const btn_all = document.querySelector('.btn_all');
-		btn_all.addEventListener('click',function(){
-			//alert("전체 회원 정보 조회 버튼 클릭");
-			const url = './allMember2.do';
-			fetch(url).then(response => response.json()).then(
-				data => {
-					console.log(data);
-					//result_tbody에 서버에서 받은 내용을 출력
-					const tbody = document.querySelector('.result_tbody');
-					tbody.innerHTML = '';//해당 영역 초기화
-					data.list.forEach(item => {
-						console.log(item);
-						//tr 태그 생성
-						const tr = document.createElement('tr');
-						tr.innerHTML = `<td>${item.id}</td>
-							<td>${item.password}</td>
-							<td>${item.userName}</td>
-							<td>${item.nickName}</td>`;
-							
-						tbody.appendChild(tr);
-					});
-				}		
-			)
-		});
-		const btn_search_name = document.querySelector('.btn_search_name');
-		btn_search_name.addEventListener('click',function(){
-			const txt_search = document.querySelector('.txt_search_name');
-			
-			//alert(txt_search.value);
-			//ajax로 호출 - ./searchNameMember.do, 전송방식 POST
-			const url = './searchNameMember.do';
-			
-			fetch(url,{
-				method : 'post',
-				body : JSON.stringify({'search' : txt_search.value})
-			}).then(response => response.json()).then(
-					data => {
-						console.log(data);
-						//result_tbody에 서버에서 받은 내용을 출력
-						const tbody = document.querySelector('.result_tbody');
-						tbody.innerHTML = '';//해당 영역 초기화
-						data.list.forEach(item => {
-							console.log(item);
-							//tr 태그 생성
-							const tr = document.createElement('tr');
-							tr.innerHTML = `<td>${item.id}</td>
-								<td>${item.password}</td>
-								<td>${item.userName}</td>
-								<td>${item.nickName}</td>`;
-								
-							tbody.appendChild(tr);
-						});
-					}		
-				)
-			
-		});
-		
-	}
+    // 페이지 로드 완료 후 실행되는 함수
+    window.onload = () => {
+        // '전체 회원 정보 조회' 버튼을 찾아 변수에 저장
+        const btn_all = document.querySelector('.btn_all');
+        
+        // '전체 회원 정보 조회' 버튼에 클릭 이벤트 리스너를 추가
+        btn_all.addEventListener('click', function() {
+            // 버튼 클릭 시 서버로부터 전체 회원 데이터를 요청함
+            const url = './allMember2.do'; // 전체 회원 데이터를 가져올 API URL
+            fetch(url) // GET 요청을 서버로 보냄
+                .then(response => response.json()) // 서버로부터 JSON 형식의 응답을 받음
+                .then(data => {
+                    console.log(data); // 받은 데이터 콘솔에 출력 (디버깅 용도)
+                    
+                    // 서버로부터 받은 회원 데이터를 HTML 테이블에 출력하기 위한 작업
+                    const tbody = document.querySelector('.result_tbody'); // 결과를 표시할 테이블의 tbody 요소 선택
+                    tbody.innerHTML = ''; // 기존 테이블 내용 초기화
+                    
+                    // 데이터 리스트를 반복하면서 각 회원 정보를 테이블 행으로 추가
+                    data.list.forEach(item => {
+                        console.log(item); // 각 회원 데이터를 콘솔에 출력 (디버깅 용도)
+                        
+                        // 새로운 테이블 행을 생성하고 회원 정보로 채움
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${item.id}</td>
+                            <td>${item.password}</td>
+                            <td>${item.userName}</td>
+                            <td>${item.nickName}</td>
+                        `;
+                        
+                        // 생성한 행을 테이블의 tbody에 추가
+                        tbody.appendChild(tr);
+                    });
+                });
+        });
+
+        // '이름으로 회원 검색' 버튼을 찾아 변수에 저장
+        const btn_search_name = document.querySelector('.btn_search_name');
+        
+        // '이름으로 회원 검색' 버튼에 클릭 이벤트 리스너를 추가
+        btn_search_name.addEventListener('click', function() {
+            // 검색어를 입력하는 텍스트 필드를 찾아 변수에 저장
+            const txt_search = document.querySelector('.txt_search_name');
+            
+            // AJAX 호출을 위해 URL을 설정
+            const url = './searchNameMember.do';
+            
+            // 서버에 POST 요청을 보냄 (검색어를 포함하여)
+            fetch(url, {
+                method: 'post', // POST 방식으로 데이터를 전송
+                body: JSON.stringify({ 'search': txt_search.value }) // 검색어를 JSON 형식으로 변환하여 전송
+            })
+            .then(response => response.json()) // 서버로부터 JSON 형식의 응답을 받음
+            .then(data => {
+                console.log(data); // 받은 데이터 콘솔에 출력 (디버깅 용도)
+                
+                // 서버로부터 받은 검색 결과를 테이블에 출력
+                const tbody = document.querySelector('.result_tbody'); // 결과를 표시할 테이블의 tbody 요소 선택
+                tbody.innerHTML = ''; // 기존 테이블 내용 초기화
+                
+                // 데이터 리스트를 반복하면서 각 회원 정보를 테이블 행으로 추가
+                data.list.forEach(item => {
+                    console.log(item); // 각 회원 데이터를 콘솔에 출력 (디버깅 용도)
+                    
+                    // 새로운 테이블 행을 생성하고 회원 정보로 채움
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.password}</td>
+                        <td>${item.userName}</td>
+                        <td>${item.nickName}</td>
+                    `;
+                    
+                    // 생성한 행을 테이블의 tbody에 추가
+                    tbody.appendChild(tr);
+                });
+            });
+        });
+    };
 </script>
+
 </head>
 <body>
-	<input type="text" class="txt_search_name">
-	<button class="btn_search_name">이름으로 회원 검색</button>
-	<button class="btn_all">전체 회원 정보 조회</button>
-	<hr>
-	<table>
-		<thead>
-			<tr>
-				<th>아이디</th>
-				<th class='passwd'>암호</th>
-				<th>이름</th>
-				<th>닉네임</th>
-			</tr>
-		</thead>
-		<tbody class="result_tbody">
-			
-		</tbody>		
-	</table> 
-	<a href="./main.do">메인 페이지로 이동</a>
+    <!-- 이름으로 회원 검색을 위한 입력 필드 및 검색 버튼 -->
+    <input type="text" class="txt_search_name"> <!-- 사용자가 이름으로 검색할 때 입력하는 텍스트 필드 -->
+    <button class="btn_search_name">이름으로 회원 검색</button> <!-- 검색을 실행하는 버튼 -->
+    
+    <!-- 전체 회원 정보 조회 버튼 -->
+    <button class="btn_all">전체 회원 정보 조회</button> <!-- 모든 회원 정보를 조회하는 버튼 -->
+    <hr>
+
+    <!-- 회원 정보를 출력하기 위한 테이블 -->
+    <table>
+        <thead>
+            <tr>
+                <th>아이디</th> <!-- 테이블 헤더: 회원 아이디 -->
+                <th class='passwd'>암호</th> <!-- 테이블 헤더: 회원 비밀번호 -->
+                <th>이름</th> <!-- 테이블 헤더: 회원 이름 -->
+                <th>닉네임</th> <!-- 테이블 헤더: 회원 닉네임 -->
+            </tr>
+        </thead>
+        <tbody class="result_tbody">
+            <!-- 서버에서 받아온 회원 정보가 여기에 동적으로 추가됨 -->
+        </tbody>        
+    </table>
+
+    <!-- 메인 페이지로 이동하는 링크 -->
+    <a href="./main.do">메인 페이지로 이동</a> <!-- 메인 페이지로 이동하기 위한 링크 -->
 </body>
+
 </html>
 
 

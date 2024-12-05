@@ -1,0 +1,4 @@
+MVC 패턴
+DTO, VO, Service, DispatcherServlet, Controller
+HandlerMapping, ModelAndView
+흐름과 복습
