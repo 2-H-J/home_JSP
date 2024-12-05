@@ -16,7 +16,7 @@
 				<property name="driver" value="oracle.jdbc.OracleDriver" />
 				<!-- 데이터베이스 연결 URL 지정 -->
 				<property name="url"
-					value="jdbc:oracle:thin:@localhost:1521/xe" />
+					value="jdbc:oracle:thin:@127.0.0.1:1521/xe" />
 				<!-- 데이터베이스 사용자 이름 지정 -->
 				<property name="username" value="C##SCOTT" />
 				<!-- 데이터베이스 비밀번호 지정 -->
