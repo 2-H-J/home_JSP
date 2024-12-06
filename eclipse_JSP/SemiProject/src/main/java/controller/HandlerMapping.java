@@ -64,6 +64,12 @@ public class HandlerMapping {
                 System.out.println("[HandlerMapping] LogoutController 생성 -> LogoutController.java");
                 controller = new LogoutController();
                 break;
+            case "mainPage":
+            case "index":
+                System.out.println("[HandlerMapping] MainController 생성 -> MainController.java");
+                controller = new MainController();
+                break;
+
             default:
                 System.out.println("[HandlerMapping] 알 수 없는 command: " + command + " -> 요청에 해당하는 컨트롤러가 없습니다");
                 break;
@@ -72,8 +78,3 @@ public class HandlerMapping {
         return controller;
     }
 }
-
-// 참고로 이 코드는 요청을 받아서 해당 요청을 처리하기 위한 적절한 컨트롤러 객체를 반환하는 역할을 합니다.
-// 싱글턴 패턴을 사용하여 클래스 인스턴스가 하나만 존재하도록 보장하며, 각 요청(command)에 따라 적절한 컨트롤러를 생성하고 반환합니다.
-// 이를 통해 MVC 패턴에서 다양한 사용자 요청에 대한 분기를 효과적으로 처리할 수 있습니다.
-// System.out.println()을 사용하여 각 단계에서 로그를 남겨서 호출 흐름을 명확히 추적할 수 있습니다.

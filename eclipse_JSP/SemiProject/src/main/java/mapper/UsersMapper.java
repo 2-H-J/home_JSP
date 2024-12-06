@@ -18,6 +18,8 @@ public interface UsersMapper {
     // 특정 로그인 아이디로 사용자 조회하는 메서드 (애너테이션을 사용하여 직접 쿼리 작성)
     @Select("SELECT * FROM users WHERE login_id = #{loginId}")
     UsersDTO selectUserByLoginId(@Param("loginId") String loginId);
+    
+    
 }
 
 // 이 인터페이스는 MyBatis 매퍼로서 데이터베이스의 users 테이블과 상호작용하기 위한 메서드를 정의합니다.
