@@ -32,12 +32,30 @@ public class LoginController implements Controller {
             session.setAttribute("user", user);
 
             session.setAttribute("sessionExpireTime", Instant.now().plus(10, ChronoUnit.SECONDS));
-            System.out.println("[LoginController] 세션 만료 시간 설정: 1분 후");
+            /*
+            10초	session.setAttribute("sessionExpireTime", Instant.now().plus(10, ChronoUnit.SECONDS));
+			10분	session.setAttribute("sessionExpireTime", Instant.now().plus(10, ChronoUnit.MINUTES));
+			1시간	session.setAttribute("sessionExpireTime", Instant.now().plus(1, ChronoUnit.HOURS));
+			1일		session.setAttribute("sessionExpireTime", Instant.now().plus(1, ChronoUnit.DAYS));
+
+            */
+            System.out.println("[LoginController] 세션 만료 시간 설정: 10초 후");
 
             
             if ("on".equals(rememberMe)) {
                 Cookie cookie = new Cookie("loginId", loginId);
-                cookie.setMaxAge(60 * 60 * 24 * 7); // 7일 동안 유지
+                cookie.setMaxAge(20); // 7일 동안 유지
+                /*
+                	20초	cookie.setMaxAge(20);
+					1분		cookie.setMaxAge(60);
+					10분	cookie.setMaxAge(600);
+					30분	cookie.setMaxAge(1800);
+					1시간	cookie.setMaxAge(3600);
+					12시간	cookie.setMaxAge(60 * 60 * 12);
+					1일		cookie.setMaxAge(60 * 60 * 24);
+					3일		cookie.setMaxAge(60 * 60 * 24 * 3);
+					7일		cookie.setMaxAge(60 * 60 * 24 * 7);
+                */
                 cookie.setPath("/");
                 response.addCookie(cookie);
 

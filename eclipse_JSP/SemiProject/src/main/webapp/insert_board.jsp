@@ -7,6 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 공통 헤더 -->
+	<jsp:include page="header.html" />
 	<h1>글쓰기</h1>
 	<form action="./insertBoard.do" method="post">
 		<div class="form-group">

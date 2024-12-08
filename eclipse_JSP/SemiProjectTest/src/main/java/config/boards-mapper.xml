@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper에 접근할 클래스 명 or 인터페이스 명 -->
+<mapper namespace="mapper.BoardsMapper">
+
+	<!-- 게시판 결과를 매핑하는 resultMap -->
+	<resultMap type="dto.BoardsDTO" id="boards">
+		<id column="post_number" property="postNumber" />
+		<result column="user_number" property="userNumber" />
+		<result column="title" property="title" />
+		<result column="description" property="description" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<!-- 전체 게시판 목록 조회 쿼리 -->
+	<select id="selectAllBoards" resultMap="boards">
+		SELECT POST_NUMBER,
+		USER_NUMBER, TITLE, DESCRIPTION, CREATE_TIME,
+		UPDATE_TIME
+		FROM BOARDS
+		order by post_number
+	</select>
+
+	<select id="selectBoardByPostNumber" resultMap="boards">
+		SELECT
+		POST_NUMBER, USER_NUMBER, TITLE, DESCRIPTION, CREATE_TIME,
+		UPDATE_TIME
+		FROM BOARDS
+		WHERE POST_NUMBER = #{postNumber, jdbcType=INTEGER}
+	</select>
+
+	<delete id="deleteBoardByPostNumber">
+		DELETE FROM BOARDS WHERE POST_NUMBER = #{postNumber,
+		jdbcType=INTEGER}
+	</delete>
+
+	<!-- 게시판 글쓰기 쿼리 -->
+	<insert id="insertBoard" parameterType="dto.BoardsDTO">
+		INSERT INTO
+		boards(post_number, user_number, title, description, create_time)
+		VALUES(post_number_seq.NEXTVAL, #{userNumber}, #{title},
+		#{description}, SYSDATE)
+	</insert>
+
+
+	<!-- 게시판 글 수정 쿼리 -->
+	<update id="updateBoard" parameterType="dto.BoardsDTO">
+		UPDATE boards SET title =
+		#{title}, description = #{description}, update_time = sysdate
+		WHERE
+		post_number = #{postNumber}
+	</update>
+
+</mapper>

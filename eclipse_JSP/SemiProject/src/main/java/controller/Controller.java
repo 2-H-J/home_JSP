@@ -7,12 +7,21 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import view.ModelAndView;
 
+/**
+ * Controller 인터페이스는 MVC 패턴에서 컨트롤러 역할을 하는 클래스들이 구현해야 할 표준 메서드를 정의합니다.
+ */
 public interface Controller {
-	ModelAndView execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException;
-	// 이 메서드는 클라이언트 요청을 처리하고, 해당 요청에 대한 응답으로 어떤 뷰(View)와 데이터를 사용자에게 반환할지를 결정
-	
-//	 1. ModelAndView 반환 타입: 
-//		- ModelAndView는 Spring MVC에서 데이터와 뷰의 논리적 이름을 함께 담는 객체입니다.
-//		- Model은 데이터(Model) 객체를 표현하며, 컨트롤러에서 뷰로 전달하고자 하는 데이터를 담습니다.
-//		- View는 클라이언트에게 응답으로 반환할 JSP, Thymeleaf, Freemarker와 같은 뷰의 논리적 이름입니다.
+
+	/**
+	 * 클라이언트의 요청(HttpServletRequest)과 응답(HttpServletResponse)을 처리하고, 처리 결과를 담은
+	 * ModelAndView 객체를 반환하는 메서드입니다.
+	 * 
+	 * @param request  클라이언트로부터 받은 HTTP 요청 객체
+	 * @param response 클라이언트로 반환할 HTTP 응답 객체
+	 * @return ModelAndView 객체 (뷰 정보와 데이터를 포함)
+	 * @throws ServletException 요청 처리 중 서블릿 관련 예외가 발생할 경우
+	 * @throws IOException      요청 처리 중 입출력 관련 예외가 발생할 경우
+	 */
+	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException;
 }

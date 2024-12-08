@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<!-- 공통 헤더 -->
+	<jsp:include page="header.html" />
 	<h2>전체 회원 정보</h2>
 	<table border="1">
 		<thead>

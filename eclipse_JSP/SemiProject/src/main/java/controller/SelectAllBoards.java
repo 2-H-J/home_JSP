@@ -15,7 +15,6 @@ public class SelectAllBoards implements Controller {
 	@Override
 	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("controller - ");
 		List<BoardsDTO> list = BoardsService.getInstance().selectAllBoards();
 
 		ModelAndView view = new ModelAndView();

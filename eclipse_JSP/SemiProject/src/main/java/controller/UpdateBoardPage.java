@@ -19,10 +19,10 @@ public class UpdateBoardPage implements Controller {
 		int postNumber = Integer.parseInt(postNumberStr);
 
 		// 게시글 상세 조회 서비스 호출
-		List<BoardsDTO> boardList = BoardsService.getInstance().selectBoardByPostNumber(postNumber);
+		BoardsDTO board = BoardsService.getInstance().selectBoardByPostNumber(postNumber);
 
 		ModelAndView view = new ModelAndView();
-		view.addObject("boardList", boardList);
+		view.addObject("board", board);
 		view.setPath("update_board.jsp");
 		view.setRedirect(false);
 		return view;

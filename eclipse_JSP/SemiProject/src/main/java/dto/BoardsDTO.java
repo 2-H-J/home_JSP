@@ -1,18 +1,50 @@
 package dto;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 
+/**
+ * BoardsDTO 클래스는 게시판 데이터베이스의 게시글 정보를 캡슐화하는 데이터 전송 객체(Data Transfer Object)입니다.
+ */
 public class BoardsDTO {
+
+	// 게시글 번호 (Primary Key)
 	private int postNumber;
+
+	// 작성자 번호 (Foreign Key)
 	private int userNumber;
+
+	// 게시글 제목
 	private String title;
+
+	// 게시글 내용
 	private String description;
+
+	// 게시글 생성 시간
 	private Timestamp createTime;
+
+	// 게시글 수정 시간
 	private Timestamp updateTime;
 
+	// UsersDTO 연동
+	private UsersDTO users;
+
+	/**
+	 * 기본 생성자
+	 */
 	public BoardsDTO() {
 	}
 
+	/**
+	 * 모든 필드를 초기화하는 생성자
+	 * 
+	 * @param postNumber  게시글 번호
+	 * @param userNumber  작성자 번호
+	 * @param title       게시글 제목
+	 * @param description 게시글 내용
+	 * @param createTime  게시글 생성 시간
+	 * @param updateTime  게시글 수정 시간
+	 */
 	public BoardsDTO(int postNumber, int userNumber, String title, String description, Timestamp createTime,
 			Timestamp updateTime) {
 		super();
@@ -24,6 +56,14 @@ public class BoardsDTO {
 		this.updateTime = updateTime;
 	}
 
+	/**
+	 * 게시글 번호, 작성자 번호, 제목, 내용을 초기화하는 생성자
+	 * 
+	 * @param postNumber  게시글 번호
+	 * @param userNumber  작성자 번호
+	 * @param title       게시글 제목
+	 * @param description 게시글 내용
+	 */
 	public BoardsDTO(int postNumber, int userNumber, String title, String description) {
 		super();
 		this.postNumber = postNumber;
@@ -32,6 +72,13 @@ public class BoardsDTO {
 		this.description = description;
 	}
 
+	/**
+	 * 작성자 번호, 제목, 내용을 초기화하는 생성자
+	 * 
+	 * @param userNumber  작성자 번호
+	 * @param title       게시글 제목
+	 * @param description 게시글 내용
+	 */
 	public BoardsDTO(int userNumber, String title, String description) {
 		super();
 		this.userNumber = userNumber;
@@ -39,6 +86,19 @@ public class BoardsDTO {
 		this.description = description;
 	}
 
+	public BoardsDTO(int postNumber, int userNumber, String title, String description, Timestamp createTime,
+			Timestamp updateTime, UsersDTO users) {
+		super();
+		this.postNumber = postNumber;
+		this.userNumber = userNumber;
+		this.title = title;
+		this.description = description;
+		this.createTime = createTime;
+		this.updateTime = updateTime;
+		this.users = users;
+	}
+
+	// Getter와 Setter 메서드
 	public int getPostNumber() {
 		return postNumber;
 	}
@@ -87,6 +147,35 @@ public class BoardsDTO {
 		this.updateTime = updateTime;
 	}
 
+	public UsersDTO getUsers() {
+		return users;
+	}
+
+	public void setUsers(UsersDTO users) {
+		this.users = users;
+	}
+
+	public String getFormattedCreateTime() {
+		if (createTime != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return sdf.format(createTime);
+		}
+		return null;
+	}
+
+	public String getFormattedUpdateTime() {
+		if (updateTime != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			return sdf.format(updateTime);
+		}
+		return null;
+	}
+
+	/**
+	 * 객체의 정보를 문자열로 반환
+	 * 
+	 * @return 게시글 객체를 문자열로 표현
+	 */
 	@Override
 	public String toString() {
 		return "BoardsDTO{" + "postNumber=" + postNumber + ", userNumber=" + userNumber + ", title='" + title + '\''

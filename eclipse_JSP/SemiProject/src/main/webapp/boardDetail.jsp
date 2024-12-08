@@ -78,40 +78,41 @@ a:hover {
 }
 </style>
 <body>
-	<c:if test="${not empty boardList}">
+	<!-- 공통 헤더 -->
+	<jsp:include page="header.html" />
+	<c:if test="${not empty board}">
 		<table border="1">
-			<c:forEach var="board" items="${boardList}">
-				<tr>
-					<th>Post Number</th>
-					<td>${board.postNumber}</td>
-				</tr>
-				<tr>
-					<th>Title</th>
-					<td>${board.title}</td>
-				</tr>
-				<tr>
-					<th>Description</th>
-					<td>${board.description}</td>
-				</tr>
-				<tr>
-					<th><c:choose>
-							<c:when test="${board.updateTime != null}">
-                        	수정일
-                    </c:when>
-							<c:otherwise>
-                       		작성일
-                    </c:otherwise>
-						</c:choose></th>
-					<td><c:choose>
-							<c:when test="${board.updateTime != null}">
-                        ${board.updateTime}
-                    </c:when>
-							<c:otherwise>
-                        ${board.createTime}
-                    </c:otherwise>
-						</c:choose></td>
-				</tr>
-			</c:forEach>
+			<!-- 단일 게시글이므로 반복문을 제거하고, 바로 board 객체를 사용 -->
+			<tr>
+				<th>Post Number</th>
+				<td>${board.postNumber}</td>
+			</tr>
+			<tr>
+				<th>Nick Name</th>
+				<td>${board.users.nickName}</td>
+			</tr>
+			<tr>
+				<th>Title</th>
+				<td>${board.title}</td>
+			</tr>
+			<tr>
+				<th>Description</th>
+				<td>${board.description}</td>
+			</tr>
+			<tr>
+				<th>
+					<c:choose>
+						<c:when test="${board.updateTime != null}">수정일</c:when>
+						<c:otherwise>작성일</c:otherwise>
+					</c:choose>
+				</th>
+				<td>
+					<c:choose>
+						<c:when test="${board.updateTime != null}">${board.updateTime}</c:when>
+						<c:otherwise>${board.createTime}</c:otherwise>
+					</c:choose>
+				</td>
+			</tr>
 		</table>
 	</c:if>
 
@@ -123,10 +124,10 @@ a:hover {
 
 		<!-- 오른쪽으로 배치할 버튼 -->
 		<div class="right">
-			<c:forEach var="board" items="${boardList}">
-				<a href="./updateBoard.do?postNumber=${board.postNumber}">글 수정</a>
+			<c:if test="${writer}">
+				<a href="./updateBoard.do?postNumber=${board.postNumber}">수정하기</a>
 				<a href="./deleteBoard.do?postNumber=${board.postNumber}">글 삭제</a>
-			</c:forEach>
+			</c:if>
 		</div>
 	</div>
 

@@ -1,8 +1,7 @@
 package mapper;
 
 import java.util.List;
-
-import org.apache.ibatis.annotations.Param;
+import java.util.Map;
 
 import dto.BoardsDTO;
 
@@ -10,7 +9,7 @@ public interface BoardsMapper {
 
 	List<BoardsDTO> selectAllBoards();
 
-	List<BoardsDTO> selectBoardByPostNumber(int postNumber);
+	BoardsDTO selectBoardByPostNumber(int postNumber);
 
 	int deleteBoardByPostNumber(int postNumber);
 
@@ -18,8 +17,12 @@ public interface BoardsMapper {
 
 	int updateBoard(BoardsDTO board);
 
-	List<BoardsDTO> selectPagedBoards(@Param("startRow") int startRow, @Param("endRow") int endRow);
+	List<BoardsDTO> searchBoardsByTitle(Map<String, Object> params);
 
-	int getTotalBoardCount();
+	List<BoardsDTO> searchBoardsByWriter(Map<String, Object> params);
+
+	List<BoardsDTO> searchBoardsByTitleSorted(Map<String, Object> params);
+
+	List<BoardsDTO> searchBoardsByWriterSorted(Map<String, Object> params);
 
 }

@@ -18,5 +18,6 @@
 	<mappers>
 		<mapper resource="config/users-mapper.xml" />
 		<mapper resource="config/boards-mapper.xml" />
+		<mapper resource="config/region-mapper.xml" />
 	</mappers>
 </configuration>
