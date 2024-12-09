@@ -37,19 +37,19 @@ public class SelectAllMemberServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//전체 회원정보 리스트로 받음
 		List<BoardMemberDTO> list = BoardMemberService.getInstance().selectAllMember();
-		//받은 회원정보 개수
+		//받은 회원정보 개수 
+		//조회한 현재 날짜 시간도 문자열로 저장 YYYY-MM-DD HH:mm:ss
 		int count = list.size();
-		//조회한 현재 날짜 시간도 문자열 저장 YYYY-MM-DD HH:mm:ss
 		SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd HH:mm:ss");
 		Date date = Calendar.getInstance().getTime();
 		String dateString = sdf.format(date);
 		
-		//JSON으로 변환
+		//json으로 변환
 		JSONObject json = new JSONObject();
-		//JSON에 데이터 추가
+		//json에 데이터 추가
 		json.put("list", list);
 		json.put("count", count);
-		json.put("date",dateString);
+		json.put("date", dateString);
 		
 		System.out.println(json.toString());
 		

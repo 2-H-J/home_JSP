@@ -13,7 +13,7 @@ public class BoardMemberService {
 	private BoardMemberService() {
 		mapper = DBManager.getInstance().getSession().getMapper(BoardMemberMapper.class);
 	}
-
+	
 	public static BoardMemberService getInstance() {
 		if(instance == null)
 			instance = new BoardMemberService();
@@ -32,16 +32,9 @@ public class BoardMemberService {
 		return mapper.selectAllMember();
 	}
 
-	public int selectIdMember(String id) {
-		return mapper.selectIdMember(id);
+	public int checkMemberId(String id) {
+		return mapper.checkMemberId(id);
 	}
-
 	
 	
 }
-
-
-
-
-
-

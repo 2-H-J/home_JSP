@@ -1,0 +1,92 @@
+@charset "UTF-8";
+/* 기본 컨테이너 스타일 */
+.container {
+    width: 80%;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+/* 테이블 스타일 */
+.board-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    font-size: 16px;
+    text-align: left;
+}
+
+.board-table th, .board-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.board-table th {
+    background-color: #f4f4f4;
+    font-weight: bold;
+}
+
+.board-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.board-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* 페이지네이션 스타일 */
+.pagination {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.page-link {
+    display: inline-block;
+    margin: 0 5px;
+    padding: 8px 12px;
+    text-decoration: none;
+    color: #007BFF;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.page-link:hover {
+    background-color: #007BFF;
+    color: white;
+}
+
+.page-link.active {
+    background-color: #0056b3;
+    color: white;
+    border-color: #0056b3;
+}
+
+/* 글쓰기 버튼 컨테이너 */
+.write-button-container {
+    text-align: right;
+    margin-bottom: 10px;
+}
+
+/* 글쓰기 버튼 스타일 */
+.write-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    color: white;
+    background-color: #28a745;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.write-btn:hover {
+    background-color: #218838;
+    transform: translateY(-2px);
+} 
+
+.write-btn:active {
+    background-color: #1e7e34;
+    transform: translateY(0);
+}
+

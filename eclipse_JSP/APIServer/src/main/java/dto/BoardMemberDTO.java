@@ -6,7 +6,9 @@ public class BoardMemberDTO {
 	private String userName;
 	private String nickName;
 
-	public BoardMemberDTO() {	}
+	public BoardMemberDTO() {
+	}
+	
 
 	public BoardMemberDTO(String id, String password, String userName, String nickName) {
 		this.id = id;
@@ -14,7 +16,6 @@ public class BoardMemberDTO {
 		this.userName = userName;
 		this.nickName = nickName;
 	}
-
 
 
 	public String getId() {
@@ -49,13 +50,4 @@ public class BoardMemberDTO {
 		this.nickName = nickName;
 	}
 
-	@Override
-	public String toString() {
-		return "BoardMemberDTO [id=" + id + ", password=" + password + ", userName=" + userName + ", nickName="
-				+ nickName + "]";
-	}
-	
-	
-	
-	
 }

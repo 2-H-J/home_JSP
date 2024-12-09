@@ -7,12 +7,16 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import service.BoardMemberService;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.List;
 
 import org.json.JSONObject;
 
+import dto.BoardMemberDTO;
+
 /**
- * Servlet implementation class CheckIdServlet
+ * Servlet implementation class InsertMemberServlet
  */
 @WebServlet("/checkMultipleId.do")
 public class CheckIdServlet extends HttpServlet {
@@ -30,10 +34,23 @@ public class CheckIdServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String id = request.getParameter("id");
-		int count = BoardMemberService.getInstance().selectIdMember(id);
-		JSONObject json = new JSONObject();
-		json.put("status", count);
+		BufferedReader br = request.getReader();
+		String str = "";
+		StringBuilder builder = new StringBuilder();
+		// 실제 클라이언트가 보낸 데이터를 문자열로 읽어오는 부분
+		while ((str = br.readLine()) != null)
+			builder.append(str);
+		System.out.println(builder.toString());
+
+		JSONObject json = new JSONObject(builder.toString());
+		String id = json.getString("id");
+		System.out.println(id);
+		
+		int result = BoardMemberService.getInstance().checkMemberId(id);
+		
+		String msg = (result == 0) ? "사용가능한 아이디입니다.":"사용 불가능한 아이디입니다.";
+		json = new JSONObject();
+		json.put("msg", msg);
 		response.getWriter().println(json.toString());
 	}
 

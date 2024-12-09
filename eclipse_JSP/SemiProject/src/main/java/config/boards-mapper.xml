@@ -44,7 +44,8 @@
 		b.UPDATE_TIME,
 		u.NICK_NAME  <!-- 유저의 닉네임을 추가 -->
 		FROM BOARDS b
-		JOIN USERS u ON b.USER_NUMBER = u.USER_NUMBER  <!-- USERS 테이블과 조인 -->
+		JOIN USERS u ON b.USER_NUMBER = u.USER_NUMBER  <!-- USERS 테이블과 
+			조인 -->
 		WHERE b.POST_NUMBER = #{postNumber, jdbcType=INTEGER}
 	</select>
 

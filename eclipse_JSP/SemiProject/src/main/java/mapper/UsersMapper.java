@@ -77,4 +77,8 @@ public interface UsersMapper {
 	 */
 	// 로그인 아이디와 비밀번호를 사용하여 사용자 조회하는 메서드
 	UsersDTO selectUserByLoginIdAndPassword(@Param("loginId") String loginId, @Param("password") String password);
+	
+	
+	public int countByNickName(String nickName);
+
 }

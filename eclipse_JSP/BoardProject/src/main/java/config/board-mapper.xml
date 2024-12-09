@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMapper">
+	<resultMap type="dto.BoardDTO" id="board">
+		<id column="bno" property="bno"/>
+		<result column="title" property="title"/>
+		<result column="write_date" property="writeDate"/>
+		<result column="write_update_date" property="writeUpdateDate"/>
+		<result column="bcount" property="bcount"/>
+		<result column="blike" property="blike"/>
+		<result column="bhate" property="bhate"/>
+		<result column="content" property="content"/>
+		<result column="nickname" property="nickName"/>
+	</resultMap>
+	<select id="getBoardList" resultMap="board">
+		select * from board_view
+	</select>
+	<insert id="insertBoard" parameterType="dto.BoardDTO">
+		insert into board(bno, title, content, id)
+		values(seq_board_bno.nextval, #{title},#{content},#{id})
+	</insert>
+ 
+</mapper>
