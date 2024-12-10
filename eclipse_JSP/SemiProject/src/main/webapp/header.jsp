@@ -65,7 +65,7 @@ window.onload = () => {
 			<!-- 세션에 유저 정보가 있으면 로그아웃 버튼으로 변경 -->
 			<c:choose>
 				<c:when test="${not empty sessionScope.user}">
-					<a href="./logout.do">👤 로그아웃</a>
+					<a href="./index.do">👤 로그아웃</a>
 				</c:when>
 				<c:otherwise>
 					<a href="./loginView.do">👤 로그인</a>

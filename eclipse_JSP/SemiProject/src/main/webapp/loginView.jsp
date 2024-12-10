@@ -26,7 +26,7 @@
         <h1>로그인</h1>
         <!-- 로그인 처리 form -->
         <form action="./login.do" method="post">
-            <input type="text" name="id" placeholder="아이디" required>
+            <input type="text" name="loginId" placeholder="아이디" required>
             <input type="password" name="password" placeholder="비밀번호" required>
             <div class="login-checkbox">
                 <label for="rememberId">

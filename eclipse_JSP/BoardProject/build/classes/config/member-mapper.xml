@@ -6,79 +6,59 @@
 <!-- MyBatis 매퍼 설정 파일 -->
 <mapper namespace="mapper.BoardMemberMapper">
 
-  <!-- 모든 멤버 정보를 조회하는 SELECT 문 -->
-  <select id="selectAllMember" resultType="dto.BoardMemberDTO">
-    <!-- 
-      설명:
-      - ID: selectAllMember
-      - resultType: dto.BoardMemberDTO (결과를 매핑할 DTO 클래스)
-      - 쿼리 내용: board_member 테이블의 모든 행을 조회.
-    -->
-    select * from board_member
-  </select>
+	<!-- 모든 멤버 정보를 조회하는 SELECT 문 -->
+	<select id="selectAllMember" resultType="dto.BoardMemberDTO">
+		<!-- 설명: - ID: selectAllMember - resultType: dto.BoardMemberDTO 
+		(결과를 매핑할 DTO 클래스) - 쿼리 내용: board_member 테이블의 모든 행을 조회. -->
+		select * from board_member
+	</select>
 
-  <!-- 새로운 멤버를 추가하는 INSERT 문 -->
-  <insert id="insertMember" parameterType="dto.BoardMemberDTO">
-    <!-- 
-      설명:
-      - ID: insertMember
-      - parameterType: dto.BoardMemberDTO (파라미터로 전달받을 DTO 클래스)
-      - 쿼리 내용: board_member 테이블에 새로운 멤버 데이터를 삽입.
-      - 비밀번호는 `STANDARD_HASH` 함수를 사용하여 SHA-512 해시로 암호화 후 저장.
-    -->
-    insert into board_member(id, password, username, nickname)
-    values(#{id}, standard_hash(#{password}, 'SHA512'), #{userName}, #{nickName})    
-  </insert>
+	<!-- 새로운 멤버를 추가하는 INSERT 문 -->
+	<insert id="insertMember" parameterType="dto.BoardMemberDTO">
+		<!-- 설명: - ID: insertMember - parameterType: dto.BoardMemberDTO 
+		(파라미터로 전달받을 DTO 클래스) - 쿼리 내용: board_member 테이블에 새로운 멤버 데이터를 삽입. - 비밀번호는 `STANDARD_HASH` 
+			함수를 사용하여 SHA-512 해시로 암호화 후 저장. -->
+		insert into board_member(id, password, username, nickname)
+		values(#{id}, standard_hash(#{password}, 'SHA512'), #{userName},
+		#{nickName})
+	</insert>
 
-  <!-- 특정 이름을 가진 멤버를 조회하는 SELECT 문 -->
-  <select id="selectNameMember" parameterType="string" resultType="dto.BoardMemberDTO">
-    <!-- 
-      설명:
-      - ID: selectNameMember
-      - parameterType: string (입력 파라미터는 문자열)
-      - resultType: dto.BoardMemberDTO (결과를 매핑할 DTO 클래스)
-      - 쿼리 내용: board_member 테이블에서 username이 특정 문자열을 포함하는 행을 조회.
-      - `%`와 `||` 연산자를 사용하여 LIKE 조건문 구현 (부분 문자열 검색).
-    -->
-    select * from board_member where username like '%' || #{value} || '%'
-  </select>
+	<!-- 특정 이름을 가진 멤버를 조회하는 SELECT 문 -->
+	<select id="selectNameMember" parameterType="string"
+		resultType="dto.BoardMemberDTO">
+		<!-- 설명: - ID: selectNameMember - parameterType: string (입력 파라미터는 문자열) 
+			- resultType: dto.BoardMemberDTO (결과를 매핑할 DTO 클래스) - 쿼리 내용: board_member 
+			테이블에서 username이 특정 문자열을 포함하는 행을 조회. - `%`와 `||` 연산자를 사용하여 LIKE 조건문 구현 (부분 
+			문자열 검색). -->
+		select * from board_member where username like '%' || #{value} || '%'
+	</select>
 
-  <!-- 특정 멤버를 삭제하는 DELETE 문 -->
-  <delete id="deleteMember" parameterType="string">
-    <!-- 
-      설명:
-      - ID: deleteMember
-      - parameterType: string (입력 파라미터는 문자열)
-      - 쿼리 내용: board_member 테이블에서 전달받은 ID와 일치하는 행 삭제.
-    -->
-    delete from board_member where id = #{id}
-  </delete>
+	<!-- 특정 멤버를 삭제하는 DELETE 문 -->
+	<delete id="deleteMember" parameterType="string">
+		<!-- 설명: - ID: deleteMember - parameterType: string (입력 파라미터는 문자열) - 쿼리 
+			내용: board_member 테이블에서 전달받은 ID와 일치하는 행 삭제. -->
+		delete from board_member where id = #{id}
+	</delete>
 
-  <!-- 특정 ID를 가진 멤버의 수를 조회하는 SELECT 문 -->
-  <select id="selectIdMember" parameterType="string" resultType="int">
-    <!-- 
-      설명:
-      - ID: selectIdMember
-      - parameterType: string (입력 파라미터는 문자열)
-      - resultType: int (결과는 정수로 반환)
-      - 쿼리 내용: board_member 테이블에서 id와 일치하는 행의 수를 조회하여 반환.
-      - 주로 중복 확인에 사용됨.
-    -->
-    select count(*) as member_count from board_member where id like #{id}
-  </select>
-  
-  <!-- ID와 비밀번호를 기준으로 멤버를 조회하는 SELECT 문 -->
-  <select id="findMemberByIdAndPassword" parameterType="map" resultType="dto.BoardMemberDTO">
-    <!-- 
-      설명:
-      - ID: findMemberByIdAndPassword
-      - parameterType: map (파라미터를 키-값 쌍으로 전달)
-      - resultType: dto.BoardMemberDTO (결과를 매핑할 DTO 클래스)
-      - 쿼리 내용: board_member 테이블에서 id와 암호화된 비밀번호가 일치하는 행을 조회.
-      - 암호화된 비밀번호 비교를 위해 `STANDARD_HASH` 함수 사용.
-    -->
-    select * from board_member
-    where id like #{id} and password like STANDARD_HASH(#{password}, 'SHA512')
-  </select>
+	<!-- 특정 ID를 가진 멤버의 수를 조회하는 SELECT 문 -->
+	<select id="selectIdMember" parameterType="string"
+		resultType="int">
+		<!-- 설명: - ID: selectIdMember - parameterType: string (입력 파라미터는 문자열) - 
+			resultType: int (결과는 정수로 반환) - 쿼리 내용: board_member 테이블에서 id와 일치하는 행의 수를 조회하여 
+			반환. - 주로 중복 확인에 사용됨. -->
+		select count(*) as member_count from board_member where id like #{id}
+	</select>
+
+	<!-- ID와 비밀번호를 기준으로 멤버를 조회하는 SELECT 문 -->
+	<select id="findMemberByIdAndPassword" parameterType="map"
+		resultType="dto.BoardMemberDTO">
+		<!-- 설명: - ID: findMemberByIdAndPassword - parameterType: map (파라미터를 키-값 
+			쌍으로 전달) - resultType: dto.BoardMemberDTO (결과를 매핑할 DTO 클래스) - 쿼리 내용: board_member 
+			테이블에서 id와 암호화된 비밀번호가 일치하는 행을 조회. - 암호화된 비밀번호 비교를 위해 `STANDARD_HASH` 함수 사용. -->
+		select * from board_member
+		where 
+		id like #{id} and 
+		password like STANDARD_HASH(#{password}, 'SHA512')
+	</select>
 
 </mapper>
