@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 
 import config.DBManager;
 import dto.BoardDTO;
+import jakarta.websocket.Session;
 import mapper.BoardMapper;
 
 public class BoardService {
@@ -31,6 +32,20 @@ public class BoardService {
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
 			return mapper.insertBoard(dto);
 		}
+	}
+
+	public BoardDTO selectBoard(int bno) {
+	 try(SqlSession session = DBManager.getInstance().getSession()){
+		 BoardMapper mapper = session.getMapper(BoardMapper.class);
+		 return mapper.selectBoard(bno);
+	 }
+	}
+
+	public int updateBoardCount(int bno) {
+		 try(SqlSession session = DBManager.getInstance().getSession()){
+			 BoardMapper mapper = session.getMapper(BoardMapper.class);
+			 return mapper.updateBoardCount(bno);
+		 }
 	}
 
 	

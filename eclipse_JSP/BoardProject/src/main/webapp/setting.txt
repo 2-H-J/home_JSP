@@ -68,3 +68,10 @@
 	
 
 	5-4. board-mapper.xml
+	
+	
+	-------
+	게시글 내용 보기, 게시글 좋아요 갯수 증가
+	HandlerMapper - BoardViewController - BoardService - BoardMapper - board-mapper.xml
+	
+	
