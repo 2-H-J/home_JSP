@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>회원가입</title>
-<jsp:include page="header.html" />
+<jsp:include page="header.jsp" />
 <style>
 /* 기본 스타일 */
 body {

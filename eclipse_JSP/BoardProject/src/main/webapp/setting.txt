@@ -72,6 +72,8 @@
 	
 	-------
 	
+	- 로그인
+	
 	-게시글 내용 보기, 게시글 좋아요 갯수 증가
 	HandlerMapping -> BoardViewController -> BoardService -> BoardMapper -> board-mapper
 	

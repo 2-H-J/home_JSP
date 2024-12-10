@@ -1,83 +1,67 @@
 package controller;
 
 import java.io.IOException;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
+
+import dto.UsersDTO;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import service.UsersService;
-import dto.UsersDTO;
 import view.ModelAndView;
 
+/**
+ * LoginController는 클라이언트의 로그인 요청을 처리하는 컨트롤러입니다. 클라이언트로부터 아이디와 비밀번호를 입력받아 인증을
+ * 수행하고, 성공 또는 실패 여부에 따라 적절한 뷰로 이동합니다.
+ */
 public class LoginController implements Controller {
 
-    @Override
-    public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String loginId = request.getParameter("loginId");
-        String password = request.getParameter("password");
-        String rememberMe = request.getParameter("rememberMe");
+	/**
+	 * 클라이언트의 요청을 처리하고 결과에 따라 뷰를 반환합니다.
+	 * 
+	 * @param request  클라이언트의 HTTP 요청 객체
+	 * @param response 서버의 HTTP 응답 객체
+	 * @return ModelAndView 클라이언트 요청 결과에 따라 이동할 경로 및 데이터
+	 */
+	@Override
+	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		System.out.println("[LoginController] : execute 메서드 시작");
 
-        System.out.println("[LoginController] execute() 호출 -> 로그인 시도 중, loginId: " + loginId);
+		// 1. 클라이언트로부터 전달된 id와 password 값을 가져오기
+		String loginId = request.getParameter("loginId"); // 로그인 아이디
+		String password = request.getParameter("loginId"); // 비밀번호 (오타 확인 필요)
+		System.out.println("[LoginController] 입력 받은 loginId / password : " + loginId + " / " + password);
 
-        UsersDTO user = UsersService.getInstance().login(loginId, password);
-        ModelAndView view = new ModelAndView();
+		// 2. UsersService를 통해 로그인 검증
+		// 로그인 성공 시 사용자 정보를 담은 UsersDTO 객체를 반환
+		UsersDTO dto = UsersService.getInstance().login(loginId, password);
+		if (dto != null) {
+			System.out.println("LoginController: 로그인 성공, 사용자 정보 = " + dto);
+		} else {
+			System.out.println("LoginController: 로그인 실패, 잘못된 자격 증명");
+		}
 
-        if (user != null) {
-            System.out.println("[LoginController] 로그인 성공 - 사용자: " + user.getNickName() + " -> 세션 설정 시작");
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+		// ModelAndView 객체 생성
+		ModelAndView view = new ModelAndView();
+		System.out.println("[LoginController] : ModelAndView객체 "+view);
+		// 3. 로그인 성공 처리
+		if (dto != null) {
+			// 세션에 사용자 정보를 저장
+			request.getSession().setAttribute("user", dto);
 
-            session.setAttribute("sessionExpireTime", Instant.now().plus(10, ChronoUnit.SECONDS));
-            /*
-            10초	session.setAttribute("sessionExpireTime", Instant.now().plus(10, ChronoUnit.SECONDS));
-			10분	session.setAttribute("sessionExpireTime", Instant.now().plus(10, ChronoUnit.MINUTES));
-			1시간	session.setAttribute("sessionExpireTime", Instant.now().plus(1, ChronoUnit.HOURS));
-			1일		session.setAttribute("sessionExpireTime", Instant.now().plus(1, ChronoUnit.DAYS));
+			// 성공 시 메인 페이지로 리다이렉트 설정
+			view.setPath("./index.do");
+			view.setRedirect(true); // 클라이언트에게 새 요청을 보내도록 리다이렉트
+			System.out.println("LoginController: ./index.do로 리다이렉트");
+		} else {
+			// 4. 로그인 실패 처리
+			// 로그인 실패 시 로그인 화면으로 다시 포워드
+			view.setPath("./loginView.jsp");
+			view.setRedirect(false); // 서버 내부에서 포워드
+			System.out.println("LoginController: ./loginView.jsp로 포워드");
+		}
 
-            */
-            System.out.println("[LoginController] 세션 만료 시간 설정: 10초 후");
-
-            
-            if ("on".equals(rememberMe)) {
-                Cookie cookie = new Cookie("loginId", loginId);
-                cookie.setMaxAge(20); // 7일 동안 유지
-                /*
-                	20초	cookie.setMaxAge(20);
-					1분		cookie.setMaxAge(60);
-					10분	cookie.setMaxAge(600);
-					30분	cookie.setMaxAge(1800);
-					1시간	cookie.setMaxAge(3600);
-					12시간	cookie.setMaxAge(60 * 60 * 12);
-					1일		cookie.setMaxAge(60 * 60 * 24);
-					3일		cookie.setMaxAge(60 * 60 * 24 * 3);
-					7일		cookie.setMaxAge(60 * 60 * 24 * 7);
-                */
-                cookie.setPath("/");
-                response.addCookie(cookie);
-
-                // 세션에 "로그인 상태 유지" 정보 저장
-                session.setAttribute("rememberMe", true);
-                System.out.println("[LoginController] 로그인 상태 유지 설정 완료 - 쿠키와 세션 저장");
-            } else {
-                session.setAttribute("rememberMe", false);
-                System.out.println("[LoginController] 로그인 상태 유지 비활성화");
-            }
-
-
-
-            System.out.println("[LoginController] 로그인 성공 후 index.jsp로 리다이렉트");
-            view.setPath("index.jsp");
-            view.setRedirect(true);
-        } else {
-            System.out.println("[LoginController] 로그인 실패 - 아이디 또는 비밀번호 불일치, signin.jsp로 리다이렉트");
-            view.setPath("signin.jsp?error=invalid");
-            view.setRedirect(true);
-        }
-
-        return view;
-    }
+		// ModelAndView 반환
+		return view;
+	}
 }

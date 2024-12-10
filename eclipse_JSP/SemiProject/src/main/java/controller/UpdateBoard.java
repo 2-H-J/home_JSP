@@ -18,12 +18,14 @@ public class UpdateBoard implements Controller {
 		String description = request.getParameter("description");
 		String postNumberStr = request.getParameter("postNumber");
 		int postNumber = Integer.parseInt(postNumberStr);
+		String tag = request.getParameter("tag");
 
 		// 게시글 객체 생성 후 수정 내용 설정
 		BoardsDTO board = new BoardsDTO();
 		board.setPostNumber(postNumber);
 		board.setTitle(title);
 		board.setDescription(description);
+		board.setTag(tag);
 
 		// 게시글 업데이트
 		int result = BoardsService.getInstance().updateBoard(board); // updateBoard 메서드가 영향을 받은 행 수를 반환한다고 가정

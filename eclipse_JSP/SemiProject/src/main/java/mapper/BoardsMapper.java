@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import dto.BoardsDTO;
+import dto.CommentsDTO;
 
 public interface BoardsMapper {
 
@@ -24,5 +25,14 @@ public interface BoardsMapper {
 	List<BoardsDTO> searchBoardsByTitleSorted(Map<String, Object> params);
 
 	List<BoardsDTO> searchBoardsByWriterSorted(Map<String, Object> params);
+	
+	//조회수
+	int updateBoardsCount(int postNumber);
+	
+	int insertComment(CommentsDTO comment);
+
+	List<CommentsDTO> getCommentList(int postNumber);
+
+	int deleteComment(int commentNumber);
 
 }
