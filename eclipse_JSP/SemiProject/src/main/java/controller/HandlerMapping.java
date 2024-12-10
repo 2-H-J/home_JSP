@@ -1,103 +1,98 @@
 package controller;
 
-import java.io.File;
-
 public class HandlerMapping {
-    // 싱글톤 패턴: HandlerMapping 클래스의 유일한 인스턴스를 생성
+    // 싱글톤 패턴으로 HandlerMapping 인스턴스 생성
     private static HandlerMapping instance = new HandlerMapping();
 
     // 기본 생성자
     public HandlerMapping() {
-        String fileName = new File(HandlerMapping.class.getProtectionDomain().getCodeSource().getLocation().getPath()).getName();
-        System.out.println("[HandlerMapping] 파일명: " + fileName);
-        System.out.println("[HandlerMapping] HandlerMapping 인스턴스 생성");
+        System.out.println("[HandlerMapping] 생성자 호출 -> HandlerMapping 인스턴스 생성됨");
     }
 
-    // HandlerMapping 인스턴스 반환 메서드
+    // HandlerMapping 인스턴스 반환 (싱글톤 유지)
     public static HandlerMapping getInstance() {
-        System.out.println("[HandlerMapping] getInstance() 호출");
         if (instance == null) {
-            System.out.println("[HandlerMapping] 새로운 HandlerMapping 인스턴스 생성");
             instance = new HandlerMapping();
+            System.out.println("[HandlerMapping] 새로운 인스턴스 생성");
         }
+        System.out.println("[HandlerMapping] 기존 인스턴스 반환");
         return instance;
     }
 
-    // 입력받은 command에 따라 적절한 Controller 생성
+    // 전달받은 command 값에 따라 적절한 Controller 객체를 생성
     public Controller createController(String command) {
         Controller controller = null;
-        System.out.println("[HandlerMapping] createController() 호출 - command: " + command);
+        System.out.println("[HandlerMapping] 전달된 명령어: " + command);
 
+        // 명령어(command)에 따라 적합한 Controller 매핑
         switch (command) {
             case "allUser":
-                System.out.println("[HandlerMapping] SelectAllUsers 컨트롤러 생성");
                 controller = new SelectAllUsers();
+                System.out.println("[HandlerMapping] SelectAllUsers 컨트롤러 생성");
                 break;
             case "allBoard":
-                System.out.println("[HandlerMapping] SelectAllBoards 컨트롤러 생성");
                 controller = new SelectAllBoards();
+                System.out.println("[HandlerMapping] SelectAllBoards 컨트롤러 생성");
                 break;
             case "boardDetail":
-                System.out.println("[HandlerMapping] SelectBoardByPostNumber 컨트롤러 생성");
                 controller = new SelectBoardByPostNumber();
+                System.out.println("[HandlerMapping] SelectBoardByPostNumber 컨트롤러 생성");
                 break;
             case "deleteBoard":
-                System.out.println("[HandlerMapping] DeleteBoardByPostNumber 컨트롤러 생성");
                 controller = new DeleteBoardByPostNumber();
+                System.out.println("[HandlerMapping] DeleteBoardByPostNumber 컨트롤러 생성");
                 break;
             case "insertBoard":
-                System.out.println("[HandlerMapping] InsertBoard 컨트롤러 생성");
                 controller = new InsertBoard();
+                System.out.println("[HandlerMapping] InsertBoard 컨트롤러 생성");
                 break;
             case "updateBoard":
-                System.out.println("[HandlerMapping] UpdateBoardPage 컨트롤러 생성");
                 controller = new UpdateBoardPage();
+                System.out.println("[HandlerMapping] UpdateBoardPage 컨트롤러 생성");
                 break;
             case "syncBoard":
-                System.out.println("[HandlerMapping] UpdateBoard 컨트롤러 생성");
                 controller = new UpdateBoard();
+                System.out.println("[HandlerMapping] UpdateBoard 컨트롤러 생성");
                 break;
             case "region":
-                System.out.println("[HandlerMapping] regionintro 컨트롤러 생성");
                 controller = new regionintro();
+                System.out.println("[HandlerMapping] regionintro 컨트롤러 생성");
                 break;
             case "regionDetail":
-                System.out.println("[HandlerMapping] regionDetail 컨트롤러 생성");
                 controller = new regionDetail();
+                System.out.println("[HandlerMapping] regionDetail 컨트롤러 생성");
                 break;
             case "insertMember":
-                System.out.println("[HandlerMapping] InsertMember 컨트롤러 생성 (회원 추가 작업)");
                 controller = new InsertMember();
+                System.out.println("[HandlerMapping] InsertMember 컨트롤러 생성 -> 회원 추가");
                 break;
             case "checkLoginId":
-                System.out.println("[HandlerMapping] CheckLoginIdController 컨트롤러 생성 (아이디 중복 체크)");
                 controller = new CheckLoginIdController();
+                System.out.println("[HandlerMapping] CheckLoginIdController 컨트롤러 생성 -> 아이디 중복 체크");
                 break;
             case "login":
-                System.out.println("[HandlerMapping] LoginController 생성 -> LoginController.java");
                 controller = new LoginController();
+                System.out.println("[HandlerMapping] LoginController 컨트롤러 생성 -> 로그인 처리");
                 break;
             case "logout":
-                System.out.println("[HandlerMapping] LogoutController 생성 -> LogoutController.java");
                 controller = new LogoutController();
+                System.out.println("[HandlerMapping] LogoutController 컨트롤러 생성 -> 로그아웃 처리");
                 break;
             case "updateUser":
-                controller = new UpdateUserController();
-                break;
-            case "checkNickname":
-                controller = new CheckNickNameController();
-                break;
+            	controller = new UpdateUserController();
+            	System.out.println("[HandlerMapping] UpdateUserController 컨트롤러 생성 -> 내정보수정 처리");
+            	break;
             default:
-                System.out.println("[HandlerMapping] 유효하지 않은 command: " + command);
+                System.out.println("[HandlerMapping] 알 수 없는 명령어: " + command);
                 break;
         }
 
+        // 생성된 Controller 반환
         if (controller != null) {
-            System.out.println("[HandlerMapping] 생성된 컨트롤러: " + controller.getClass().getSimpleName());
+            System.out.println("[HandlerMapping] 생성된 Controller: " + controller.getClass().getSimpleName());
         } else {
-            System.out.println("[HandlerMapping] 생성된 컨트롤러가 없음 (command 처리 실패)");
+            System.out.println("[HandlerMapping] Controller 생성 실패");
         }
-
         return controller;
     }
 }

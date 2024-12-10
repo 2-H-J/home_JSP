@@ -14,18 +14,43 @@
 		<result column="content" property="content"/>
 		<result column="nickname" property="nickName"/>
 	</resultMap>
+	
 	<select id="getBoardList" resultMap="board">
 		select * from board_view
 	</select>
+	
 	<insert id="insertBoard" parameterType="dto.BoardDTO">
 		insert into board(bno, title, content, id)
 		values(seq_board_bno.nextval, #{title},#{content},#{id})
 	</insert>
+	
  	<select id="selectBoard" resultMap="board">
- 	select * from board_view where bno = #{bno}
+ 		select * from board_view where bno = #{bno}
  	</select>
  	
  	<update id="updateBoardCount">
- 		update board set bcount = bcount + 1 where bno = #{bno}
+ 		update board set bcount = bcount + 1 where bno = #{bno} 
+ 	</update>
+ 	
+ 	<insert id="insertBoardComment" parameterType="dto.BoardCommentDTO">
+ 		insert into board_comment(cno, bno, content, id)
+ 		values(SEQ_BOARD_COMMENT_CNO.nextval, #{bno}, #{content}, #{id})
+ 	</insert>
+ 	
+ 	<select id="getCommentList" resultType="dto.BoardCommentDTO">
+ 		select * from board_comment_view where bno = #{bno}
+ 	</select>
+ 	
+ 	<delete id="deleteBoard">
+ 		delete from board where bno = #{bno}
+ 	</delete>
+ 	
+ 	<delete id="boardCommentDelete">
+ 		delete from board_comment where cno = #{cno}
+ 	</delete>
+ 	
+ 	<update id="updateBoard">
+ 		update board set title = #{title}, content = #{content} 
+ 		where bno = #{bno}
  	</update>
 </mapper>

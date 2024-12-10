@@ -29,25 +29,23 @@ public class DispatcherServlet extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("[DispatcherServlet] doGet() 호출됨 -> 요청 URI: " + request.getRequestURI());
-        HttpSession session = request.getSession(false);
-        boolean sessionRestored = false;
+        HttpSession session = request.getSession(false); // 세션 가져오기 (없으면 null 반환)
+        boolean sessionRestored = false; // 세션 복구 여부 플래그
 
-        // 세션이 없거나 사용자 정보가 없을 경우
+        // 세션이 없거나 사용자 정보가 없는 경우
         if (session == null || session.getAttribute("user") == null) {
             System.out.println("[DispatcherServlet] 세션 없음 -> 쿠키 확인 및 복구 시도");
-            Cookie[] cookies = request.getCookies();
+            Cookie[] cookies = request.getCookies(); // 요청에서 쿠키 가져오기
             if (cookies != null) {
                 for (Cookie cookie : cookies) {
-                    if ("loginId".equals(cookie.getName())) {
-                        String loginId = cookie.getValue();
-                        System.out.println("[DispatcherServlet] 쿠키에서 loginId 확인: " + loginId);
-                        UsersDTO user = UsersService.getInstance().getUserByLoginId(loginId);
+                    if ("loginId".equals(cookie.getName())) { // "loginId" 쿠키 찾기
+                        String loginId = cookie.getValue(); // 쿠키 값 가져오기
+                        UsersDTO user = UsersService.getInstance().getUserByLoginId(loginId); // 사용자 정보 조회
 
                         if (user != null) {
                             // 세션 복구
                             session = request.getSession(true); // 새 세션 생성
-                            session.setAttribute("user", user);
+                            session.setAttribute("user", user); // 사용자 정보를 세션에 저장
 
                             // "로그인 상태 유지" 사용자라면 세션 만료 시간 연장
                             session.setAttribute("rememberMe", true);
@@ -62,8 +60,8 @@ public class DispatcherServlet extends HttpServlet {
 
         // 기존 세션이 있는 경우
         if (session != null && !sessionRestored) {
-            Instant expireTime = (Instant) session.getAttribute("sessionExpireTime");
-            Boolean rememberMe = (Boolean) session.getAttribute("rememberMe");
+            Instant expireTime = (Instant) session.getAttribute("sessionExpireTime"); // 세션 만료 시간
+            Boolean rememberMe = (Boolean) session.getAttribute("rememberMe"); // 로그인 상태 유지 여부
 
             // "로그인 상태 유지" 사용자는 세션 만료 시간 무시
             if (rememberMe != null && rememberMe) {
@@ -80,42 +78,34 @@ public class DispatcherServlet extends HttpServlet {
             }
         }
 
-        // 기존 로직 실행
+        // 기존 로직 실행: URL에서 명령어(command) 추출
         String[] path = request.getRequestURI().split("/");
         String command = path[path.length - 1].replace(".do", "");
-        System.out.println("[DispatcherServlet] 요청 command: " + command);
 
-        Controller controller = HandlerMapping.getInstance().createController(command);
+        Controller controller = HandlerMapping.getInstance().createController(command); // Controller 생성
         ModelAndView view = null;
 
         if (controller != null) {
-            System.out.println("[DispatcherServlet] 컨트롤러 실행: " + controller.getClass().getSimpleName());
-            view = controller.execute(request, response);
-        } else {
-            System.out.println("[DispatcherServlet] 유효하지 않은 command: " + command);
+            view = controller.execute(request, response); // 컨트롤러 실행
         }
 
         if (view != null) {
+            // ModelAndView의 데이터를 request 영역에 추가
             for (String key : view.getModel().keySet()) {
                 request.setAttribute(key, view.getModel().get(key));
-                System.out.println("[DispatcherServlet] 모델 데이터 추가 - key: " + key + ", value: " + view.getModel().get(key));
             }
 
+            // 페이지 이동 처리
             if (view.isRedirect()) {
-                System.out.println("[DispatcherServlet] 리다이렉트 경로: " + view.getPath());
-                response.sendRedirect(view.getPath());
+                response.sendRedirect(view.getPath()); // 리다이렉트 처리
             } else {
-                System.out.println("[DispatcherServlet] 포워드 경로: " + view.getPath());
-                request.getRequestDispatcher(view.getPath()).forward(request, response);
+                request.getRequestDispatcher(view.getPath()).forward(request, response); // 포워딩 처리
             }
-        } else {
-            System.out.println("[DispatcherServlet] 처리 결과가 없음");
         }
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("[DispatcherServlet] doPost() 호출됨");
-        doGet(request, response);
+        doGet(request, response); // POST 요청은 GET 요청으로 처리
     }
 }

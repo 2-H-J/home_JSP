@@ -68,17 +68,18 @@
 	<p>
 		안녕하세요, <b><%=user != null ? user.getNickName() : "게스트"%></b> 님!
 	</p>
-	<form action="logout.do" method="post">
+	<form action="./logout.do" method="post">
 		<button type="submit">로그아웃</button>
 	</form>
-	<a href="./updateUser.do">내 정보 수정</a>
+	
+	<a href="./updateUser.do">내정보 수정</a>
 	<%
 	} else {
 		// 사용자 정보 없음 -> 로그인 버튼 제공
 		System.out.println("[MainPage] 사용자 정보 없음 -> 로그인 페이지 링크 제공");
 	}
 	%>
-<%-- 	<a href="signin.jsp"><button>로그인</button></a>
+<%-- 	<a href="./signin.jsp"><button>로그인</button></a>
 	<%
 	}
 	%> --%>

@@ -66,12 +66,48 @@
 	
 	5-4. BoardMapper(instance)
 	
-
+	
 	5-4. board-mapper.xml
 	
 	
 	-------
-	게시글 내용 보기, 게시글 좋아요 갯수 증가
-	HandlerMapper - BoardViewController - BoardService - BoardMapper - board-mapper.xml
+	
+	-게시글 내용 보기, 게시글 좋아요 갯수 증가
+	HandlerMapping -> BoardViewController -> BoardService -> BoardMapper -> board-mapper
 	
 	
+	-댓글 등록 처리
+		* BoardCommentInsertController에서 댓글 등록 처리
+		1. BoardCommentDTO 작성
+		2. 게시글 번호, 댓글내용 받아옴
+		3. DB 등록하는 작업
+	BoardCommentDTO -> HandlerMapping -> BoardCommentInsertController -> BoardService -> BoardMapper -> board-mapper
+	
+	- 댓글 목록 보기
+	BoardViewController -> BoardService -> BoardMapper -> board-mapper -> board_view 추가 수정?
+	
+	- 게시글 삭제 / 수정 / 게시글 좋아요 싫어요 / 댓글 삭제 / 댓글 좋아요 싫어요
+1. 게시글 삭제 : 제약조건 문제 - 제약조건들을 전부 DROP 후 on delete cascade를 추가 후 실행
+	board_view.jsp 삭제 추가 -> HandlerMapping -> BoardDeleteController -> BoardService -> BoardMapper -> board-mapper
+
+2. 게시글 수정 ( 게시글 추가랑 비슷? ) BoardViewController 내용 대부분 복사
+
+	- 게시글 수정 페이지 가기
+	board_view.jsp의 버튼 boardUpdateView.do를 이용해서 버튼 클릭시 board_update_view.jsp로 이동 처리 ->
+	HandlerMapping -> BoardUpdateViewController (BoardViewController 내용 대부분 복사) -> 
+	board_update_view.jsp 틀 만들고 기존 정보 가져오기 위해 처리작업 (이동시 해당 게시글 정보를 받오기) ->
+	
+	- 게시글 수정 작업
+	HandlerMapping -> BoardUpdateController -> BoardService -> BoardMapper -> board-mapper
+	
+	
+	
+
+3. 게시글 좋아요/싫어요
+
+4. 댓글 삭제
+	HandlerMapping -> BoardCommentDeleteController -> BoardService -> BoardMapper -> board-mapper
+
+5. 댓글 좋아요/싫어요
+6. 페이징
+7. 파일업로드

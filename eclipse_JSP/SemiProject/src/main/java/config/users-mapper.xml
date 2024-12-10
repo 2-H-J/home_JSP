@@ -15,155 +15,124 @@
 		<result column="user_name" property="userName" />
 		<result column="user_email" property="userEmail" />
 	</resultMap>
+	
+	
+    <!-- 모든 사용자 정보 조회 -->
+    <select id="selectAllUsers" resultType="dto.UsersDTO">
+        SELECT 
+            user_number AS userNumber,
+            login_id AS loginId,
+            nick_name AS nickName,
+            password,
+            create_time AS createTime,
+            update_time AS updateTime,
+            pw_update_time AS pwUpdateTime,
+            user_name AS userName,
+            user_email AS userEmail
+        FROM 
+            users
+    </select>
+
+    <!-- 사용자 번호로 사용자 정보 조회 -->
+    <select id="selectUserByUserNumber" parameterType="int" resultType="dto.UsersDTO">
+        SELECT 
+            user_number AS userNumber,
+            login_id AS loginId,
+            nick_name AS nickName,
+            password,
+            create_time AS createTime,
+            update_time AS updateTime,
+            pw_update_time AS pwUpdateTime,
+            user_name AS userName,
+            user_email AS userEmail
+        FROM 
+            users
+        WHERE 
+            user_number = #{userNumber}
+    </select>
+
+    <!-- 로그인 ID로 사용자 정보 조회 -->
+    <select id="selectUserByLoginId" parameterType="string" resultType="dto.UsersDTO">
+        SELECT 
+            user_number AS userNumber,
+            login_id AS loginId,
+            nick_name AS nickName,
+            password,
+            create_time AS createTime,
+            update_time AS updateTime,
+            pw_update_time AS pwUpdateTime,
+            user_name AS userName,
+            user_email AS userEmail
+        FROM 
+            users
+        WHERE 
+            login_id = #{loginId}
+    </select>
+
+    <!-- 회원 정보 삽입 -->
+    <insert id="insertMember" parameterType="dto.UsersDTO">
+        INSERT INTO users (
+            user_number,       <!-- 시퀀스를 통해 자동 생성 -->
+            login_id,
+            nick_name,
+            password,
+            create_time,
+            update_time,
+            pw_update_time,
+            user_name,
+            user_email
+        ) VALUES (
+            USERS_SEQ.NEXTVAL, <!-- 사용자 번호 자동 생성 -->
+            #{loginId, jdbcType=VARCHAR},
+            #{nickName, jdbcType=VARCHAR},
+            #{password, jdbcType=VARCHAR},
+            #{createTime, jdbcType=TIMESTAMP},
+            NULL,
+            #{pwUpdateTime, jdbcType=TIMESTAMP},
+            #{userName, jdbcType=VARCHAR},
+            #{userEmail, jdbcType=VARCHAR}
+        )
+    </insert>
 
 
-	<!-- 모든 사용자 정보 조회 -->
-	<select id="selectAllUsers" resultType="dto.UsersDTO">
-		SELECT
-		user_number AS
-		userNumber,
-		login_id AS loginId,
-		nick_name AS nickName,
-		password,
-		create_time AS createTime,
-		update_time AS updateTime,
-		pw_update_time AS
-		pwUpdateTime,
-		user_name AS userName,
-		user_email AS userEmail
-		FROM
-		users
+    <!-- 사용자 정보 업데이트 -->
+    <update id="updateUser" parameterType="dto.UsersDTO">
+        UPDATE users
+        SET 
+            nick_name = #{nickName},
+            user_email = #{userEmail},
+            update_time = CURRENT_TIMESTAMP
+        WHERE 
+            user_number = #{userNumber}
+    </update>
+
+    <!-- 사용자 비밀번호 업데이트 -->
+    <update id="updatePassword" parameterType="map">
+        UPDATE users
+        SET 
+            password = #{newPassword},
+            pw_update_time = CURRENT_TIMESTAMP
+        WHERE 
+            user_number = #{userNumber}
+    </update>
+
+    <!-- 사용자 삭제 -->
+    <delete id="deleteUserByUserNumber" parameterType="int">
+        DELETE FROM users
+        WHERE 
+            user_number = #{userNumber}
+    </delete>
+    
+    <select id="selectLoginIdCount" parameterType="String" resultType="int">
+   		SELECT COUNT(*)
+   		FROM USERS
+    	WHERE LOGIN_ID = #{loginId}
 	</select>
-
-	<!-- 사용자 번호로 사용자 정보 조회 -->
-	<select id="selectUserByUserNumber" parameterType="int"
-		resultType="dto.UsersDTO">
-		SELECT
-		user_number AS userNumber,
-		login_id AS loginId,
-		nick_name AS nickName,
-		password,
-		create_time AS createTime,
-		update_time
-		AS updateTime,
-		pw_update_time AS pwUpdateTime,
-		user_name AS userName,
-		user_email AS userEmail
-		FROM
-		users
-		WHERE
-		user_number = #{userNumber}
-	</select>
-
-	<!-- 로그인 ID로 사용자 정보 조회 -->
-	<select id="selectUserByLoginId" parameterType="string"
-		resultType="dto.UsersDTO">
-		SELECT
-		user_number AS userNumber,
-		login_id AS loginId,
-		nick_name AS nickName,
-		password,
-		create_time AS createTime,
-		update_time
-		AS updateTime,
-		pw_update_time AS pwUpdateTime,
-		user_name AS userName,
-		user_email AS userEmail
-		FROM
-		users
-		WHERE
-		login_id = #{loginId}
-	</select>
-
-	<!-- 회원 정보 삽입 -->
-	<insert id="insertMember" parameterType="dto.UsersDTO">
-		INSERT INTO users (
-		user_number,       <!-- 시퀀스를 통해 자동 생성 -->
-		login_id,
-		nick_name,
-		password,
-		create_time,
-		update_time,
-		pw_update_time,
-		user_name,
-		user_email
-		) VALUES (
-		USERS_SEQ.NEXTVAL, <!-- 사용자 번호 자동 생성 -->
-		#{loginId, jdbcType=VARCHAR},
-		#{nickName, jdbcType=VARCHAR},
-		#{password, jdbcType=VARCHAR},
-		#{createTime, jdbcType=TIMESTAMP},
-		NULL,
-		#{pwUpdateTime, jdbcType=TIMESTAMP},
-		#{userName, jdbcType=VARCHAR},
-		#{userEmail, jdbcType=VARCHAR}
-		)
-	</insert>
-
-	<!-- 사용자 정보 업데이트 -->
-	<update id="updateUser" parameterType="dto.UsersDTO">
-		UPDATE users
-		SET
-		nick_name =
-		CASE WHEN #{nickName} IS NOT NULL THEN #{nickName} ELSE nick_name
-		END,
-		user_email = CASE WHEN #{userEmail} IS NOT NULL THEN #{userEmail} ELSE
-		user_email END,
-		update_time = CURRENT_TIMESTAMP
-		WHERE
-		user_number =
-		#{userNumber}
-	</update>
-
-	<!-- 사용자 비밀번호 업데이트 -->
-	<update id="updatePassword" parameterType="map">
-		UPDATE users
-		SET
-		password = #{newPassword},
-		pw_update_time = CURRENT_TIMESTAMP
-		WHERE
-		user_number = #{userNumber}
-	</update>
-
-	<select id="countByNickName" parameterType="String"
-		resultType="int">
-		SELECT COUNT(*)
-		FROM users
-		WHERE nick_name = #{nickName}
-	</select>
-
-
-
-	<!-- 사용자 정보 업데이트 -->
-	<!-- <update id="updateUser" parameterType="dto.UsersDTO"> UPDATE users 
-		SET nick_name = #{nickName}, user_email = #{userEmail}, update_time = CURRENT_TIMESTAMP 
-		WHERE user_number = #{userNumber} </update> -->
-
-	<!-- 사용자 비밀번호 업데이트 -->
-	<!-- <update id="updatePassword" parameterType="map"> UPDATE users SET password 
-		= #{newPassword}, pw_update_time = CURRENT_TIMESTAMP WHERE user_number = 
-		#{userNumber} </update> -->
-
-	<!-- 사용자 삭제 -->
-	<delete id="deleteUserByUserNumber" parameterType="int">
-		DELETE FROM
-		users
-		WHERE
-		user_number = #{userNumber}
-	</delete>
-
-	<select id="selectLoginIdCount" parameterType="String"
-		resultType="int">
-		SELECT COUNT(*)
-		FROM USERS
-		WHERE LOGIN_ID = #{loginId}
-	</select>
-
+	
 	<!-- 특정 loginId와 password로 사용자 정보를 조회하기 위한 select 쿼리 정의 -->
-	<select id="selectUserByLoginIdAndPassword" resultMap="users">
-		SELECT *
-		FROM users
-		WHERE login_id = #{loginId} AND password = #{password}
-	</select>
+    <select id="selectUserByLoginIdAndPassword" resultMap="users">
+        SELECT * FROM users 
+        WHERE login_id = #{loginId} AND password = #{password}
+    </select>
 
 </mapper>

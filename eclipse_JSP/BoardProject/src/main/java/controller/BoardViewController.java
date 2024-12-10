@@ -2,7 +2,9 @@ package controller;
 
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.List;
 
+import dto.BoardCommentDTO;
 import dto.BoardDTO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -32,15 +34,18 @@ public class BoardViewController implements Controller {
 			history = new HashSet<Integer>();
 			session.setAttribute("history", history);
 		}
-		System.out.println("[BoardViewController] history "+history); 
+		System.out.println("[BoardViewController] history / session :  "+history+" / "+session); 
 		if(history.add(bno))
-		
 		BoardService.getInstance().updateBoardCount(bno);
+		
 		
 		// - 글번호에 게시글 조회 
 		BoardDTO dto = BoardService.getInstance().selectBoard(bno);
+		System.out.println("[BoardViewController] 게시글 조회 "+dto+" / "+bno);
 		
 		// - 해당 게시글의 댓글 목록 조회
+		List<BoardCommentDTO> commentList = BoardService.getInstance().getCommentList(bno);
+		System.out.println("[BoardViewController] 댓글 목록 조회 : "+commentList);
 		
 		
 		// - 해당 게시글의 첨부파일 목록 조회
@@ -50,6 +55,7 @@ public class BoardViewController implements Controller {
 		ModelAndView view = new ModelAndView();
 		view.setPath("board_view.jsp");
 		view.addObject("board", dto);
+		view.addObject("commentList", commentList);
 		
 		return view;
 	}
