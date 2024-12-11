@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼 설정 파일 -->
+<mapper namespace="mapper.UsersMapper">
+
+	<!-- resultMap: 쿼리 결과를 Java 객체(dto.UsersDTO)로 매핑하기 위한 매핑 정의. 각 컬럼(column)을 
+		Java 객체의 속성(property)으로 매핑. -->
+	<resultMap type="dto.UsersDTO" id="users">
+		<id column="user_number" property="userNumber" /> <!-- Primary Key -->
+		<result column="login_Id" property="loginId" />
+		<result column="nick_name" property="nickName" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="pw_update_time" property="pwUpdateTime" />
+		<result column="user_name" property="userName" />
+		<result column="user_email" property="userEmail" />
+	</resultMap>
+	
+<!-- ..................................................................................................................................... -->
+
+	<!-- 모든 사용자 정보 조회 -->
+	<select id="selectAllUsers" resultType="dto.UsersDTO">
+		<!-- 설명: - ID: selectAllUsers - resultType: dto.UsersDTO (결과를 매핑할 DTO 클래스) 
+			- 쿼리 내용: users 테이블의 모든 사용자 데이터를 조회. - 각 컬럼을 Java 속성명으로 매핑하기 위해 alias 사용 (AS). -->
+		SELECT
+		user_number AS userNumber,
+		login_id AS loginId,
+		nick_name AS nickName,
+		password,
+		create_time AS createTime,
+		update_time AS updateTime,
+		pw_update_time AS pwUpdateTime,
+		user_name AS userName,
+		user_email AS userEmail
+		FROM
+		users
+	</select>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 사용자 번호로 사용자 정보 조회 -->
+	<select id="selectUserByUserNumber" parameterType="int"
+		resultType="dto.UsersDTO">
+		<!-- 설명: - ID: selectUserByUserNumber - parameterType: int (입력 파라미터 타입) 
+			- resultType: dto.UsersDTO (결과를 매핑할 DTO 클래스) - 쿼리 내용: user_number 값으로 특정 
+			사용자의 정보를 조회. -->
+		SELECT
+		user_number AS userNumber,
+		login_id AS loginId,
+		nick_name AS nickName,
+		password,
+		create_time AS createTime,
+		update_time AS updateTime,
+		pw_update_time AS pwUpdateTime,
+		user_name AS userName,
+		user_email AS userEmail
+		FROM
+		users
+		WHERE
+		user_number = #{userNumber}
+	</select>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 로그인 ID로 사용자 정보 조회 -->
+	<select id="selectUserByLoginId" parameterType="string"
+		resultType="dto.UsersDTO">
+		<!-- 설명: - ID: selectUserByLoginId - parameterType: string (입력 파라미터 타입) 
+			- resultType: dto.UsersDTO (결과를 매핑할 DTO 클래스) - 쿼리 내용: login_id 값으로 특정 사용자의 
+			정보를 조회. -->
+		SELECT
+		user_number AS userNumber,
+		login_id AS loginId,
+		nick_name AS nickName,
+		password,
+		create_time AS createTime,
+		update_time AS updateTime,
+		pw_update_time AS pwUpdateTime,
+		user_name AS userName,
+		user_email AS userEmail
+		FROM
+		users
+		WHERE
+		login_id = #{loginId}
+	</select>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 회원 정보 삽입 -->
+	<insert id="insertMember" parameterType="dto.UsersDTO">
+		<!-- 설명: - ID: insertMember - parameterType: dto.UsersDTO (입력 파라미터 타입) 
+			- 쿼리 내용: users 테이블에 새로운 사용자 데이터를 삽입. - 사용자 번호(user_number)는 시퀀스(USERS_SEQ)를 
+			통해 자동 생성. -->
+		INSERT INTO users (
+		user_number,
+		login_id,
+		nick_name,
+		password,
+		create_time,
+		update_time,
+		pw_update_time,
+		user_name,
+		user_email
+		) VALUES (
+		USERS_SEQ.NEXTVAL,
+		#{loginId, jdbcType=VARCHAR},
+		#{nickName, jdbcType=VARCHAR},
+		#{password, jdbcType=VARCHAR},
+		#{createTime, jdbcType=TIMESTAMP},
+		NULL,
+		#{pwUpdateTime, jdbcType=TIMESTAMP},
+		#{userName, jdbcType=VARCHAR},
+		#{userEmail, jdbcType=VARCHAR}
+		)
+	</insert>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 사용자 정보 업데이트 -->
+	<update id="updateUser" parameterType="dto.UsersDTO">
+		<!-- 설명: - ID: updateUser - parameterType: dto.UsersDTO (입력 파라미터 타입) - 
+			쿼리 내용: users 테이블에서 사용자 정보를 수정. - 닉네임, 이메일 수정 및 업데이트 시간을 현재 시간으로 설정. -->
+		UPDATE users
+		SET
+		nick_name = #{nickName},
+		user_email = #{userEmail},
+		update_time = CURRENT_TIMESTAMP
+		WHERE
+		user_number = #{userNumber}
+	</update>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 사용자 비밀번호 업데이트 -->
+	<update id="updatePassword" parameterType="map">
+		<!-- 설명: - ID: updatePassword - parameterType: map (입력 파라미터를 Map 형태로 전달) 
+			- 쿼리 내용: users 테이블에서 비밀번호를 변경. - 비밀번호 변경 시간을 현재 시간으로 설정. -->
+		UPDATE users
+		SET
+		password = #{newPassword},
+		pw_update_time = CURRENT_TIMESTAMP
+		WHERE
+		user_number = #{userNumber}
+	</update>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 사용자 삭제 -->
+	<delete id="deleteUserByUserNumber" parameterType="int">
+		<!-- 설명: - ID: deleteUserByUserNumber - parameterType: int (입력 파라미터 타입) 
+			- 쿼리 내용: user_number 값을 기준으로 사용자를 삭제. -->
+		DELETE FROM users
+		WHERE
+		user_number = #{userNumber}
+	</delete>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 특정 로그인 ID의 존재 여부 확인 -->
+	<select id="selectLoginIdCount" parameterType="string"
+		resultType="int">
+		<!-- 설명: - ID: selectLoginIdCount - parameterType: string (입력 파라미터 타입) 
+			- resultType: int (결과 타입: 정수) - 쿼리 내용: users 테이블에서 특정 로그인 ID의 개수를 조회. -->
+		SELECT COUNT(*)
+		FROM users
+		WHERE login_id = #{loginId}
+	</select>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- 특정 loginId와 password로 사용자 정보 조회 -->
+	<select id="selectUserByLoginIdAndPassword" resultMap="users">
+		<!-- 설명: - ID: selectUserByLoginIdAndPassword - resultMap: users (결과를 매핑할 
+			resultMap ID) - 쿼리 내용: login_id와 password가 일치하는 사용자를 조회. -->
+		SELECT * FROM users
+		WHERE login_id = #{loginId} AND password = STANDARD_HASH(#{password}, 'SHA512')
+	</select>
+
+<!-- ..................................................................................................................................... -->
+
+	<!-- ID와 비밀번호를 기준으로 멤버를 조회하는 SELECT 문 -->
+<select id="findUserByIdAndPassword" parameterType="map" resultType="dto.UsersDTO">
+    SELECT user_number AS userNumber,
+           login_id AS loginId,
+           nick_name AS nickName,
+           password
+    FROM users
+    WHERE login_id = #{loginId} AND password = STANDARD_HASH(#{password}, 'SHA512')
+</select>
+
+
+<!-- ..................................................................................................................................... -->
+
+
+</mapper>
