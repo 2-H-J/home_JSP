@@ -128,4 +128,24 @@ public class UsersService {
 
 //-----------------------------------------------------------------------------------------------------------------
     
+    public boolean isNickNameExists(String nickName) {
+        return mapper.countNickName(nickName) > 0;
+    }
+    
+//-----------------------------------------------------------------------------------------------------------------
+
+    public boolean updateNickName(int userNumber, String nickName) {
+        return mapper.updateNickName(userNumber, nickName) > 0;
+    }
+
+//-----------------------------------------------------------------------------------------------------------------
+    
+    public boolean isEmailExists(String email) {
+        System.out.println("[UsersService] isEmailExists() 호출 -> email 확인: " + email);
+        boolean exists = mapper.countEmail(email) > 0; // 이메일 중복 여부 확인
+        System.out.println("[UsersService] 이메일 존재 여부: " + exists);
+        return exists;
+    }
+
+
 }

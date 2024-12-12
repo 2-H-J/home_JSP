@@ -7,15 +7,12 @@ public class BoardCommentDTO {
 	private String content;
 	private String nickName;
 	private String cdate;
-	private String clike;
-	private String chate;
-	
-	public BoardCommentDTO() {
-		
-	}
+	private int clike;
+	private int chate;
+
+	public BoardCommentDTO() {	}
 
 	public BoardCommentDTO(int bno, String id, String content) {
-		super();
 		this.bno = bno;
 		this.id = id;
 		this.content = content;
@@ -69,19 +66,19 @@ public class BoardCommentDTO {
 		this.cdate = cdate;
 	}
 
-	public String getClike() {
+	public int getClike() {
 		return clike;
 	}
 
-	public void setClike(String clike) {
+	public void setClike(int clike) {
 		this.clike = clike;
 	}
 
-	public String getChate() {
+	public int getChate() {
 		return chate;
 	}
 
-	public void setChate(String chate) {
+	public void setChate(int chate) {
 		this.chate = chate;
 	}
 
@@ -91,5 +88,4 @@ public class BoardCommentDTO {
 				+ nickName + ", cdate=" + cdate + ", clike=" + clike + ", chate=" + chate + "]";
 	}
 
-	
 }

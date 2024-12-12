@@ -9,7 +9,7 @@
 </head>
 <body>
 	<!-- 공통 헤더 -->
-	<jsp:include page="header.jsp" />
+	<jsp:include page="./views/header.jsp"></jsp:include>
 	<h1>Region Detail</h1>
 
 	<!-- 단일 지역의 상세 정보 출력 -->

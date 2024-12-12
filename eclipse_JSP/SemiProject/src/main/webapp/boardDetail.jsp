@@ -82,7 +82,7 @@ height: 50px;
 </style>
 <body>
 	<!-- 공통 헤더 -->
-	<jsp:include page="header.jsp" />
+	<jsp:include page="./views/header.jsp"></jsp:include>
 	<c:if test="${not empty board}">
 		<table border="1">
 			<!-- 단일 게시글이므로 반복문을 제거하고, 바로 board 객체를 사용 -->

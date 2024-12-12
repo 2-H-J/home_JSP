@@ -10,15 +10,13 @@
 <head>
 <meta charset="UTF-8">
 <title>메인 페이지</title>
-    <!-- 헤더 CSS 포함 -->
-    <link rel="stylesheet" type="text/css" href="./css/header.css">
+
+    
 </head>
 <body>
     <!-- 헤더 JSP 포함 -->
-    <jsp:include page="./header.jsp"></jsp:include>
+    <jsp:include page="./views/header.jsp"></jsp:include>
+    <jsp:include page="./views/footer.jsp"></jsp:include>
     
-
-    <!-- 헤더 JavaScript 포함 -->
-    <script src="./script/header.js"></script>
 </body>
 </html>

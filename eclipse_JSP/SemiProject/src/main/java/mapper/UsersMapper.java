@@ -94,4 +94,26 @@ public interface UsersMapper {
      * @return 로그인 성공 시 사용자 정보를 담은 UsersDTO 객체, 실패 시 null
      */
     UsersDTO findUserByIdAndPassword(Map<String, String> map);
+    
+    /**
+     * 특정 닉네임의 개수를 조회합니다.
+     * 중복 확인 또는 해당 닉네임의 존재 여부를 확인할 때 사용됩니다.
+     * 
+     * @param nickName 확인할 닉네임
+     * @return 해당 닉네임의 개수 (0 이상)
+     */
+    int countNickName(String nickName);
+
+    /**
+     * 특정 사용자의 닉네임을 업데이트합니다.
+     * 
+     * @param userNumber 사용자 번호
+     * @param nickName 새로 설정할 닉네임
+     * @return 업데이트된 행의 수 (1이면 성공, 0이면 실패)
+     */
+    int updateNickName(@Param("userNumber") int userNumber, @Param("nickName") String nickName);
+
+	int countEmail(String email);
+    
+    
 }

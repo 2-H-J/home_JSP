@@ -102,14 +102,30 @@
 	- 게시글 수정 작업
 	HandlerMapping -> BoardUpdateController -> BoardService -> BoardMapper -> board-mapper
 	
-	
-	
 
 3. 게시글 좋아요/싫어요
+
 
 4. 댓글 삭제
 	HandlerMapping -> BoardCommentDeleteController -> BoardService -> BoardMapper -> board-mapper
 
 5. 댓글 좋아요/싫어요
+
+
 6. 페이징
+
+
 7. 파일업로드
+	board_write_view.jsp
+
+	파일 업로드할 input 태그 추가
+	1 ~ 5개
+
+	BoardWriteController
+	업로드한 파일들을 받아서 파일쓰기
+	
+	board_view.jsp 게시글 조회시 해당 게시글 첨부파일 목록도 출력
+	
+	게시글 목록은 BoardViewController에서 파일 목록을 List로 받아서 처리
+	
+	

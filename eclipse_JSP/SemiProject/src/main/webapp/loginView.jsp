@@ -9,11 +9,11 @@
 <title>로그인 페이지</title>
 <link rel="stylesheet" type="text/css" href="css/loginView.css">
 <!-- 헤더 CSS 포함 -->
-<link rel="stylesheet" type="text/css" href="./css/header.css">
+<!-- <link rel="stylesheet" type="text/css" href="./css/header.css"> -->
 </head>
 <body>
 	<!-- 헤더 JSP 포함 -->
-    <jsp:include page="./header.jsp"></jsp:include>
+    <jsp:include page="./views/header.jsp"></jsp:include>
 	  <div class="login-container">
         <h1>로그인</h1>
         <!-- 로그인 처리 form -->
@@ -43,11 +43,6 @@
         </div>
     </div>
 
-    <div class="footer">
-        <a href="#">이용약관</a> | <a href="#">개인정보처리방침</a> | <a href="#">책임의 한계와 법적고지</a> | <a href="#">회원정보 고객센터</a>
-        <p>TRIP Copyright © ABCD Corp all right</p>
-    </div>
-    <!-- 헤더 JavaScript 포함 -->
-    <script src="./script/header.js"></script>
+    <jsp:include page="./views/footer.jsp"></jsp:include>
 </body>
 </html>

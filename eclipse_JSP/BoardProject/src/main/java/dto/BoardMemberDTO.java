@@ -7,8 +7,6 @@ public class BoardMemberDTO {
 	private String nickName;
 
 	public BoardMemberDTO() {	}
-	
-	
 
 	public BoardMemberDTO(String id, String password, String userName, String nickName) {
 		this.id = id;

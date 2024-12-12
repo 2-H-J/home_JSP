@@ -67,6 +67,17 @@ public class HandlerMapping {
 		case "commentDelete":
 			controller = new CommentDeleteController();
 			break;
+		case "checkNickName":
+		    controller = new CheckNickNameController();
+		    break;
+		case "updateNickName":
+		    controller = new UpdateNickNameController();
+		    break;
+		case "mypageView":
+		    controller = new MyPageController();
+		    break;
+
+
 		}
 		return controller;
 	}

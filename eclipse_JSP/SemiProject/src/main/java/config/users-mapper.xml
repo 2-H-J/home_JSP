@@ -194,5 +194,19 @@
 
 <!-- ..................................................................................................................................... -->
 
+<!-- 닉네임 중복 확인 -->
+<select id="countNickName" parameterType="string" resultType="int">
+    SELECT COUNT(*) FROM users WHERE nick_name = #{nickName}
+</select>
+
+<!-- ..................................................................................................................................... -->
+
+<!-- 닉네임 수정 -->
+<update id="updateNickName" parameterType="map">
+    UPDATE users
+    SET nick_name = #{nickName}, update_time = CURRENT_TIMESTAMP
+    WHERE user_number = #{userNumber}
+</update>
+
 
 </mapper>

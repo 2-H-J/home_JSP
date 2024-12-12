@@ -28,7 +28,7 @@ img {
 </head>
 <body>
 	<!-- 공통 헤더 -->
-	<jsp:include page="header.jsp" />
+	<jsp:include page="./views/header.jsp"></jsp:include>
 	<h1>Region List</h1>
 
 	<!-- 이미지들을 flexbox로 배치 -->

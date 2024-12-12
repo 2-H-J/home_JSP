@@ -20,7 +20,7 @@ public class LoginViewController implements Controller {
         // ModelAndView 생성 및 초기화
         ModelAndView view = new ModelAndView();
         view.setRedirect(false); // 포워드 방식
-        view.setPath("loginView.jsp"); // 이동할 경로 설정
+        view.setPath("./loginView.jsp"); // 이동할 경로 설정
         System.out.println("[LoginViewController] ModelAndView 설정 완료 -> Path: " + view.getPath() + ", Redirect: " + view.isRedirect());
 
         System.out.println("[LoginViewController] execute() 완료 -> ModelAndView 반환");

@@ -18,6 +18,7 @@ body {
 	text-align: center; /* 텍스트 가운데 정렬 */
 	margin: 0 auto; /* 수평 가운데 정렬 */
 	margin-bottom: 50px; /* 하단 여백 */
+	margin-top: 50px;
 }
 
 /* 로그인 폼의 제목 스타일 */

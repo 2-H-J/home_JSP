@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import config.DBManager;
 import dto.BoardCommentDTO;
 import dto.BoardDTO;
+import dto.BoardFileDTO;
 import mapper.BoardMapper;
 
 public class BoardService {
@@ -27,10 +28,17 @@ public class BoardService {
 		}
 	}
 
-	public int insertBoard(BoardDTO dto) {
+	public int insertBoard(BoardDTO dto, List<BoardFileDTO> fList) {
 		try(SqlSession session = DBManager.getInstance().getSession()){
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
-			return mapper.insertBoard(dto);
+			int bno = mapper.selectBoardNo();
+			dto.setBno(bno);
+			int count = mapper.insertBoard(dto);
+			fList.forEach(item -> {
+				item.setBno(bno);
+				mapper.insertBoardFile(item);
+			});
+			return count;
 		}
 	}
 
@@ -66,13 +74,13 @@ public class BoardService {
 		try(SqlSession session = DBManager.getInstance().getSession()){
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
 			return mapper.deleteBoard(bno);
-		}
+		} 
 	}
 
-	public int boardCommentDelete(int cno) {
+	public int deleteBoardComment(int cno) {
 		try(SqlSession session = DBManager.getInstance().getSession()){
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
-			return mapper.boardCommentDelete(cno);
+			return mapper.deleteBoardComment(cno);
 		}
 	}
 
@@ -80,6 +88,20 @@ public class BoardService {
 		try(SqlSession session = DBManager.getInstance().getSession()){
 			BoardMapper mapper = session.getMapper(BoardMapper.class);
 			return mapper.updateBoard(dto);
+		} 
+	}
+
+	public List<BoardFileDTO> getBoardFileList(int bno) {
+		try(SqlSession session = DBManager.getInstance().getSession()){
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			return mapper.getBoardFileList(bno);
+		}
+	}
+
+	public String selectFilePath(int fno) {
+		try(SqlSession session = DBManager.getInstance().getSession()){
+			BoardMapper mapper = session.getMapper(BoardMapper.class);
+			return mapper.selectFilePath(fno);
 		}
 	}
 

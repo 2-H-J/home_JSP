@@ -1,0 +1,177 @@
+@charset "UTF-8"; /* 파일의 문자 인코딩을 UTF-8로 설정 */
+
+/* 전체 페이지 스타일 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    font-size: 14px; /* 전체 글자 크기 */
+}
+
+/* 컨테이너 스타일 */
+.mypage-container {
+    width: 450px;
+    background-color: #FFFFFF;
+    padding: 40px 30px;
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+    margin: 50px auto; /* 위아래 여백 및 수평 가운데 정렬 */
+}
+
+/* 제목 스타일 */
+.mypage-container h1 {
+    font-size: 1.6em; /* 글자 크기 약간 낮춤 */
+    margin-bottom: 20px;
+    color: #333;
+    text-align: center;
+}
+
+/* 라벨과 입력 필드 스타일 */
+.mypage-container label {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    font-size: 1em;
+    color: #555;
+}
+
+/* 일반 입력 필드 */
+.mypage-container input[type="text"],
+.mypage-container input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+}
+
+/* 닉네임 중복 확인 */
+.nickname-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.nickname-row input {
+    flex: 3;
+}
+
+.nickname-row button {
+    flex: 1;
+    padding: 10px 15px; /* 버튼 크기와 글자 크기 조정 */
+    background-color: #D3D3D3;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* 비밀번호 수정 */
+.password-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.password-row input {
+    flex: 3;
+}
+
+.password-row button {
+    flex: 1;
+    padding: 10px 15px; /* 버튼 크기와 글자 크기 조정 */
+    background-color: #D3D3D3;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+}
+
+/* 비밀번호 추가 입력 필드 */
+.password-edit-fields {
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* 이메일 필드와 중복 확인 버튼 */
+.email-row {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* 요소 간 간격 */
+}
+
+.email-row input {
+    flex: 2;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+    max-width: 150px; /* 이메일 필드 최대 너비 제한 */
+}
+
+.email-row select {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 0.9em;
+    max-width: 120px; /* 선택 박스 최대 너비 제한 */
+}
+
+.email-row button {
+    flex: 1;
+    padding: 10px 15px; /* 버튼 크기를 다른 요소들과 조화롭게 설정 */
+    background-color: #D3D3D3;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em; /* 글자 크기를 입력 필드와 맞춤 */
+    cursor: pointer;
+    max-width: 100px; /* 버튼 최대 너비 */
+}
+
+.email-row button:hover {
+    background-color: #C0C0C0;
+}
+
+/* 직접 입력 도메인 */
+.custom-domain {
+    margin-top: 10px;
+}
+
+.custom-domain input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #E0E0E0;
+    border-radius: 5px;
+    background-color: #F9F9F9;
+    font-size: 1em;
+}
+
+/* 폼 버튼 영역 */
+.form-buttons {
+    display: flex;
+    justify-content: space-between; /* 버튼을 양쪽 끝으로 배치 */
+    gap: 10px; /* 버튼 간 간격 */
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    padding: 10px;
+    background-color: #D3D3D3;
+    border: none;
+    border-radius: 5px;
+    font-size: 1em;
+    cursor: pointer;
+    flex: 1; /* 버튼 너비를 동일하게 설정 */
+    max-width: none; /* 버튼의 최대 너비 제한 제거 */
+}
+
+.form-buttons button:hover {
+    background-color: #C0C0C0;
+}
