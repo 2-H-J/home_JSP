@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.UsersMapper">
+
+    <!-- 사용자 데이터 매핑 -->
+	<resultMap id="users" type="dto.UsersDTO">
+	    <id column="user_number" property="userNumber" />
+	    <result column="login_id" property="loginId" />
+	    <result column="nick_name" property="nickName" />
+	    <result column="password" property="password" />
+	    <result column="create_time" property="createTime" />
+	    <result column="update_time" property="updateTime" />
+	    <result column="pw_update_time" property="pwUpdateTime" />
+	    <result column="user_name" property="userName" />
+	    <result column="user_email" property="userEmail" />
+	    <result column="grade" property="grade" />
+	</resultMap>
+
+
+<!-- ........................................................................................................... -->
+    <!-- 아이디 중복 확인 -->
+    <select id="selectLoginIdCount" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+        WHERE login_id = #{loginId}
+    </select>
+
+    <!-- 이메일 중복 확인 -->
+    <select id="selectEmailCount" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+        WHERE user_email = #{email}
+    </select>
+
+    <!-- 닉네임 중복 확인 -->
+    <select id="selectNickNameCount" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM users
+        WHERE nick_name = #{nickName}
+    </select>
+
+    <!-- 회원 가입 -->
+    <insert id="insertMember" parameterType="dto.UsersDTO">
+        INSERT INTO users (
+            user_number,
+            login_id,
+            nick_name,
+            password,
+            create_time,
+            update_time,
+            pw_update_time,
+            user_name,
+            user_email,
+            grade
+        ) VALUES (
+            SEQ_USER_NUMBER.NEXTVAL,
+            #{loginId, jdbcType=VARCHAR},
+            #{nickName, jdbcType=VARCHAR},
+            #{password, jdbcType=VARCHAR},
+            #{createTime, jdbcType=TIMESTAMP},
+            NULL, <!-- update_time -->
+            NULL, <!-- pw_update_time -->
+            #{userName, jdbcType=VARCHAR},
+            #{userEmail, jdbcType=VARCHAR},
+            DEFAULT
+        )
+    </insert>
+    
+<!-- ........................................................................................................... -->
+    <!-- 로그인 -->
+	<select id="findUserByLoginId" parameterType="string" resultMap="users">
+	    SELECT 
+	        user_number,
+	        login_id,
+	        nick_name,
+	        password,
+	        user_name,
+	        user_email
+	    FROM users
+	    WHERE login_id = #{loginId}
+	</select>
+	
+
+
+
+
+<!-- ........................................................................................................... -->
+    <!-- 내정보 수정 -->
+        <!-- 사용자 번호로 사용자 정보 조회 -->
+	<select id="findUserByUserNumber" parameterType="int" resultMap="users">
+	    SELECT 
+	        user_number,
+	        login_id,
+	        nick_name,
+	        password,
+	        create_time,
+	        update_time,
+	        pw_update_time,
+	        user_name,
+	        user_email,
+	        grade
+	    FROM users
+	    WHERE user_number = #{userNumber}
+	</select>
+
+
+    <!-- 정보수정 -->
+    <update id="updateUser" parameterType="dto.UsersDTO">
+        UPDATE users
+        <set>
+            <!-- 닉네임 변경 -->
+            <if test="nickName != null and nickName != ''">
+                nick_name = #{nickName},
+            </if>
+            <!-- 이메일 변경 -->
+            <if test="userEmail != null and userEmail != ''">
+                user_email = #{userEmail},
+            </if>
+            <!-- 비밀번호 변경 -->
+            <if test="password != null and password != ''">
+                password = #{password},
+                pw_update_time = SYSDATE,
+            </if>
+            <!-- 항상 업데이트되는 update_time -->
+            update_time = SYSDATE
+        </set>
+        WHERE user_number = #{userNumber}
+    </update>
+<!-- ........................................................................................................... -->
+    
+
+</mapper>

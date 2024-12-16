@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+
+<style>
+* {
+	margin: 0;
+	padding: 0;
+}
+
+header {
+	background-color: #8ED1FC;
+	text-align: center;
+	margin-bottom: 70px;
+	position: relative;
+}
+
+.menu_container {
+	width: 900px;
+	margin: 0 auto;
+}
+
+.menu_bar {
+	width: 900px;
+	height: 90px;
+	list-style-type: none;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	gap: 50px;
+}
+
+.menu_bar li {
+	width: 150px;
+	height: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 20px;
+	box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+	background-color: white;
+}
+
+.menu_bar li:hover {
+	background-color: black; /* li에 마우스를 올리면 배경색이 검은색으로 변경 */
+}
+
+.menu_bar a {
+	color: black;
+	text-decoration: none;
+	font-weight: bold;
+	width: 100%;
+}
+
+.menu_bar a:hover {
+	color: white; /* li에 마우스를 올리면 a 텍스트 색상이 흰색으로 변경 */
+}
+
+.user-icon {
+	width: 150px;
+	height: 30px;
+	margin-top: 5px;
+	display: inline-block;
+	position: absolute;
+	cursor: pointer;
+	right: 50px;
+	top: 30px;
+}
+
+.user-icon a {
+	color: black; text-decoration : none;
+	font-weight: bold;
+	text-decoration: none;
+}
+</style>
+
+<script>
+    window.onload = () => {
+        // 모든 메뉴 항목을 선택
+        const menu = document.querySelectorAll('.menu_bar a');
+
+        // 각 메뉴 항목에 대해 마우스 이벤트를 설정
+        menu.forEach(item => {
+            // 마우스를 올리면 글씨 크기와 굵기 증가
+            item.addEventListener('mouseenter', () => {
+                item.style.fontSize = '20px'; // 글씨 크기 변경
+                item.style.fontWeight = 'bolder'; // 글씨 굵기 증가
+            });
+
+            // 마우스를 떼면 원래 크기와 굵기로 돌아가게 설정
+            item.addEventListener('mouseleave', () => {
+                item.style.fontSize = '16px'; // 원래 크기로 복원
+                item.style.fontWeight = 'bold'; // 원래 굵기로 복원
+            });
+        });
+    }
+</script>
+
+<body>
+	<header>
+		<nav class="menu_container">
+			<ul class="menu_bar">
+				<li><a href="./index.jsp">홈</a></li>
+				<li><a href="./region.do">지역소개</a></li>
+				<li><a href="">여행정보</a></li>
+				<li><a href="./allBoard.do">여행게시판</a></li>
+			</ul>
+		</nav>
+
+	</header>
+</body>
+
+</html>

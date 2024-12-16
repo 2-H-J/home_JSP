@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- mapper에 접근할 클래스 명 or 인터페이스 명 -->
+<mapper namespace="mapper.BoardsMapper">
+
+	<!-- 게시판 결과를 매핑하는 resultMap -->
+	<resultMap type="dto.BoardsDTO" id="boards">
+		<id column="post_number" property="postNumber" />
+		<result column="user_number" property="userNumber" />
+		<result column="title" property="title" />
+		<result column="description" property="description" />
+		<result column="tag" property="tag" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="nick_name" property="nickName" />
+		<result column="blike" property="blike" />
+		<result column="bcount" property="bcount" />
+	</resultMap>
+	<resultMap type="dto.CommentsDTO" id="comments">
+		<id column="comment_number" property="commentNumber" />
+		<result column="post_number" property="postNumber" />
+		<result column="user_number" property="userNumber" />
+		<result column="c_description" property="cDescription" />
+		<result column="cmt_create_time" property="cmtCreateTime" />
+		<result column="cmt_update_time" property="cmtUpdateTime" />
+		<result column="nick_name" property="nickName" />
+	</resultMap>
+
+	<!-- 전체 게시판 목록 조회 쿼리 -->
+	<select id="selectAllBoards" resultMap="boards">
+		select * from BOARD_VIEW
+	</select>
+
+	<!-- 게시글 하나만 조회 -->
+	<select id="selectBoardByPostNumber" resultMap="boards">
+		select * from
+		BOARD_VIEW
+		WHERE POST_NUMBER = #{postNumber, jdbcType=INTEGER}
+	</select>
+
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoardByPostNumber">
+		DELETE FROM BOARDS WHERE POST_NUMBER = #{postNumber,
+		jdbcType=INTEGER}
+	</delete>
+
+	<!-- 게시판 글쓰기 쿼리 -->
+	<insert id="insertBoard" parameterType="dto.BoardsDTO">
+		INSERT INTO
+		boards(post_number, user_number, title, description, create_time, tag)
+		VALUES(post_number_seq.NEXTVAL, #{userNumber}, #{title},
+		#{description}, SYSDATE, #{tag})
+	</insert>
+
+
+	<!-- 게시판 글 수정 쿼리 -->
+	<update id="updateBoard" parameterType="dto.BoardsDTO">
+		UPDATE boards SET title =
+		#{title}, description = #{description}, update_time = sysdate, tag =
+		#{tag}
+		WHERE
+		post_number = #{postNumber}
+	</update>
+
+	<!-- 게시글 제목 검색 -->
+	<select id="searchBoardsByTitleSorted" resultMap="boards">
+		SELECT POST_NUMBER, USER_NUMBER, TITLE, DESCRIPTION, CREATE_TIME,
+		UPDATE_TIME
+		FROM BOARDS
+		WHERE TITLE LIKE
+		<choose>
+			<when test="keyword != null and keyword.trim() != ''"> '%' || #{keyword} || '%' </when>
+			<otherwise> '%' </otherwise>
+		</choose>
+		<if test="sort != null">
+			ORDER BY
+			<choose>
+				<when test="sort == 'createTime'">CREATE_TIME</when>
+				<when test="sort == 'title'">TITLE</when>
+				<when test="sort == 'userNumber'">USER_NUMBER</when>
+				<otherwise>POST_NUMBER</otherwise>
+			</choose>
+			<if test="order == 'desc'">DESC</if>
+			<if test="order == 'asc'">ASC</if>
+		</if>
+	</select>
+
+	<!-- 작성자로 검색 후 정렬 -->
+	<select id="searchBoardsByWriterSorted" resultMap="boards">
+		SELECT POST_NUMBER, USER_NUMBER, TITLE, DESCRIPTION, CREATE_TIME,
+		UPDATE_TIME
+		FROM BOARDS
+		WHERE USER_NUMBER = #{userNumber}
+		<if test="sort != null">
+			ORDER BY
+			<choose>
+				<when test="sort == 'createTime'">CREATE_TIME</when>
+				<when test="sort == 'title'">TITLE</when>
+				<when test="sort == 'userNumber'">USER_NUMBER</when>
+				<otherwise>POST_NUMBER</otherwise>
+			</choose>
+			<if test="order == 'desc'">DESC</if>
+			<if test="order == 'asc'">ASC</if>
+		</if>
+	</select>
+	<!-- 조회수 -->
+	<update id="updateBoardsCount">
+		update boards set bcount = bcount + 1 where
+		post_number = #{postNumber}
+	</update>
+
+	<insert id="insertComment" parameterType="dto.CommentsDTO">
+		insert into
+		comments(comment_number, post_number, user_number, c_description)
+		values(SEQ_COMMENTS_COMMENT_NUMBER.nextval, #{postNumber},
+		#{userNumber}, #{cDescription})
+	</insert>
+	<select id="getCommentList" resultMap="comments">
+		select * from comments_view
+	</select>
+	<delete id="deleteComment">
+		DELETE FROM COMMENTS WHERE COMMENT_NUMBER = #{commentNumber}
+	</delete>
+</mapper>

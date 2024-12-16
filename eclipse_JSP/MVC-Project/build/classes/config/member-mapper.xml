@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 매퍼 설정 파일의 시작. namespace는 매퍼의 고유 식별자 역할을 함 -->
+<mapper namespace="mapper.BoardMemberMapper">
+
+  <!-- 모든 멤버 정보를 조회하는 select 문 -->
+  <!-- 'selectAllMember'는 해당 SQL 문을 호출할 때 사용할 ID임 -->
+  <!-- 'resultType'은 쿼리의 결과를 Java 객체(dto.BoardMemberDTO)로 변환하는데 사용됨 -->
+  <select id="selectAllMember" resultType="dto.BoardMemberDTO">
+    <!-- board_member 테이블에서 모든 데이터를 가져옴 -->
+    select * from board_member
+  </select>
+
+  <!-- 새로운 멤버를 추가하는 insert 문 -->
+  <!-- 'insertMember'는 호출할 때 사용할 ID, 'parameterType'은 전달받을 파라미터 타입(dto.BoardMemberDTO)을 지정 -->
+  <insert id="insertMember" parameterType="dto.BoardMemberDTO">
+    <!-- board_member 테이블에 id, password, username, nickname을 삽입함 -->
+    <!-- 비밀번호는 standard_hash 함수를 사용해 SHA-512 해시로 암호화되어 저장됨 -->
+    insert into board_member(id,password,username,nickname)
+    values(#{id}, standard_hash(#{password},'SHA512'), #{userName}, #{nickName})    
+  </insert>
+
+  <!-- 특정 이름을 가진 멤버를 조회하는 select 문 -->
+  <!-- 'selectNameMember'는 호출할 때 사용할 ID -->
+  <!-- 'parameterType'은 전달받을 파라미터 타입으로 설정됨 (String) -->
+  <!-- 'resultType'은 dto.BoardMemberDTO 타입으로 결과 반환 -->
+  <select id="selectNameMember" parameterType="string" resultType="dto.BoardMemberDTO">
+    <!-- username 컬럼에서 전달받은 문자열을 포함하는 모든 멤버를 조회함 -->
+    <!-- 'like' 연산자를 사용해 부분 문자열 검색 수행, ||는 문자열 연결 연산자 역할 -->
+    select * from board_member where username like '%' || #{value} || '%'
+  </select>
+
+  <!-- 특정 멤버를 삭제하는 delete 문 -->
+  <!-- 'deleteMember'는 호출할 때 사용할 ID -->
+  <!-- 'parameterType'은 전달받을 파라미터 타입으로 설정됨 (String) -->
+  <delete id="deleteMember" parameterType="string">
+    <!-- 전달받은 id를 가진 멤버를 삭제함 -->
+    delete from board_member where id = #{id}
+  </delete>
+
+  <!-- 특정 ID를 가진 멤버가 몇 명인지 조회하는 select 문 -->
+  <!-- 'selectIdMember'는 호출할 때 사용할 ID -->
+  <!-- 'parameterType'은 전달받을 파라미터 타입으로 설정됨 (String) -->
+  <!-- 'resultType'은 결과가 정수(int)임을 명시함 -->
+  <select id="selectIdMember" parameterType="string" resultType="int">
+    <!-- id가 특정 값과 일치하는 멤버의 수를 조회하여 반환 -->
+    select count(*) as member_count from board_member where id like #{id}
+  </select>
+
+</mapper>

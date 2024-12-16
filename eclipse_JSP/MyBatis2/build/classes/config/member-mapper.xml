@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.BoardMemberMapper">
+	<!-- namespace="mapper.BoardMemberMapper" : mapper태그 안에있는 자어떤클래스 안에서 작업할건지 
+		또는 인터페이스 -->
+
+	<select id="selectAllMember" resultType="dto.BoardMemberDTO">
+		<!-- id="selectAllMember" : select를 어떤거로 찾는 css와 동일한 속성값 -->
+		<!-- resultType="타입" : 결과를 어떤 타입으로 주는지 java type -->
+		select * from board_member
+	</select>
+
+	<insert id="insertMember" parameterType="dto.BoardMemberDTO">
+		<!-- 타입 : 외부로부터 어떤 타입으로 받는지 알려주는 타입(매개변수) -->
+		insert into board_member(id,password,username,nickname)
+		values(#{id}, standard_hash(#{password},'SHA512'), #{userName}, #{nickName}) <!-- #{} DTO에 선언한 필드명들 -->
+		<!-- standard_hash(#{}, 'SHA512') : hash값으로 암호화 처리 -->
+	</insert>
+	
+	<select id="selectNameMember" parameterType="string" resultType="dto.BoardMemberDTO">
+		select * from board_member where username like '%' || #{value} || '%'
+	</select>
+	
+	<delete id="deleteMember" parameterType="string">
+		delete from board_member where id = #{id}
+	</delete>
+
+	
+	
+
+</mapper>
