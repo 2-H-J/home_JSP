@@ -1,0 +1,151 @@
+/* 전체 스타일 */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+.mypage-container {
+    width: 450px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* 제목 */
+.mypage-container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+}
+
+/* 입력 필드와 라벨 */
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+/* 비밀번호 입력창 간격 조정 */
+.form-group input[name="currentPassword"] {
+    margin-bottom: 12px; /* 현재 비밀번호와 새 비밀번호 사이 간격 */
+}
+
+/* 비밀번호 입력 필드 간격 */
+.form-group input[name="newPassword"] {
+    margin-top: 12px; /* 현재 비밀번호 메시지와 새 비밀번호 입력창 사이 간격 */
+}
+
+.form-group input[name="confirmNewPassword"] {
+    margin-top: 8px; /* 새 비밀번호와 확인 필드 사이 간격 */
+    margin-bottom: 5px;
+}
+
+input[type="text"], input[type="password"], select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* 한 줄 배치 */
+.inline-group {
+    display: flex;
+    gap: 10px;
+}
+
+.inline-group label {
+    flex: 1;
+}
+
+/* 닉네임과 이메일 중복 확인 버튼 */
+.inline-input, .email-container {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.inline-input input, .email-container input, .email-container select {
+    flex: 1;
+}
+
+.inline-input button, .email-container button {
+    flex: 0 0 100px;
+    padding: 8px;
+    text-align: center;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 0.9em;
+    cursor: pointer;
+}
+
+.inline-input button:hover, .email-container button:hover {
+    background-color: #0056b3;
+}
+
+/* 직접 입력 도메인 */
+.custom-domain {
+    margin-top: 10px;
+    display: none;
+}
+
+.custom-domain input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* 수정 및 취소 버튼 */
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.form-buttons button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 1em;
+}
+
+.blue-button {
+    background-color: #007bff;
+}
+
+.blue-button:hover {
+    background-color: #0056b3;
+}
+
+.cancel-button {
+    background-color: #6c757d;
+}
+
+.cancel-button:hover {
+    background-color: #5a6268;
+}
+
+/* 메시지 스타일 */
+.message {
+    font-size: 12px;
+    margin-bottom: 0;
+}
+
+.message.success {
+    color: green;
+    line-height: 1.2;
+}
+
+.message.error {
+    color: red;
+    line-height: 1.2;
+}

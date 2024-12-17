@@ -5,6 +5,8 @@ import dto.UsersDTO;
 import mapper.UsersMapper;
 
 import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.mindrot.jbcrypt.BCrypt;
 
@@ -246,5 +248,76 @@ public class UsersService {
         System.out.println("[UsersService] 현재 비밀번호 불일치");
         return false;
     }
+    //-----------------------------------------------------------------------------------------------------
+	// 사용자 이름과 이메일로 아이디 찾기
+	// 새작업 12월 15일
+	public String findLoginId(String userName, String userEmail) {
+		System.out.println("[UsersService] findLoginId 호출 -> userName: " + userName + ", userEmail: " + userEmail);
+		try {
+			return mapper.findLoginIdByUserNameAndEmail(userName, userEmail);
+		} catch (Exception e) {
+			System.out.println("[UsersService] findLoginId 예외 발생: " + e.getMessage());
+			return null;
+		}
+	}
+	// 사용자 이름과 이메일로 비밀번호 찾기
+	// 새작업 12월 16일
+	public UsersDTO verifyUserForPasswordReset(String userName, String loginId, String userEmail) {
+	    System.out.println("[UsersService] 비밀번호 초기화 사용자 검증 시작");
+	    System.out.println("입력된 정보 -> 이름: " + userName + ", 아이디: " + loginId + ", 이메일: " + userEmail);
+
+	    // 파라미터 구성
+	    Map<String, String> params = new HashMap<>();
+	    params.put("userName", userName);
+	    params.put("loginId", loginId);
+	    params.put("userEmail", userEmail);
+
+	    // 사용자 확인
+	    UsersDTO user = null;
+	    try {
+	        user = mapper.findUserForPasswordReset(params);
+	        if (user != null) {
+	            System.out.println("[UsersService] 사용자 확인 성공 -> 로그인 아이디: " + user.getLoginId());
+	        } else {
+	            System.out.println("[UsersService] 사용자 확인 실패 -> 데이터베이스에서 찾을 수 없음");
+	        }
+	    } catch (Exception e) {
+	        System.out.println("[UsersService] 사용자 검증 중 예외 발생: " + e.getMessage());
+	        e.printStackTrace();
+	    }
+
+	    return user;
+	}
+
+	public boolean resetPassword(int userNumber, String newPassword) {
+	    System.out.println("[UsersService] 비밀번호 초기화 시작 -> 사용자 번호: " + userNumber);
+
+	    // 비밀번호 해싱 처리
+	    String hashedPassword = BCrypt.hashpw(newPassword, BCrypt.gensalt());
+	    System.out.println("[UsersService] 해싱된 비밀번호: " + hashedPassword);
+
+	    // 업데이트를 위한 파라미터 맵 구성
+	    Map<String, Object> params = new HashMap<>();
+	    params.put("userNumber", userNumber); // 사용자 번호
+	    params.put("password", hashedPassword); // 해싱된 비밀번호
+
+	    try {
+	        int result = mapper.updatePassword(params);
+	        if (result > 0) {
+	            System.out.println("[UsersService] 비밀번호 초기화 성공");
+	            return true;
+	        } else {
+	            System.out.println("[UsersService] 비밀번호 초기화 실패 -> 업데이트된 행 없음");
+	            return false;
+	        }
+	    } catch (Exception e) {
+	        System.out.println("[UsersService] 비밀번호 초기화 중 예외 발생: " + e.getMessage());
+	        e.printStackTrace();
+	        return false;
+	    }
+	}
+	//-----------------------------------------------------------------------------------------------------
+	
+    
 
 }

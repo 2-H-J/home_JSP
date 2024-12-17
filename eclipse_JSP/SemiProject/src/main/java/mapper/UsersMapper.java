@@ -1,5 +1,9 @@
 package mapper;
 
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Param;
+
 import dto.UsersDTO;
 
 /**
@@ -61,6 +65,19 @@ public interface UsersMapper {
      */
 	int updateUser(UsersDTO user);
 	// -----------------------------------------------------------------
+	// 사용자 이름과 이메일로 로그인 ID 찾기 12/17 추가
 	
+	String findLoginIdByUserNameAndEmail(@Param("userName") String userName, @Param("userEmail") String userEmail);
+
+	// 이름과 이메일로 사용자 ID 조회
+	String findUserByNameAndEmail(@Param("userName") String userName, @Param("userEmail") String userEmail);
+	
+	
+	// 새작업 12월 16일
+	// 사용자 비밀번호 업데이트
+	UsersDTO findUserForPasswordReset(Map<String, String> params);
+
+	int updatePassword(Map<String, Object> params);
+	// -----------------------------------------------------------------
     
 }

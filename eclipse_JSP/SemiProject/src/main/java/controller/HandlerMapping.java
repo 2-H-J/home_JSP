@@ -77,7 +77,17 @@ public class HandlerMapping {
 			controller = new UpdateUserController(); // 사용자 정보 수정
 			System.out.println("[HandlerMapping] UpdateUserController 생성 완료");
 			break;
-
+		// 아이디/비밀번호 찾기--------------------------------------------
+			case "findLoginId":
+			    controller = new FindLoginIdController();
+			    break;
+			case "recoverPassword":
+			    controller = new PasswordRecoveryController();
+			    break;
+			case "updatePassword":
+				controller = new PasswordUpdateController();
+				break;	
+//-------------------------------------------------------------------------
 		default:
 			System.out.println("[HandlerMapping] 알 수 없는 명령어 -> " + command);
 			break;

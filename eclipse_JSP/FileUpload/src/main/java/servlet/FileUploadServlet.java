@@ -16,9 +16,11 @@ import java.util.Iterator;
  * Servlet implementation class FileUploadServlet
  */
 @WebServlet("/fileUpload.do")
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 50) 
-// 파일 사이즈 - maxFileSize = 1024 * 1024 * 5 : 1MB
-// 전송 사이즈 - maxRequestSize = 1024 * 1024 * 50 : 50MB
+@MultipartConfig(
+		maxFileSize = 1024 * 1024 * 5, // 파일 사이즈 - maxFileSize = 1024 * 1024 * 5 : 1MB
+		maxRequestSize = 1024 * 1024 * 50 // 전송 사이즈 - maxRequestSize = 1024 * 1024 * 50 : 50MB
+) 
+
 public class FileUploadServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
