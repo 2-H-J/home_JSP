@@ -1,0 +1,35 @@
+@charset "UTF-8";
+*{
+	margin: 0;
+	padding: 0;	
+}
+/* 푸터 스타일 */
+.footer {
+	margin-top: 20px; /* 상단 여백 */
+	text-align: center; /* 텍스트 가운데 정렬 */
+	font-size: 0.9em; /* 글자 크기 */
+	color: #555; /* 글자색: 중간 회색 */
+	background-color: #E0E0E0; /* 배경색: 연한 회색 */
+	width: 100%; /* 푸터 너비를 화면 전체로 설정 */
+	padding: 20px 10px; /* 내부 여백: 위아래 20px, 좌우 10px */
+}
+
+/* 푸터 내부 링크 스타일 */
+.footer a {
+	text-decoration: none; /* 밑줄 제거 */
+	color: #555; /* 글자색: 중간 회색 */
+	margin: 0 5px; /* 링크 간 간격 */
+	
+}
+
+.footer .links a:hover {
+	background-color: #D3D3D3; /* 배경색을 더 어두운 회색으로 변경 */
+}
+
+/* 하단 링크 컨테이너 스타일 */
+.footer .links {
+	display: flex; /* 플렉스 박스를 사용해 배치 */
+	justify-content: space-between; /* 양쪽 끝으로 정렬 */
+	margin-top: 20px; /* 위쪽 여백 */
+	font-size: 0.9em; /* 글자 크기 */
+}

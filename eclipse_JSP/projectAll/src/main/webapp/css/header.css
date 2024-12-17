@@ -1,0 +1,91 @@
+/* 모든 엘리먼트 초기화 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 헤더 스타일 */
+header {
+    background-color: #8ED1FC;
+    text-align: center;
+    padding: 20px 0;
+    position: relative;
+}
+
+.menu_container {
+    display: flex;
+    justify-content: center;
+    gap: 50px;
+}
+
+.menu_bar {
+    list-style-type: none;
+    display: flex;
+    gap: 50px;
+}
+
+.menu_bar li {
+    font-size: 18px;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.menu_bar li:hover {
+    color: black;
+}
+
+.menu_bar a {
+    text-decoration: none;
+    color: inherit;
+}
+
+/* 유저 정보 스타일 */
+.user-info {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    gap: 10px; /* 이미지와 텍스트 간격 */
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.profile-image-small {
+    width: 55px; /* 이미지 너비를 크게 설정 */
+    height: 55px; /* 이미지 높이를 크게 설정 */
+    object-fit: cover; /* 이미지 비율 유지 */
+    border-radius: 50%; /* 원형 이미지 */
+    border: 2px solid #ddd; /* 테두리 두께를 조금 더 강조 */
+}
+
+
+.user-nickname {
+    font-size: 18px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* 버튼 스타일 */
+.mypage-btn, .logout-btn, .login-btn {
+    text-decoration: none;
+    color: white;
+    background-color: #555;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.mypage-btn:hover, .logout-btn:hover, .login-btn:hover {
+    background-color: #333;
+}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mapper.UserReportMapper">
+    <select id="selectAllReports" resultType="dto.UserReportDTO">
+    SELECT 
+        ur.REPORT_NUMBER AS reportNumber,
+        ur.USER_NUMBER AS userNumber,
+        ur.POST_NUMBER AS postNumber,
+        ur.USER_REPORT_REASON AS userReportReason,
+        ur.REPORT_STATUS AS reportStatus,
+        TO_CHAR(ur.CREATE_TIME, 'YYYY-MM-DD HH24:MI:SS') AS createTime,
+        COALESCE(ur.HANDLED_BY_ADMIN_ID, 0) AS handledByAdminId,
+        bu.NICK_NAME AS postWriterNickname,
+        u.NICK_NAME AS userNickname -- 신고자 닉네임 추가
+    FROM 
+        USER_REPORTS ur
+    LEFT JOIN 
+        BOARDS b ON ur.POST_NUMBER = b.POST_NUMBER
+    LEFT JOIN 
+        USERS u ON ur.USER_NUMBER = u.USER_NUMBER -- 신고자 닉네임
+    LEFT JOIN 
+        USERS bu ON b.USER_NUMBER = bu.USER_NUMBER  -- 게시글 작성자 닉네임
+    ORDER BY 
+        ur.CREATE_TIME DESC
+    </select>
+
+    <insert id="insertReport" parameterType="dto.UserReportDTO">
+        INSERT INTO USER_REPORTS (REPORT_NUMBER, USER_NUMBER, POST_NUMBER, USER_REPORT_REASON, REPORT_STATUS, CREATE_TIME)
+        VALUES (SEQ_REPORT_NUMBER.NEXTVAL, #{userNumber}, #{postNumber}, #{userReportReason}, 'PENDING', SYSTIMESTAMP)
+    </insert>
+
+    <update id="updateReportStatus" parameterType="map">
+        UPDATE USER_REPORTS
+        SET REPORT_STATUS = #{status},
+            HANDLED_BY_ADMIN_ID = #{adminId}
+        WHERE REPORT_NUMBER = #{reportNumber}
+    </update>
+</mapper>
