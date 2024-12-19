@@ -19,7 +19,10 @@ import controller.HandlerMapping;
  * 결과(ModelAndView)를 처리합니다. 또한 사용자 세션 관리 및 로그인 상태 유지 기능을 포함합니다.
  */
 @WebServlet("*.do") // 모든 ".do" 확장자로 끝나는 요청을 처리
-@MultipartConfig(maxFileSize = 1024 * 1024 * 5, maxRequestSize = 1024 * 1024 * 50)
+@MultipartConfig(
+		maxFileSize = 1024 * 1024 * 5, 
+		maxRequestSize = 1024 * 1024 * 50
+)
 /*
 MultipartConfig 적용 문제
 

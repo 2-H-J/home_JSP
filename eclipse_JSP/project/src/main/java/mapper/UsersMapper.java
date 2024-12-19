@@ -132,16 +132,29 @@ public interface UsersMapper {
     // ---------------------------------------------------------------------------------------------
     // 프로필 이미지
     /*
-     * 사용자 번호를 기준으로 프로필 이미지 경로를 조회합니다.
-     * @return 프로필 이미지 경로
+     * 사용자 프로필 이미지를 업데이트합니다.
+     * 
+     * @param params 프로필 이미지 경로와 사용자 번호를 포함한 매핑
+     */
+    void updateProfileImage(Map<String, Object> params);
+
+    /*
+     * 사용자 번호로 프로필 이미지를 조회합니다.
+     * 
+     * @param userNumber 사용자 번호
+     * @return 프로필 이미지 경로 (Base64 형식 포함)
      */
     String getProfileImage(int userNumber);
 
     /*
-     * 사용자 프로필 이미지를 업데이트합니다.
+     * 사용자 번호로 프로필 정보를 조회합니다.
+     * 
      * @param userNumber 사용자 번호
-     * @param fileName   새 이미지 파일명
+     * @return 프로필 정보를 포함한 사용자 객체 (UsersDTO)
      */
-    void updateProfileImage(@Param("userNumber") int userNumber, @Param("fileName") String fileName);
+    UsersDTO findUserProfileByUserNumber(int userNumber);
+
     // ---------------------------------------------------------------------------------------------
+
+
 }

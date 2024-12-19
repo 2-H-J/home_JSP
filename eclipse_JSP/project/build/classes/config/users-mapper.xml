@@ -181,7 +181,8 @@
 
 	<!-- ........................................................................................................... -->
 	<!-- 로그인 -->
-	<select id="findUserByLoginId" parameterType="string" resultMap="users">
+	<select id="findUserByLoginId" parameterType="string"
+		resultMap="users">
 		SELECT
 		user_number,
 		login_id,
@@ -192,7 +193,8 @@
 		grade,
 		profile_image_url
 		FROM users
-		WHERE login_id = #{loginId}
+		WHERE login_id =
+		#{loginId}
 	</select>
 
 	<!-- ........................................................................................................... -->
@@ -273,23 +275,25 @@
 		user_number = #{userNumber}
 	</update>
 	<!-- ........................................................................................................... -->
-	
-    <!-- 프로필 이미지 -->
+	<!-- 프로필 이미지 업데이트 -->
+	<update id="updateProfileImage" parameterType="map">
+		UPDATE users
+		SET profile_image_url = #{profileImageUrl}
+		WHERE user_number = #{userNumber}
+	</update>
 
-    <!-- 사용자 번호를 기준으로 프로필 이미지 조회 -->
-    <select id="getProfileImage" parameterType="int" resultType="string">
-        SELECT profile_image_url
-        FROM users
-        WHERE user_number = #{userNumber}
-    </select>
+	<!-- 사용자 번호로 프로필 이미지 조회 -->
+	<select id="findUserProfileByUserNumber" parameterType="int"
+		resultMap="users">
+		SELECT user_number, profile_image_url
+		FROM users
+		WHERE user_number = #{userNumber}
+	</select>
 
-    <!-- 사용자 프로필 이미지 업데이트 -->
-    <update id="updateProfileImage" parameterType="map">
-        UPDATE users
-        SET profile_image_url = #{fileName}
-        WHERE user_number = #{userNumber}
-    </update>
+
+
 	<!-- ........................................................................................................... -->
+
 
 
 </mapper>

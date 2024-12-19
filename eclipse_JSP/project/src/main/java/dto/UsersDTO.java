@@ -131,6 +131,11 @@ public class UsersDTO {
 				+ ", profileImageUrl=" + profileImageUrl + "]";
 	}
 
+	public boolean isAdmin() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
     
     
 	

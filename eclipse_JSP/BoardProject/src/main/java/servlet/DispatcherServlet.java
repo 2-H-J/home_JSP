@@ -39,8 +39,10 @@ public class DispatcherServlet extends HttpServlet {
 		String[] path = request.getRequestURI().split("/");
 		String command = path[path.length-1].replace(".do", "");
 		System.out.println(command);
+		
 		//Controller 생성
 		Controller controller = HandlerMapping.getInstance().createController(command);
+		
 		//execute
 		ModelAndView view = null;
 		if(controller != null) {
