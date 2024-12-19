@@ -64,8 +64,7 @@ header {
     height: 55px; /* 이미지 높이를 크게 설정 */
     object-fit: cover; /* 이미지 비율 유지 */
     border-radius: 50%; /* 원형 이미지 */
-    border: 1px solid #ddd; /* 테두리 두께를 조금 더 강조 */
-    margin-right: 5px; /* 닉네임과 간격 추가 */
+    border: 2px solid #ddd; /* 테두리 두께를 조금 더 강조 */
 }
 
 

@@ -2,14 +2,9 @@ package service;
 
 import config.DBManager;
 import dto.UsersDTO;
-import jakarta.servlet.ServletException;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.Part;
 import mapper.UsersMapper;
 
-import java.io.IOException;
 import java.sql.Timestamp;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -341,7 +336,7 @@ public class UsersService {
 		}
 	}
 	// -----------------------------------------------------------------------------------------------------
-
+	
 	/**
 	 * 사용자와 연관된 데이터 삭제 후 사용자 삭제
 	 * 
@@ -385,7 +380,7 @@ public class UsersService {
 		}
 	}
 	// -----------------------------------------------------------------------------------------------------
-
+	
 	/**
 	 * 사용자 삭제
 	 * 
@@ -407,7 +402,7 @@ public class UsersService {
 		}
 	}
 	// -----------------------------------------------------------------------------------------------------
-
+	
 	/**
 	 * 사용자 번호로 특정 사용자 정보 조회
 	 * 
@@ -432,61 +427,59 @@ public class UsersService {
 		}
 	}
 
-	// 프로필 작업 부분 ------------------------------------------------------------
-	/**
-	 * 프로필 이미지 업로드 (Base64 방식)
-	 *
-	 * @param request    HttpServletRequest 객체
-	 * @param userNumber 사용자 번호
-	 * @throws IOException
-	 * @throws ServletException
-	 */
-	public void uploadProfileImage(HttpServletRequest request, int userNumber) throws IOException, ServletException {
-		Part filePart = request.getPart("profileImage");
-		if (filePart == null || filePart.getSize() == 0) {
-			throw new IllegalArgumentException("업로드된 파일이 없습니다.");
-		}
+	// 프로필 작업부분---------------------------------------------------------------------------
 
-		// 파일 데이터를 읽어 Base64 인코딩
-		byte[] fileData = filePart.getInputStream().readAllBytes();
-		String base64Image = Base64.getEncoder().encodeToString(fileData);
-
-		// Base64 데이터 URL 형식으로 DB에 저장
-		String dbFilePath = "data:image/png;base64," + base64Image;
-
-		Map<String, Object> params = new HashMap<>();
-		params.put("profileImageUrl", dbFilePath);
-		params.put("userNumber", userNumber);
-
-		mapper.updateProfileImage(params);
-		System.out.println("[UsersService] 프로필 이미지 업로드 완료 -> userNumber: " + userNumber);
+    /**
+     * 사용자 번호를 기준으로 프로필 이미지 경로를 조회합니다.
+     * 
+     * @param userNumber 사용자 번호
+     * @return 프로필 이미지 파일명
+     */
+	public String getProfileImage(int userNumber) {
+	    System.out.println("[UsersService] getProfileImage() 호출 -> 사용자 번호: " + userNumber);
+	    try {
+	        String imageName = mapper.getProfileImage(userNumber);
+	        System.out.println("[UsersService] DB에서 가져온 이미지 이름: " + imageName);
+	        return imageName;
+	    } catch (Exception e) {
+	        System.out.println("[UsersService] 프로필 이미지 조회 중 예외 발생: " + e.getMessage());
+	        return null;
+	    }
 	}
 
-	/**
-	 * 프로필 이미지 삭제 (기본 이미지로 설정)
-	 *
-	 * @param userNumber 사용자 번호
-	 */
-	public void deleteProfileImage(int userNumber) {
-		String defaultImagePath = "/img/defaultProfile/Default_IMG.png";
-		mapper.updateProfileImage(Map.of("profileImageUrl", defaultImagePath, "userNumber", userNumber));
-		System.out.println("[UsersService] 프로필 이미지 삭제 완료 -> 기본 이미지로 설정");
-	}
 
-	/**
-	 * 사용자 프로필 이미지 조회 (Base64 데이터 반환)
-	 *
-	 * @param userNumber 사용자 번호
-	 * @return Base64 이미지 데이터 또는 기본 이미지 경로
-	 */
-	public String getProfileImageBase64(int userNumber) {
-		String base64Image = mapper.getProfileImage(userNumber);
-		if (base64Image == null || base64Image.isEmpty()) {
-			return "/img/defaultProfile/Default_IMG.png"; // 기본 이미지 경로 반환
-		}
-		return base64Image; // Base64 문자열 반환
-	}
+    /**
+     * 사용자 프로필 이미지를 업데이트합니다.
+     * 
+     * @param userNumber 사용자 번호
+     * @param fileName   새 이미지 파일명
+     */
+    public void updateProfileImage(int userNumber, String fileName) {
+        System.out.println("[UsersService] updateProfileImage() 호출 -> 사용자 번호: " + userNumber + ", 파일명: " + fileName);
+        try {
+            mapper.updateProfileImage(userNumber, fileName);
+            System.out.println("[UsersService] 프로필 이미지 업데이트 성공");
+        } catch (Exception e) {
+            System.out.println("[UsersService] 프로필 이미지 업데이트 중 예외 발생: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * 사용자 프로필 이미지를 기본 이미지로 변경합니다.
+     * 
+     * @param userNumber 사용자 번호
+     */
+    public void deleteProfileImage(int userNumber) {
+        System.out.println("[UsersService] deleteProfileImage() 호출 -> 사용자 번호: " + userNumber);
+        try {
+            mapper.updateProfileImage(userNumber, "Default_IMG.png");
+            System.out.println("[UsersService] 프로필 이미지 기본 이미지로 변경 성공");
+        } catch (Exception e) {
+            System.out.println("[UsersService] 프로필 이미지 기본 이미지 변경 중 예외 발생: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 	// -----------------------------------------------------------------------------------------------------
-
+    
 }

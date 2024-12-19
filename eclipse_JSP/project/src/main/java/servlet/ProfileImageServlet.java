@@ -42,6 +42,9 @@ public class ProfileImageServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         try {
+            // 경로 확인 및 생성
+            ensureDirectoryExists(IMAGE_PATH);
+
             // 요청에서 동작(action)과 사용자 번호(userNumber)를 가져옴
             String action = request.getParameter("action"); // upload or delete
             int userNumber = Integer.parseInt(request.getParameter("userNumber"));
@@ -129,12 +132,24 @@ public class ProfileImageServlet extends HttpServlet {
     }
 
     /*
+     * 경로 확인 및 디렉토리 생성 메서드
+     * @param path 생성하려는 경로
+     * @throws IOException 생성 실패 시 예외
+     */
+    private void ensureDirectoryExists(String path) throws IOException {
+        File directory = new File(path);
+        if (!directory.exists() && !directory.mkdirs()) {
+            throw new IOException("폴더 생성 실패: " + path);
+        }
+    }
+
+    /*
      * 이미지 확장자 검증 메서드
      * @param extension 파일 확장자
      * @return 유효한 확장자인 경우 true 반환
      */
     private boolean isValidImageExtension(String extension) {
-        return extension != null && extension.matches("(?i)jpg|jpeg|png|bmp"); // 대소문자 구분 없이 검증
+        return extension != null && extension.matches("(?i)jpg|jpeg|png|bmp|webp"); // 대소문자 구분 없이 검증
     }
 
     /*

@@ -139,19 +139,17 @@ public class HandlerMapping {
 			System.out.println("[HandlerMapping] LogoutController 생성 완료");
 			break;
 
-		// 마이페이지+프로필 이미지(업로드/삭제)-----------------------------------
+		// 마이페이지 -----------------------------------------------------
 		case "mypageView":
 			System.out.println("[HandlerMapping] MyPageViewController 생성 시작");
 			controller = new MyPageViewController();
 			System.out.println("[HandlerMapping] MyPageViewController 생성 완료");
 			break;
-		// 마이페이지 정보수정 이동---------------------------------------------------
 		case "updateUserView":
 			System.out.println("[HandlerMapping] UpdateUserViewController 생성 시작");
 			controller = new UpdateUserViewController();
 			System.out.println("[HandlerMapping] UpdateUserViewController 생성 완료");
 			break;
-		// 정보수정---------------------------------------------------
 		case "updateUser":
 			System.out.println("[HandlerMapping] UpdateUserController 생성 시작");
 			controller = new UpdateUserController(); // 사용자 정보 수정
@@ -169,6 +167,12 @@ public class HandlerMapping {
 			controller = new PasswordUpdateController();
 			break;
 			
+		// 이미지 업로드/삭제 Controller-------------------------------------------------------------------------
+	    case "uploadImage":
+	        System.out.println("[HandlerMapping] ProfileImageController 생성 시작");
+	        controller = new ProfileImageController();
+	        System.out.println("[HandlerMapping] ProfileImageController 생성 완료");
+	        break;
         // ------------------------------------------------------------------------------------------------------
 		default:
 			System.out.println("[HandlerMapping] 알 수 없는 명령어 -> " + command);

@@ -132,8 +132,7 @@ public class UsersDTO {
 	}
 
 	public boolean isAdmin() {
-		// TODO Auto-generated method stub
-		return false;
+	    return "ADMIN".equalsIgnoreCase(this.grade);
 	}
 
     
