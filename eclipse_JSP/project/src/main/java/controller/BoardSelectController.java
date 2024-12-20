@@ -37,7 +37,7 @@ public class BoardSelectController implements Controller {
 
 		// 페이지 설정
 		int page = 1;
-		int pageSize = 40;
+		int pageSize = 25;
 		try {
 			page = Integer.parseInt(pageParam);
 			if (page <= 0)

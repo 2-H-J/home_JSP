@@ -20,7 +20,7 @@ public class BoardMainView implements Controller {
         int page = request.getParameter("page") != null ? Integer.parseInt(request.getParameter("page")) : 1;
 
         // 2. 페이지당 게시글 수 설정
-        int pageSize = 40;
+        int pageSize = 25;
 
         // 3. 전체 게시글 수 가져오기
         int totalRecords = BoardsService.getInstance().getTotalRecords();

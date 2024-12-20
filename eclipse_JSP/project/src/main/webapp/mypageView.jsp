@@ -98,19 +98,19 @@
         <!-- 사용자 정보 섹션 -->
         <div class="user-info-section">
             <div class="user-info-item">
-                이름 <span>${user.userName}</span>
+                이름 :<span>${user.userName}</span>
                 <!-- 사용자 이름 표시 -->
             </div>
             <div class="user-info-item">
-                아이디 <span>${user.loginId}</span>
+                아이디 :<span>${user.loginId}</span>
                 <!-- 사용자 아이디 표시 -->
             </div>
             <div class="user-info-item">
-                닉네임 <span>${user.nickName}</span>
+                닉네임 :<span>${user.nickName}</span>
                 <!-- 사용자 닉네임 표시 -->
             </div>
             <div class="user-info-item">
-                이메일 <span>${user.userEmail}</span>
+                이메일 :<span>${user.userEmail}</span>
                 <!-- 사용자 이메일 표시 -->
             </div>
         </div>

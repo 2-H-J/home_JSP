@@ -59,7 +59,7 @@ public interface BoardsMapper {
 
 	List<BoardFileDTO> selectFileList(int postNumber);
 
-	String selectFilePath(int fileNumber);
+	BoardFileDTO selectFilePath(int fileNumber);
 
 	int insertBoardLike(Map<String, Object> map);
 

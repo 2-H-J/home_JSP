@@ -160,7 +160,7 @@ public class UsersService {
 	}
 
 	// -------------------------------------------------------------------------------------------------
-	// 닉네임 변경
+	// 닉네임 변경?
 	public boolean updateNickName(int userNumber, String newNickName) {
 		System.out.println("[UsersService] updateNickName() 호출");
 
@@ -190,7 +190,7 @@ public class UsersService {
 	}
 
 	// -------------------------------------------------------------------------------------------------
-	// 이메일 변경
+	// 이메일 변경?
 	public boolean updateEmail(int userNumber, String newEmail) {
 		System.out.println("[UsersService] updateEmail() 호출");
 
@@ -213,25 +213,29 @@ public class UsersService {
 	// -------------------------------------------------------------------------------------------------
 	// 비밀번호 변경
 	public boolean updatePassword(int userNumber, String currentPassword, String newPassword) {
-		System.out.println("[UsersService] updatePassword() 호출");
+	    System.out.println("[UsersService] updatePassword() 호출");
 
-		try {
-			UsersDTO user = mapper.findUserByUserNumber(userNumber);
+	    try {
+	        UsersDTO user = mapper.findUserByUserNumber(userNumber);
 
-			if (!BCrypt.checkpw(currentPassword, user.getPassword())) {
-				System.out.println("[UsersService] 현재 비밀번호 불일치");
-				return false;
-			}
+	        // 현재 비밀번호 검증
+	        if (!BCrypt.checkpw(currentPassword, user.getPassword())) {
+	            System.out.println("[UsersService] 현재 비밀번호 불일치");
+	            return false;
+	        }
 
-			user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
-			user.setPwUpdateTime(new Timestamp(System.currentTimeMillis()));
-			return mapper.updateUser(user) > 0;
-		} catch (Exception e) {
-			System.out.println("[UsersService] 비밀번호 변경 중 예외 발생: " + e.getMessage());
-			e.printStackTrace();
-			return false;
-		}
+	        // 비밀번호 업데이트
+	        user.setPassword(BCrypt.hashpw(newPassword, BCrypt.gensalt()));
+	        user.setPwUpdateTime(new Timestamp(System.currentTimeMillis()));
+	        return mapper.updateUser(user) > 0;
+	    } catch (Exception e) {
+	        System.out.println("[UsersService] 비밀번호 변경 중 예외 발생: " + e.getMessage());
+	        e.printStackTrace();
+	        return false;
+	    }
 	}
+
+
 
 	// -----------------------------------------------------------------------------------------------------
 	public boolean checkCurrentPassword(int userNumber, String currentPassword) {
@@ -480,6 +484,5 @@ public class UsersService {
             e.printStackTrace();
         }
     }
-	// -----------------------------------------------------------------------------------------------------
     
 }

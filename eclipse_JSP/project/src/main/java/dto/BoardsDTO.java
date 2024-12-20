@@ -197,7 +197,7 @@ public class BoardsDTO {
 
 	public String getFormattedCreateTime() {
 		if (createTime != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			return sdf.format(createTime);
 		}
 		return null;
@@ -205,7 +205,7 @@ public class BoardsDTO {
 
 	public String getFormattedUpdateTime() {
 		if (updateTime != null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 			return sdf.format(updateTime);
 		}
 		return null;

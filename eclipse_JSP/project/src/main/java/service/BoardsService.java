@@ -270,7 +270,7 @@ public class BoardsService {
      * @param fileNumber 파일 번호
      * @return 파일 경로
      */
-    public String selectFilePath(int fileNumber) {
+    public BoardFileDTO selectFilePath(int fileNumber) {
         return mapper.selectFilePath(fileNumber);  // 파일 경로 조회
     }
 

@@ -45,7 +45,7 @@ public class HandlerMapping {
 		case "regionDetail":
 			controller = new RegionDetail();
 			break;
-		case "deleteRegion":
+		case "deleteRegion": // 새로 추가된 컨트롤러
 			System.out.println("deleteRegion controller");
 			controller = new RegionDeleteController();
 			break;
@@ -70,11 +70,11 @@ public class HandlerMapping {
 		case "fileDown":
 			controller = new BoardFileDownController();
 			break;
-		case "boardsCategory":
+		case "boardsCategory": // 새로 추가된 컨트롤러
 			controller = new BoardsCategoryController();
 			System.out.println("[HandlerMapping] Command: " + command);
 			break;
-		case "boardsList":
+		case "boardsList": // 새로 추가된 컨트롤러
 			controller = new BoardSelectController();
 			break;
 		case "boardLike": // 좋아요
@@ -82,9 +82,6 @@ public class HandlerMapping {
 			break;
 		case "boardCommentLike": // 댓글 좋아요
 			controller = new BoardCommentLikeController();
-			break;
-		case "reportWrite": // 신고
-			controller = new ReportWriteController();
 			break;
 		case "adminUser":
 			controller = new AdminUserController();
@@ -98,6 +95,12 @@ public class HandlerMapping {
 		case "index":
 			controller = new IndexController();
 			System.out.println("[HandlerMapping] IndexController 생성됨");
+			break;
+		case "commentReport":
+			controller = new CommentReportInsertController();
+			break;
+		case "commentReportList":
+			controller = new CommentReportListController();
 			break;
 			
 		// 회원가입 --------------------------------------------------------

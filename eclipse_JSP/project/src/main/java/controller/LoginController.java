@@ -53,8 +53,7 @@ public class LoginController implements Controller {
         } else {
             // 로그인 실패 처리
             System.out.println("[LoginController] 로그인 실패 -> 사용자 정보 없음");
-            request.setAttribute("errorMessage", "아이디 또는 비밀번호가 일치하지 않습니다.");
-            view.setPath("./loginView.jsp");
+            view.setPath("./loginView.jsp?error=invalid");
             view.setRedirect(false);
         }
 

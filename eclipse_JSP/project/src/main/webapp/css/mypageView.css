@@ -10,8 +10,8 @@ body {
 /* 마이페이지 컨테이너 */
 .mypage-container {
     width: 90%; /* 화면 너비의 90%로 설정 */
-    max-width: 600px; /* 최대 너비 600px로 고정 */
-    margin: 30px auto; /* 상단 30px 여백, 가운데 정렬 */
+    max-width: 700px; /* 최대 너비 600px로 고정 */
+    margin: 200px auto; /* 상단 30px 여백, 가운데 정렬 */
     background-color: #fff; /* 배경색: 흰색 */
     padding: 25px 30px; /* 내부 여백 설정 */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* 그림자 효과 추가 */
@@ -30,13 +30,13 @@ body {
 .user-info-section {
     display: flex; /* flexbox 레이아웃 사용 */
     flex-wrap: wrap; /* 아이템들이 여러 줄로 배치될 수 있도록 설정 */
-    justify-content: space-between; /* 좌우 정렬로 아이템 간격 분배 */
-    gap: 10px 15px; /* 가로 및 세로 간격 설정 */
+    justify-content: center; /* 좌우 정렬로 아이템 간격 분배 */
+    gap: 5px 5px; /* 가로 및 세로 간격 설정 */
     margin-bottom: 20px; /* 하단 여백 */
 }
 
 .user-info-item {
-    width: 45%; /* 각 아이템의 너비를 45%로 설정 */
+    width: 48%; /* 각 아이템의 너비를 45%로 설정 */
     background-color: #f8f9fa; /* 회색 배경 */
     padding: 10px 15px; /* 내부 여백 설정 */
     border-radius: 8px; /* 모서리 둥글게 설정 */
@@ -143,6 +143,7 @@ input[type="file"] {
     display: flex; /* flexbox 사용 */
     justify-content: flex-end; /* 버튼을 우측에 정렬 */
     margin-top: 20px; /* 상단 여백 설정 */
+    margin-right: 10px;
 }
 
 .edit-button {

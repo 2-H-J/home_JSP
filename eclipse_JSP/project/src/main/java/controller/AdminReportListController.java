@@ -9,11 +9,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import service.reportService;
+import service.ReportService;
 import view.ModelAndView;
 
 public class AdminReportListController implements Controller {
-    private reportService reportService = new reportService();
 
     @Override
     public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
@@ -47,7 +46,7 @@ public class AdminReportListController implements Controller {
                 int adminId = user.getUserNumber(); // UsersDTO에 userNumber 사용
 
                 // 신고 상태 업데이트
-                boolean isUpdated = reportService.updateReportStatus(reportNumber, status, adminId);
+                boolean isUpdated = ReportService.getinstance().updateReportStatus(reportNumber, status, adminId);
                 if (isUpdated) {
                     System.out.println("[AdminReportListController] 신고 처리 성공 - ReportNumber: " + reportNumber + ", Status: " + status);
                 } else {
@@ -59,7 +58,7 @@ public class AdminReportListController implements Controller {
         }
 
         // 신고 목록 조회
-        List<UserReportDTO> reports = reportService.getAllReports();
+        List<UserReportDTO> reports = ReportService.getinstance().getAllReports();
         if (reports != null) {
             System.out.println("[AdminReportListController] 신고 목록 조회 성공 - 개수: " + reports.size());
             for (UserReportDTO report : reports) {

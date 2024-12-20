@@ -45,21 +45,31 @@ public class UpdateUserController implements Controller {
 
         System.out.println("[UpdateUserController] 입력값 -> 닉네임: " + newNickName + ", 이메일: " + newEmail);
 
-        // 3. 비밀번호 변경 처리
         UsersService usersService = UsersService.getInstance();
+
+        // 3. 비밀번호 변경 처리
         if (isValid(currentPassword) && isValid(newPassword) && isValid(confirmNewPassword)) {
+            // 새 비밀번호 형식 검증
+        	if (!newPassword.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,20}$")) {
+        	    System.out.println("[UpdateUserController] 새 비밀번호 형식 불일치");
+        	    request.setAttribute("error", "비밀번호는 8~20자의 대소문자, 숫자, 특수문자를 포함해야 합니다.");
+        	    return forwardTo("./updateUserView.do", null);
+        	}
+
+            // 새 비밀번호와 확인 비밀번호 일치 여부 확인
             if (!newPassword.equals(confirmNewPassword)) {
                 System.out.println("[UpdateUserController] 새 비밀번호 불일치");
-                return forwardTo("./updateUserView.do", "새 비밀번호가 일치하지 않습니다.");
+                request.setAttribute("error", "새 비밀번호와 확인 비밀번호가 일치하지 않습니다.");
+                return forwardTo("./updateUserView.do", null);
             }
 
             // 현재 비밀번호 검증 및 업데이트
-            boolean isPasswordUpdated = usersService.updatePassword(
-                    sessionUser.getUserNumber(), currentPassword, newPassword);
+            boolean isPasswordUpdated = usersService.updatePassword(sessionUser.getUserNumber(), currentPassword,
+                    newPassword);
 
             if (!isPasswordUpdated) {
                 System.out.println("[UpdateUserController] 현재 비밀번호 불일치");
-                request.setAttribute("passwordError", "현재 비밀번호가 일치하지 않습니다.");
+                request.setAttribute("error", "현재 비밀번호가 일치하지 않습니다.");
                 return forwardTo("./updateUserView.do", null);
             }
 

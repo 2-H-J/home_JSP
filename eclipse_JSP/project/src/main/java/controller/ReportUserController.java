@@ -11,7 +11,7 @@ import view.ModelAndView; // 패키지명과 클래스명을 실제 환경에 �
 
 public class ReportUserController implements Controller {
 
-	private service.reportService reportService = new service.reportService();
+	private service.ReportService reportService = new service.ReportService();
 
 	@Override
 	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)

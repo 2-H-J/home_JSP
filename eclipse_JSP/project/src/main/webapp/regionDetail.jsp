@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>Region Detail</title>
+
+
 <script type="text/javascript"
-	src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=f05ff66bab3d2444d168e2e13e1ed414&autoload=false"></script>
+	src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f05ff66bab3d2444d168e2e13e1ed414"></script>
 
 <style>
 body {
@@ -20,8 +22,8 @@ body {
 /* 메인 컨테이너: 좌우 여백과 중앙 정렬 */
 .container {
 	max-width: 1200px; /* 전체 최대 너비 */
-	margin: 0 auto;   /* 중앙 정렬 및 양쪽 여백 */
-	padding: 20px;    /* 안쪽 여백 */
+	margin: 0 auto; /* 중앙 정렬 및 양쪽 여백 */
+	padding: 20px; /* 안쪽 여백 */
 	box-sizing: border-box;
 	background-color: #fff;
 	border-radius: 8px;
@@ -126,21 +128,18 @@ body {
 <body>
 	<!-- 공통 헤더 -->
 	<jsp:include page="./views/header.jsp"></jsp:include>
-    <jsp:include page="./views/footer.jsp"></jsp:include>
 	<!-- 메인 컨테이너: 모든 내용을 감싼다 -->
 	<div class="container">
 		<!-- Header -->
 		<div class="header">
 			<h1>${regionDetail.title}</h1>
-			<p>${regionDetail.description}</p>
+			<p></p>
 		</div>
 
 		<!-- Navigation -->
 		<div class="nav-bar">
-			<a href="#photos">사진보기</a> 
-			<a href="#details">상세정보</a> 
-			<a href="#travelogue">여행톡</a> 
-			<a href="#recommendations">추천여행</a>
+			<a href="#photos">사진보기</a> <a href="#details">상세정보</a> <a
+				href="#travelogue">여행톡</a> <a href="#recommendations">추천여행</a>
 		</div>
 
 		<!-- Content -->
@@ -148,14 +147,12 @@ body {
 		<div class="section" id="details">
 			<h2 class="section-title">상세정보</h2>
 			<p>${regionDetail.description}</p>
-			<img src="${regionDetail.imageUrl}" alt="${regionDetail.title}" />
 		</div>
 
 		<!-- 지도 API -->
-		<div class="section" id="map">
-			<h2 class="section-title">지도</h2>
-			<div class="map-container" id="map-api">지도 API 로드 중...</div>
-		</div>
+		<!-- <div class="section" id="map"> -->
+		<h2 class="section-title">지도</h2>
+		<div class="map-container" id="staticMap"></div>
 
 		<!-- 여행톡 -->
 		<div class="section" id="travelogue">
@@ -175,33 +172,59 @@ body {
 			<c:if test="${user.grade == 'admin'}">
 				<div class="buttons">
 					<div class="left-buttons">
-						<a href="./updateRegion.do?regionNumber=${regionDetail.regionNumber}">수정</a>
-						<a href="./deleteRegion.do?regionNumber=${regionDetail.regionNumber}">삭제</a>
+						<a
+							href="./updateRegion.do?regionNumber=${regionDetail.regionNumber}">수정</a>
+						<a
+							href="./deleteRegion.do?regionNumber=${regionDetail.regionNumber}">삭제</a>
+						<a href="./region.do" class="right-button">목록으로 돌아가기</a>
 					</div>
-					<a href="./region.do" class="right-button">목록으로 돌아가기</a>
 				</div>
 			</c:if>
 		</c:if>
-	</div>
 
+	</div>
+	<footer>
+		<jsp:include page="./views/footer.jsp"></jsp:include></footer>
 	<script>
 		window.onload = function() {
-			// 카카오 지도 SDK 로드 후 실행되는 함수
-			kakao.maps.load(function() {
-				var container = document.getElementById('map-api');
 
-				// regionDetail에서 latitude, longitude 값을 가져와서 설정
-				var latitude = 37.5665; // 예시: 서울 위도
-				var longitude = 126.9780; // 예시: 서울 경도
+			const latitude = parseFloat('<c:out value="${regionDetail.latitude}" />');
+			const longitude = parseFloat('<c:out value="${regionDetail.longitude}" />');
 
-				// 지도 설정
-				var options = {
-					center: new kakao.maps.LatLng(latitude, longitude),
-					level: 5
-				};
+			var markerPosition = new kakao.maps.LatLng(latitude, longitude);
 
-				var map = new kakao.maps.Map(container, options); // 지도 객체 생성
-			});
+			// 이미지 지도에 표시할 마커입니다
+			// 이미지 지도에 표시할 마커는 Object 형태입니다
+			var marker = {
+				position : markerPosition
+			};
+
+			var staticMapContainer = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+			staticMapOption = {
+				center : new kakao.maps.LatLng(latitude, longitude), // 이미지 지도의 중심좌표
+				level : 3, // 이미지 지도의 확대 레벨
+				marker : marker
+			// 이미지 지도에 표시할 마커 
+			};
+
+			// 이미지 지도를 생성합니다
+			var staticMap = new kakao.maps.StaticMap(staticMapContainer,
+					staticMapOption);
+
+			/* 		console.log("Latitude:", latitude, "Longitude:", longitude);
+
+			 // 카카오 지도 SDK 로드 후 실행되는 함수
+			 kakao.maps.load(function() {
+			 var container = document.getElementById('map-api');
+
+			 // 지도 설정
+			 var options = {
+			 center : new kakao.maps.LatLng(latitude, longitude),
+			 level : 5
+			 };
+
+			 var map = new kakao.maps.Map(container, options); // 지도 객체 생성
+			 }); */
 		};
 	</script>
 </body>

@@ -9,6 +9,8 @@ public class RegionDTO {
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private String imageUrl;
+	private double latitude;
+	private double longitude;
 
 	public RegionDTO() {
 	}
@@ -21,15 +23,28 @@ public class RegionDTO {
 		this.updateTime = updateTime;
 	}
 
-	public RegionDTO(int regionNumber, String title, String description) {
-		this.regionNumber = regionNumber;
+	public RegionDTO(String title, String description, String imageUrl, double latitude, double longitude) {
 		this.title = title;
 		this.description = description;
+		this.imageUrl = imageUrl;
+		this.latitude = latitude;
+		this.longitude = longitude;
 	}
 
-	public RegionDTO(String title, String description) {
-		this.title = title;
-		this.description = description;
+	public double getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(double latitude) {
+		this.latitude = latitude;
+	}
+
+	public double getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(double longitude) {
+		this.longitude = longitude;
 	}
 
 	public String getImageUrl() {

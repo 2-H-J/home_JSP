@@ -19,7 +19,7 @@ public class BoardsCategoryController implements Controller {
         String tag = request.getParameter("tag"); // 필터링할 카테고리 태그
         String pageParam = request.getParameter("page"); // 현재 페이지
         int currentPage = (pageParam != null && !pageParam.isEmpty()) ? Integer.parseInt(pageParam) : 1; // 페이지 값 기본값 1
-        int pageSize = 40; // 페이지당 게시글 수
+        int pageSize = 25; // 페이지당 게시글 수
         
         BoardsService service = BoardsService.getInstance();
 

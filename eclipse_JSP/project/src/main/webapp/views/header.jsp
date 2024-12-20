@@ -42,6 +42,5 @@
             </c:choose>
         </div>
     </header>
-    <script src="./script/header.js"></script>
 </body>
 </html>

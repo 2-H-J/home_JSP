@@ -34,14 +34,6 @@ public class BoardDeleteController implements Controller {
 		// 클라이언트로부터 전달받은 게시글 번호 (postNumber) 가져오기
 		int postNumber = Integer.parseInt(request.getParameter("postNumber"));
 
-		// 1. 해당 게시글의 파일 경로들을 가져옴
-		List<BoardFileDTO> list = BoardsService.getInstance().selectFileList(postNumber);
-		// 2. 경로에 해당하는 파일들을 물리적으로 삭제 - File 클래스 이용
-		list.forEach(item -> {
-			File file = new File(item.getFilePath());
-			file.delete();// 물리적으로 삭제
-		});
-
 		// 게시글 삭제 서비스 호출
 		int result = BoardsService.getInstance().deleteBoardByPostNumber(postNumber);
 

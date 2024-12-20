@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashSet;
 import java.util.List;
 
@@ -20,33 +21,32 @@ public class BoardViewController implements Controller {
 	@Override
 	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		//글 번호 가져오기
+		// 글 번호 가져오기
 		int postNumber = Integer.parseInt(request.getParameter("postNumber"));
-		//유저 번호 가져오기
+		// 유저 번호 가져오기
 		HttpSession session = request.getSession();
 		UsersDTO user = (UsersDTO) session.getAttribute("user");
-		//조회수
+		// 조회수
 		HashSet<Integer> history = (HashSet<Integer>) session.getAttribute("history");
-		if(history == null) {
+		if (history == null) {
 			history = new HashSet<Integer>();
 			session.setAttribute("history", history);
 		}
-		if(history.add(postNumber))
+		if (history.add(postNumber))
 			BoardsService.getInstance().updateBoardsCount(postNumber);
-		
-        
+
 		// 게시글 상세 조회 서비스 호출
-        BoardsDTO board = BoardsService.getInstance().selectBoardByPostNumber(postNumber);
-        
-        List<CommentsDTO> commentList = BoardsService.getInstance().getCommentList(postNumber);
-		
-        List<BoardFileDTO> fileList = BoardsService.getInstance().selectFileList(postNumber);
-        
-		//유저 번호가 null이 아닌 경우
-        boolean writer = false;
-        if (user != null && board != null) {
-        	writer = (user.getUserNumber() == board.getUserNumber());
-        }
+		BoardsDTO board = BoardsService.getInstance().selectBoardByPostNumber(postNumber);
+
+		List<CommentsDTO> commentList = BoardsService.getInstance().getCommentList(postNumber);
+
+		List<BoardFileDTO> fileList = BoardsService.getInstance().selectFileList(postNumber);
+
+		// 유저 번호가 null이 아닌 경우
+		boolean writer = false;
+		if (user != null && board != null) {
+			writer = (user.getUserNumber() == board.getUserNumber());
+		}
 		ModelAndView view = new ModelAndView();
 		view.addObject("board", board);
 		view.addObject("writer", writer);

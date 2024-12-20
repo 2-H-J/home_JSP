@@ -6,10 +6,7 @@ public class BoardFileDTO {
 	private int fileNumber;
 	private int postNumber;
 	private String filePath;
-	
-	public String getFileName() {
-		return new File(filePath).getName();
-	}
+	private String fileName;
 
 	public BoardFileDTO() {
 		super();
@@ -39,9 +36,17 @@ public class BoardFileDTO {
 		this.filePath = filePath;
 	}
 
+	public String getFileName() {
+		return fileName;
+	}
+
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardFileDTO [fileNumber=" + fileNumber + ", postNumber=" + postNumber + ", filePath=" + filePath + "]";
 	}
-	
+
 }
