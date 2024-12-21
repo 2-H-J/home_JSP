@@ -70,8 +70,8 @@ header {
 }
 
 .profile-image-small {
-    width: 55px; /* 이미지 너비를 크게 설정 */
-    height: 55px; /* 이미지 높이를 크게 설정 */
+    width: 100%; /* 이미지 너비를 크게 설정 */
+    height: 70px; /* 이미지 높이를 크게 설정 */
     object-fit: cover; /* 이미지 비율 유지 */
     border-radius: 50%; /* 원형 이미지 */
     border: 2px solid #ddd; /* 테두리 두께를 조금 더 강조 */

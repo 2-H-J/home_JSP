@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="mapper.RegionMapper">
+
+	<!-- Region 결과를 매핑하는 resultMap -->
+	<resultMap type="dto.RegionDTO" id="region">
+		<id column="region_number" property="regionNumber" />
+		<result column="title" property="title" />
+		<result column="description" property="description" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="image_url" property="imageUrl" />
+	</resultMap>
+
+	<!-- 전체 Region 목록 조회 쿼리 -->
+	<select id="selectAllRegion" resultMap="region">
+		SELECT *
+		FROM region
+		ORDER
+		BY region_number
+		OFFSET #{offset} ROWS FETCH NEXT #{pageSize}
+		ROWS ONLY
+	</select>
+
+	<!-- Region 번호로 단일 Region 조회 -->
+	<select id="selectRegionByRegionNumber" resultMap="region">
+		SELECT
+		region_number,
+		title,
+		description,
+		create_time,
+		update_time,
+		image_url,
+		latitude,   <!-- 위도 추가 -->
+		longitude   <!-- 경도 추가 -->
+		FROM
+		region
+		WHERE
+		region_number = #{regionNumber, jdbcType=INTEGER}
+	</select>
+
+
+	<select id="totalRegionCount" resultType="int">
+		select count(*) from
+		region
+	</select>
+	<!-- Region 번호로 Region 삭제 -->
+	<delete id="deleteRegionByRegionNumber">
+		DELETE FROM region
+		WHERE region_number =
+		#{regionNumber, jdbcType=INTEGER}
+	</delete>
+
+	<!-- Region 추가 쿼리 -->
+	<insert id="insertRegion" parameterType="dto.RegionDTO">
+		INSERT INTO region
+		(
+		region_number,
+		title,
+		description,
+		create_time,
+		image_url,
+		latitude,
+		longitude
+		)
+		VALUES
+		(
+		region_seq.NEXTVAL,
+		#{title},
+		#{description},
+		SYSDATE,
+		#{imageUrl, jdbcType=CLOB},
+		#{latitude},
+		#{longitude}
+		)
+	</insert>
+
+
+
+	<!-- Region 업데이트 쿼리 -->
+	<update id="updateRegion" parameterType="dto.RegionDTO">
+		UPDATE region
+		SET
+		title = #{title},
+		description = #{description},
+		update_time = SYSDATE,
+		image_url = #{imageUrl}, <!-- 추가된 부분 -->
+		latitude = #{latitude}, <!-- 새로 추가된 부분 -->
+		longitude = #{longitude} <!-- 새로 추가된 부분 -->
+		WHERE region_number = #{regionNumber}
+	</update>
+
+
+
+
+
+</mapper>

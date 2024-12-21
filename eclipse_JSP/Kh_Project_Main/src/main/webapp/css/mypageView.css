@@ -1,0 +1,135 @@
+/* 전체 페이지 스타일 */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #F5F5F5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* 마이페이지 컨테이너 */
+.mypage-container {
+    width: 350px; /* 너비 축소 */
+    padding: 30px; /* 내부 여백 축소 */
+    background-color: #FFFFFF;
+    border-radius: 15px;
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1); /* 그림자 약간 축소 */
+    text-align: center;
+    margin-top: 200px;
+}
+
+/* 제목 스타일 */
+.mypage-container h1 {
+    font-size: 2rem; /* 글자 크기 축소 */
+    margin-bottom: 20px; /* 여백 축소 */
+    color: #333;
+}
+
+/* 프로필 이미지 */
+.profile-image {
+    width: 120px; /* 크기 축소 */
+    height: 120px;
+    border-radius: 50%;
+    border: 3px solid #F8DE7E;
+    box-shadow: 0px 3px 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px; /* 하단 여백 축소 */
+}
+
+/* 사용자 정보 섹션 */
+.user-info-section {
+    margin-top: 15px; /* 여백 축소 */
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* 요소 간 간격 축소 */
+}
+
+.user-info-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem; /* 글자 크기 축소 */
+    padding: 8px; /* 내부 여백 축소 */
+    border: 1px solid #DDD;
+    border-radius: 8px;
+    background-color: #FAFAFA;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+/* 버튼 섹션 */
+button, .file-input-label {
+    padding: 10px 15px; /* 내부 여백 축소 */
+    background-color: #E5C06E;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem; /* 글자 크기 축소 */
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover, .file-input-label:hover {
+    background-color: #F8DE7E;
+    transform: translateY(-2px); /* 효과 약화 */
+}
+
+button:active, .file-input-label:active {
+    background-color: #E5C06E;
+    transform: translateY(1px);
+}
+
+/* 파일 선택 버튼 */
+input[type="file"] {
+    display: none;
+}
+
+.file-input-label {
+    display: inline-block;
+    background-color: #E5C06E;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.file-input-label:hover {
+    background-color: #F8DE7E;
+}
+
+/* 프로필 버튼 섹션 */
+.profile-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px; /* 여백 축소 */
+}
+
+/* 정보 수정 버튼 */
+.edit-button {
+	margin-top: 15px;
+    background-color: #E5C06E; /* 다른 버튼들과 동일한 배경색 */
+    color: white; /* 글자 색상 */
+    padding: 10px 15px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.edit-button:hover {
+    background-color: #F8DE7E; /* 다른 버튼들과 동일한 호버 효과 */
+    transform: translateY(-2px);
+}
+
+.edit-button:active {
+    background-color: #E5C06E;
+    transform: translateY(1px);
+}
+
