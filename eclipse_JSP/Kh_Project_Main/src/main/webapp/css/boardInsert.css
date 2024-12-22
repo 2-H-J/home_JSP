@@ -1,0 +1,154 @@
+@charset "UTF-8";
+/* 페이지 기본 스타일 */
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f9f9f9;
+}
+
+.main_container {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: flex-start;
+	margin: 100px auto;
+	width: 1200px;
+	background-color: rgb(249, 249, 249);
+}
+
+.bady_container {
+	width: 1000px;
+	flex: 1;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+	margin-left: 20px;
+	justify-content: center;
+	gap: 10px;
+}
+
+/* 파일 드래그 영역 */
+.file_drop_area {
+	height: 100px;
+	border: 2px dashed #e9e9e9;
+	background-image: url('../img/file.png');
+	background-repeat: no-repeat;
+	background-position: center;
+	margin: 20px;
+}
+
+#file {
+	display: none;
+}
+
+/* 숨겨진 파일 input 태그 */
+.file_area_active {
+	box-shadow: 0px 0px 3px 3px gray;
+}
+
+/* 제목 및 태그 영역 */
+.title_container {
+	display: flex;
+	flex-flow: row nowrap;
+	gap: 10px;
+	justify-content: center;
+	align-items: center;
+}
+
+#title {
+	width: 500px;
+	height: 25px;
+	border-radius: 10px;
+	margin: 10px;
+}
+
+#tag {
+	width: 100px;
+	font-size: 14px;
+	padding: 5px 8px;
+	border-radius: 20px;
+	border-color: rgb(221, 221, 221);
+	text-align: center;
+}
+
+/* 카테고리 영역 */
+.category-container {
+	display: flex;
+	flex-direction: column;
+	width: 200px;
+	gap: 10px;
+	background-color: #fff;
+	border-radius: 10px;
+	padding: 20px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.category-item {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	font-size: 16px;
+	font-weight: bold;
+	color: #333;
+	cursor: pointer;
+	padding: 10px;
+	border-radius: 8px;
+	transition: background-color 0.3s;
+	text-decoration: none;
+}
+
+.category-item:hover {
+	background-color: #e0f1ff;
+}
+
+/* 아이콘 스타일 */
+.category-icon {
+	width: 20px;
+	height: 20px;
+	background-image: url('../img/advertising/icon.jpg');
+	background-size: 120px 120px;
+	display: inline-block;
+	mix-blend-mode: multiply;
+	filter: brightness(1) contrast(1.2);
+}
+
+.icon-all { background-position: -62px -62.5px; }
+.icon-free { background-position: -33px -65px; }
+.icon-review { background-position: -81.25px -45px; }
+.icon-tip { background-position: -11px -70px; }
+.icon-accommodation { background-position: -43px -44px; }
+.icon-schedule { background-position: -76px -84px; }
+.icon-traffic { background-position: -44px -20px; }
+.icon-qa { background-position: -81.25px -20px; }
+
+.file_list_view {
+	color: black;
+	padding: 5px;
+}
+
+input {
+	border: 1px solid rgb(221, 221, 221);
+}
+
+/* 버튼 스타일 */
+.form-button {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.btn_submit {
+	background-color: #82C9E6;  /* 기존 버튼 색상 */
+	border: none;
+	color: white;  /* 글자색은 흰색 */
+	padding: 5px 12px;  /* 길이를 적당하게 설정 */
+	font-size: 14px;  /* 폰트 크기 */
+	border-radius: 5px;  /* 페이징 버튼과 비슷한 정도로 둥글게 */
+	cursor: pointer;
+	transition: background-color 0.3s;  /* 배경색 전환 효과 */
+}
+
+.btn_submit:hover {
+	background-color: #66B2C1;  /* 버튼 호버 시 배경색 변경 */
+}

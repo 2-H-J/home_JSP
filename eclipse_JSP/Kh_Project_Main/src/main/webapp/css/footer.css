@@ -1,0 +1,64 @@
+@charset "UTF-8";
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%; /* 페이지 높이를 100%로 설정 */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* 세로 방향 정렬 */
+    font-family: Arial, sans-serif;
+}
+
+.main-content {
+    flex: 1; /* 메인 콘텐츠가 푸터를 아래로 밀어내도록 설정 */
+    padding: 20px;
+}
+
+.footer {
+    background-color: #F9F9F9; /* 밝은 배경색 */
+    padding: 15px 20px;
+    font-family: Arial, sans-serif;
+    font-size: 0.85em;
+    color: #555;
+    border-top: 1px solid #DDD;
+    height: 150px; /* 푸터 높이 고정 */
+    width: 100%; /* 화면 전체 너비 */
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center; /* 콘텐츠를 중앙으로 정렬 */
+    align-items: flex-start;
+    gap: 80px; /* 좌우 간격 추가 */
+    height: 100%; /* 컨테이너가 푸터 높이를 채우도록 설정 */
+}
+
+.footer-left,
+.footer-right {
+    width: 20%; /* 좌우 각각 20%로 축소 */
+    line-height: 1.6;
+    white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+    text-overflow: ellipsis; /* 넘치는 텍스트 생략(...) 처리 */
+}
+
+.footer-links {
+    display: flex;
+    flex-direction: column; /* 세로 정렬 */
+    gap: 5px; /* 항목 간 간격 */
+}
+
+.footer-links a {
+    color: #333;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.footer-links a:hover {
+    color: #007BFF; /* 링크 호버 시 파란색 */
+}

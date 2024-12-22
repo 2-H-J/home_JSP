@@ -11,13 +11,13 @@ import mapper.BoardMemberMapper;
 public class BoardMemberService {
 	private static BoardMemberService instance = new BoardMemberService();
 	private BoardMemberMapper mapper;
-
+	
 	private BoardMemberService() {
 		mapper = DBManager.getInstance().getSession().getMapper(BoardMemberMapper.class);
 	}
 
 	public static BoardMemberService getInstance() {
-		if (instance == null)
+		if(instance == null)
 			instance = new BoardMemberService();
 		return instance;
 	}
@@ -44,10 +44,18 @@ public class BoardMemberService {
 			map.put("id", id);
 			map.put("password", password);
 			return mapper.findMemberByIdAndPassword(map);
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
 	}
 
+	
+	
 }
+
+
+
+
+
+

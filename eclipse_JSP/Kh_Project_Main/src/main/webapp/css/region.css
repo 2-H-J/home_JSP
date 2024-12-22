@@ -1,0 +1,143 @@
+@charset "UTF-8";
+/* 전체 레이아웃 설정 */
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Arial, sans-serif;
+	background-color: #f9f9f9;
+	padding-top: 110px; /* Header 높이만큼 여백 */
+	padding-bottom: 150px; /* Footer 높이만큼 여백 */
+}
+
+/* 컨테이너 중앙 정렬 */
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 약간의 그림자 추가 */
+}
+
+/* 관리자 버튼 스타일 */
+.admin-buttons {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 20px;
+}
+
+.admin-buttons a {
+	text-decoration: none;
+}
+
+.admin-buttons button {
+	padding: 10px 20px;
+	font-size: 16px;
+	color: #fff;
+	background-color: #007bff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* 버튼 그림자 */
+}
+
+.admin-buttons button:hover {
+	background-color: #0056b3;
+	transform: translateY(-2px); /* 호버 시 살짝 떠오르는 효과 */
+}
+
+/* 이미지 카드 레이아웃 */
+.image-container {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+	justify-content: center;
+}
+
+.image-item {
+	flex: 0 1 calc(25% - 20px); /* 4개씩 한 줄에 표시 */
+	text-align: center;
+	background: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	transition: transform 0.3s ease-in-out;
+}
+
+.image-item:hover {
+	transform: scale(1.03);
+}
+
+.image-item img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+	display: block;
+}
+
+.title {
+	margin: 10px 0;
+	font-size: 1rem;
+	font-weight: bold;
+	color: #333;
+}
+
+/* 페이징 버튼 스타일 */
+.pagination {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-top: 20px;
+	gap: 10px;
+}
+
+.pagination a, .pagination .current-page {
+	display: inline-block;
+	padding: 8px 16px;
+	border-radius: 4px;
+	text-decoration: none;
+	font-size: 0.9rem;
+	font-weight: bold;
+	color: #555;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	transition: background-color 0.2s, color 0.2s;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* 버튼 그림자 */
+}
+
+.pagination a:hover {
+	background-color: #007bff;
+	color: #fff;
+	border-color: #007bff;
+}
+
+.pagination .current-page {
+	background-color: #007bff;
+	color: #fff;
+	border: 1px solid #007bff;
+}
+
+/* Footer 스타일 */
+.footer-container {
+	position: relative;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	background-color: #f9f9f9;
+	padding: 20px 0;
+	text-align: center;
+	border-top: 1px solid #ddd;
+}
+
+/* 반응형 디자인 */
+@media screen and (max-width: 768px) {
+	.image-item {
+		flex: 0 1 calc(50% - 20px); /* 2개씩 한 줄에 표시 */
+	}
+	.admin-buttons button {
+		font-size: 14px;
+		padding: 8px 15px;
+	}
+}

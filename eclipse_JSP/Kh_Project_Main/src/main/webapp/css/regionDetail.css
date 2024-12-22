@@ -1,0 +1,124 @@
+@charset "UTF-8";
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	background-color: #f4f4f4;
+	box-sizing: border-box;
+	padding-top: 110px; /* Header 높이 */
+	padding-bottom: 150px; /* Footer 높이 */
+}
+
+/* 메인 컨테이너: 좌우 여백과 중앙 정렬 */
+.container {
+	gap: 20px;
+	max-width: 1200px; /* 전체 최대 너비 */
+	margin: 0 auto; /* 중앙 정렬 및 양쪽 여백 */
+	padding: 20px; /* 안쪽 여백 */
+	box-sizing: border-box;
+	background-color: #fff;
+	border-radius: 8px;
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 전체에 그림자 효과 */
+}
+
+/* 헤더 */
+.header {
+	background-color: #81d4fa;
+	padding: 20px;
+	text-align: center;
+	color: #333;
+}
+
+.header h1 {
+	margin: 0;
+	font-size: 28px;
+}
+
+.header p {
+	margin: 5px 0 0;
+	font-size: 16px;
+}
+
+/* 네비게이션 바 */
+.nav-bar {
+	display: flex;
+	justify-content: center;
+	background-color: #ddd;
+	padding: 10px;
+}
+
+.nav-bar a {
+	margin: 0 15px;
+	text-decoration: none;
+	color: #333;
+	font-weight: bold;
+}
+
+.nav-bar a:hover {
+	color: #007BFF;
+}
+
+/* 섹션 */
+.section {
+	margin-bottom: 30px;
+}
+
+.section-title {
+	font-size: 20px;
+	margin-bottom: 10px;
+	border-bottom: 2px solid #ddd;
+	padding-bottom: 5px;
+}
+
+/* 지도 컨테이너 */
+.map-container {
+	width: 100%;
+	height: 546.91px;
+	background-color: #eaeaea;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 18px;
+	color: #888;
+	opacity: 1;
+	margin-top: 20px;
+	box-sizing: border-box;
+	border: 1px solid #ddd; /* 지도 영역에 테두리 추가 */
+}
+
+/* 이미지 스타일 */
+.section img {
+	display: block;
+	margin: 0 auto;
+	max-width: 100%;
+	height: auto;
+}
+
+/* 버튼 스타일 */
+.buttons {
+	display: flex;
+	justify-content: space-between;
+	margin-top: 20px;
+}
+
+.buttons .left-buttons {
+	display: flex;
+	gap: 10px;
+}
+
+.buttons .right-button {
+	margin-left: auto;
+}
+
+.buttons a {
+	text-decoration: none;
+	color: #fff;
+	background-color: #007BFF;
+	padding: 10px 15px;
+	border-radius: 5px;
+	transition: all 0.3s ease-in-out;
+}
+
+.buttons a:hover {
+	background-color: #0056b3;
+}
