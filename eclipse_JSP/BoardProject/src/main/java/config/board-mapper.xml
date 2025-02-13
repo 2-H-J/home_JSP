@@ -2,156 +2,108 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!-- MyBatis 매퍼 파일: BoardMapper -->
 <mapper namespace="mapper.BoardMapper">
-	
-	<!-- ResultMap 정의: SQL 결과를 BoardDTO 객체에 매핑 -->
 	<resultMap type="dto.BoardDTO" id="board">
-		<id column="bno" property="bno" /> <!-- 게시글 번호 -->
-		<result column="title" property="title" /> <!-- 게시글 제목 -->
-		<result column="write_date" property="writeDate" /> <!-- 작성 날짜 -->
-		<result column="write_update_date" property="writeUpdateDate" /> <!-- 수정 날짜 -->
-		<result column="bcount" property="bcount" /> <!-- 조회수 -->
-		<result column="blike" property="blike" /> <!-- 좋아요 수 -->
-		<result column="bhate" property="bhate" /> <!-- 싫어요 수 -->
-		<result column="content" property="content" /> <!-- 게시글 내용 -->
-		<result column="nickname" property="nickName" /> <!-- 작성자 닉네임 -->
+		<id column="bno" property="bno"/>
+		<result column="title" property="title"/>
+		<result column="write_date" property="writeDate"/>
+		<result column="write_update_date" property="writeUpdateDate"/>
+		<result column="bcount" property="bcount"/>
+		<result column="blike" property="blike"/>
+		<result column="bhate" property="bhate"/>
+		<result column="content" property="content"/>
+		<result column="nickname" property="nickName"/>
 	</resultMap>
-
-	<!-- 게시글 목록 조회 -->
 	<select id="getBoardList" parameterType="map" resultMap="board">
-		SELECT
-		* FROM (
-			SELECT CEIL(ROW_NUMBER() OVER(ORDER BY BNO DESC) /
-			#{pageContentEa}) AS PAGE, BV.*
-			FROM BOARD_VIEW BV
-		) WHERE PAGE = #{pageNo}
+		SELECT * FROM 
+		(SELECT 
+			CEIL(ROW_NUMBER() OVER(ORDER BY BNO DESC) / #{pageContentEa}) AS PAGE,
+			BV.*
+		 FROM BOARD_VIEW BV)
+		WHERE PAGE = #{pageNo}
 	</select>
-
-	<!-- 게시글 총 개수 조회 -->
 	<select id="selectBoardTotalCount" resultType="int">
-		select count(*)
-		from board_view
+		select count(*) from board_view
 	</select>
-
-	<!-- 새로운 게시글 번호 생성 -->
 	<select id="selectBoardNo" resultType="int">
 		select seq_board_bno.nextval from dual
 	</select>
-
-	<!-- 게시글 등록 -->
 	<insert id="insertBoard" parameterType="dto.BoardDTO">
 		insert into board(bno, title, content, id)
-		values(#{bno}, #{title}, #{content,jdbcType=CLOB}, #{id})
+		values(#{bno}, #{title},#{content,jdbcType=CLOB},#{id})
 	</insert>
-
-	<!-- 게시글 첨부 파일 등록 -->
 	<insert id="insertBoardFile" parameterType="dto.BoardFileDTO">
-		insert into board_file(fno, bno, fpath)
+		insert into board_file(fno,bno,fpath)
 		values(SEQ_BOARD_FILE_FNO.nextval, #{bno}, #{fpath})
 	</insert>
-
-	<!-- 게시글 수정 -->
 	<update id="updateBoard">
-		update board set title = #{title}, content = #{content}
+		update board set title=#{title}, content=#{content}
 		where bno = #{bno}
 	</update>
-
-	<!-- 특정 게시글 조회 -->
-	<select id="selectBoard" resultMap="board">
-		select * from board_view
-		where bno = #{bno}
-	</select>
-
-	<!-- 게시글에 연결된 파일 목록 조회 -->
-	<select id="getBoardFileList" parameterType="int" resultType="dto.BoardFileDTO">
-		select * from board_file where bno = #{bno}
-	</select>
-
-	<!-- 특정 파일 경로 조회 -->
-	<select id="selectFilePath" parameterType="int" resultType="string">
-		select fpath from board_file where fno = #{fno}
-	</select>
-
-	<!-- 게시글 조회수 증가 -->
-	<update id="updateBoardCount">
-		update board set bcount = bcount + 1 where bno = #{bno}
-	</update>
-
-	<!-- 댓글 추가 -->
-	<insert id="insertBoardComment" parameterType="dto.BoardCommentDTO">
-		insert into board_comment(cno, bno, content, id)
-		values(SEQ_BOARD_COMMENT_CNO.nextval, #{bno}, #{content}, #{id})
-	</insert>
-
-	<!-- 댓글 목록 조회 -->
-	<select id="getCommentList" resultType="dto.BoardCommentDTO">
-		SELECT * FROM BOARD_COMMENT_VIEW WHERE BNO = #{bno}
-	</select>
-
-	<!-- 게시글 삭제 -->
-	<delete id="deleteBoard">
-		delete from board where bno = #{bno}
-	</delete>
-
-	<!-- 댓글 삭제 -->
-	<delete id="deleteBoardComment">
-		delete from board_comment where cno = #{cno}
-	</delete>
-
-	<!-- 좋아요 추가 -->
-	<insert id="insertBoardLike" parameterType="map">
-		insert into board_content_like(bno, id)
-		values(#{bno}, #{id})
-	</insert>
-
-	<!-- 좋아요 삭제 -->
-	<delete id="deleteBoardLike" parameterType="map">
-		delete from board_content_like where bno = #{bno} and id = #{id}
-	</delete>
-
-	<!-- 싫어요 추가 -->
-	<insert id="insertBoardHate" parameterType="map">
-		insert into board_content_hate(bno, id)
-		values(#{bno}, #{id})
-	</insert>
-
-	<!-- 싫어요 삭제 -->
-	<delete id="deleteBoardHate" parameterType="map">
-		delete from board_content_hate where bno = #{bno} and id = #{id}
-	</delete>
-
-	<!-- 특정 게시글의 좋아요 수 조회 -->
-	<select id="getBoardLike" parameterType="int" resultType="int">
-		select count(*) from board_content_like where bno = #{bno}
-	</select>
-
-	<!-- 특정 게시글의 싫어요 수 조회 -->
-	<select id="getBoardHate" parameterType="int" resultType="int">
-		select count(*) from board_content_hate where bno = #{bno}
-	</select>
-
-	<!-- 댓글 좋아요 추가 -->
-	<insert id="insertBoardCommentLike">
-		insert into board_comment_like(id, cno)
-		values(#{id}, #{cno})
-	</insert>
-
-	<!-- 댓글 좋아요 삭제 -->
-	<delete id="deleteBoardCommentLike">
-		delete from board_comment_like where id like #{id} and cno = #{cno}
-	</delete>
-
-	<!-- 댓글 싫어요 추가 -->
-	<insert id="insertBoardCommentHate">
-		insert into board_comment_hate(id, cno)
-		values(#{id}, #{cno})
-	</insert>
-
-	<!-- 댓글 싫어요 삭제 -->
-	<delete id="deleteBoardCommentHate">
-		delete from board_comment_hate where id like #{id} and cno = #{cno}
-	</delete>
-
+ 	<select id="selectBoard" resultMap="board">
+ 		select * from board_view where bno = #{bno}
+ 	</select>
+ 	<select id="getBoardFileList" parameterType="int" resultType="dto.BoardFileDTO">
+ 		select * from board_file where bno = #{bno}
+ 	</select>
+ 	<select id="selectFilePath" parameterType="int" resultType="string">
+ 		select fpath from board_file where fno = #{fno}
+ 	</select>
+ 	
+ 	<update id="updateBoardCount">
+ 		update board set bcount = bcount + 1 where bno = #{bno} 
+ 	</update>
+ 	<insert id="insertBoardComment" parameterType="dto.BoardCommentDTO">
+ 		insert into board_comment(cno, bno, content, id)
+ 		values(SEQ_BOARD_COMMENT_CNO.nextval, #{bno}, #{content}, #{id})
+ 	</insert>
+ 	<select id="getCommentList" resultType="dto.BoardCommentDTO">
+ 		SELECT * FROM BOARD_COMMENT_VIEW WHERE BNO = #{bno}
+ 	</select>
+ 	<delete id="deleteBoard">
+ 		delete from board where bno = #{bno}
+ 	</delete>
+ 	<delete id="deleteBoardComment">
+ 		delete from board_comment where cno = #{cno}
+ 	</delete>
+ 	<insert id="insertBoardLike" parameterType="map">
+ 		insert into board_content_like(bno,id)
+ 		values(#{bno},#{id})
+ 	</insert>
+ 	<delete id="deleteBoardLike" parameterType="map">
+ 		delete from board_content_like 
+ 		where bno = #{bno} and id = #{id}
+ 	</delete>
+ 	<insert id="insertBoardHate" parameterType="map">
+ 		insert into board_content_hate(bno,id)
+ 		values(#{bno},#{id})
+ 	</insert>
+ 	<delete id="deleteBoardHate" parameterType="map">
+ 		delete from board_content_hate 
+ 		where bno = #{bno} and id = #{id}
+ 	</delete>
+ 	<select id="getBoardLike" parameterType="int" resultType="int">
+ 		select count(*) from board_content_like where bno = #{bno}
+ 	</select>
+ 	<select id="getBoardHate" parameterType="int" resultType="int">
+ 		select count(*) from board_content_hate where bno = #{bno}
+ 	</select>
+ 	
+ 	<insert id="insertBoardCommentLike">
+ 		insert into board_comment_like(id,cno)
+ 		values(#{id},#{cno})
+ 	</insert>
+ 	<delete id="deleteBoardCommentLike">
+ 		delete from board_comment_like
+ 		where id like #{id} and cno = #{cno}
+ 	</delete>
+ 	<insert id="insertBoardCommentHate">
+ 		insert into board_comment_hate(id,cno)
+ 		values(#{id},#{cno})
+ 	</insert>
+ 	<delete id="deleteBoardCommentHate">
+ 		delete from board_comment_hate
+ 		where id like #{id} and cno = #{cno}
+ 	</delete>
+ 	
 </mapper>

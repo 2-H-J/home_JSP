@@ -1,0 +1,17 @@
+#Tomcat publish data
+#Mon Jan 13 12:14:06 KST 2025
+org.eclipse.jst.jee.server\:APIServer=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\APIServer
+org.eclipse.jst.jee.server\:BoardProject=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\BoardProject
+org.eclipse.jst.jee.server\:FileUpload=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\FileUpload
+org.eclipse.jst.jee.server\:JDBC=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\JDBC
+org.eclipse.jst.jee.server\:Kh_Project_Main=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\Kh_Project_Main
+org.eclipse.jst.jee.server\:MVC-Project=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\MVC-Project
+org.eclipse.jst.jee.server\:MyBatis1=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\MyBatis1
+org.eclipse.jst.jee.server\:MyBatis2=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\MyBatis2
+org.eclipse.jst.jee.server\:NaverAPI_Test=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\NaverAPI_Test
+org.eclipse.jst.jee.server\:Step01=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\Step01
+org.eclipse.jst.jee.server\:Step02=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\Step02
+org.eclipse.jst.jee.server\:Step03=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\Step03
+org.eclipse.jst.jee.server\:Test1=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\Test1
+org.eclipse.jst.jee.server\:Test2=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\Test2
+org.eclipse.jst.jee.server\:project=D\:\\workspace\\apache-tomcat-10.1.33\\webapps\\project

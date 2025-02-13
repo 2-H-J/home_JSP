@@ -39,6 +39,7 @@ public class BoardViewController implements Controller {
 		List<BoardCommentDTO> commentList = BoardService.getInstance().getCommentList(bno);
 		//해당 게시글의 첨부파일 목록 조회
 		List<BoardFileDTO> fileList = BoardService.getInstance().getBoardFileList(bno);
+		
 		//페이지 이동
 		ModelAndView view = new ModelAndView();
 		view.setPath("board_view.jsp");
@@ -49,9 +50,3 @@ public class BoardViewController implements Controller {
 	}
 
 }
-
-
-
-
-
-

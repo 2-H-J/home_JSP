@@ -2,40 +2,25 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-
-<!-- MyBatis 매퍼 파일: BoardMemberMapper -->
 <mapper namespace="mapper.BoardMemberMapper">
-
-  <!-- 모든 회원 정보 조회 -->
   <select id="selectAllMember" resultType="dto.BoardMemberDTO">
   	select * from board_member
   </select>
-
-  <!-- 회원 추가 -->
   <insert id="insertMember" parameterType="dto.BoardMemberDTO">
-  	insert into board_member(id, password, username, nickname)
-  	values(#{id}, standard_hash(#{password},'SHA512'), #{userName}, #{nickName})
+  	insert into board_member(id,password,username,nickname)
+  	values(#{id}, standard_hash(#{password},'SHA512'), #{userName}, #{nickName})   	
   </insert>
-
-  <!-- 사용자 이름으로 회원 검색 (이름에 특정 문자열 포함) -->
   <select id="selectNameMember" parameterType="string" resultType="dto.BoardMemberDTO">
   	select * from board_member where username like '%' || #{value} || '%'
   </select>
-
-  <!-- 특정 회원 삭제 -->
   <delete id="deleteMember" parameterType="string">
   	delete from board_member where id = #{id}
   </delete>
-
-  <!-- 특정 아이디로 회원 존재 여부 확인 -->
   <select id="selectIdMember" parameterType="string" resultType="int">
   	select count(*) as member_count from board_member where id like #{id}
   </select>
-
-  <!-- 아이디와 비밀번호로 회원 검색 -->
   <select id="findMemberByIdAndPassword" parameterType="map" resultType="dto.BoardMemberDTO">
   	select * from board_member
   	where id like #{id} and password like STANDARD_HASH(#{password},'SHA512')
   </select>
-
 </mapper>

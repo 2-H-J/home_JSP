@@ -1,0 +1,78 @@
+///*
+// * package servlet;
+// * 
+// * import java.io.IOException; import java.sql.Connection; import
+// * java.sql.DriverManager; import java.sql.PreparedStatement; import
+// * java.sql.SQLException;
+// * 
+// * import dao.BookDAO; import dto.Book; import jakarta.servlet.ServletException;
+// * import jakarta.servlet.annotation.WebServlet; import
+// * jakarta.servlet.http.HttpServlet; import
+// * jakarta.servlet.http.HttpServletRequest; import
+// * jakarta.servlet.http.HttpServletResponse;
+// * 
+// * @WebServlet("/insertBook") public class InsertBookServlet extends HttpServlet
+// * { private static final long serialVersionUID = 1L;
+// * 
+// * protected void doPost(HttpServletRequest request, HttpServletResponse
+// * response) throws ServletException, IOException {
+// * request.setCharacterEncoding("UTF-8");
+// * 
+// * 
+// * BookDAO dao = new BookDAO();
+// * 
+// * dao.insertBook(new Book(isbn, bookName, author, publishDate, publisher,
+// * price));
+// * 
+// * response.sendRedirect("");
+// * 
+// * } }
+// */
+
+//package servlet;
+//
+//import java.io.IOException;
+//
+//import dao.BookDAO;
+//import dto.Book;
+//import jakarta.servlet.ServletException;
+//import jakarta.servlet.annotation.WebServlet;
+//import jakarta.servlet.http.HttpServlet;
+//import jakarta.servlet.http.HttpServletRequest;
+//import jakarta.servlet.http.HttpServletResponse;
+//
+//@WebServlet("/insertBook") // 서블릿 URL 매핑
+//public class InsertBookServlet extends HttpServlet {
+//    private static final long serialVersionUID = 1L;
+//
+//    /**
+//     * POST 요청 처리 메서드
+//     */
+//    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+//        // 요청 데이터 인코딩 설정
+//        request.setCharacterEncoding("UTF-8");
+//
+//        // 클라이언트로부터 전달받은 파라미터 처리
+//        String isbn = request.getParameter("isbn");
+//        String bookName = request.getParameter("bookName");
+//        String author = request.getParameter("author");
+//        String publishDate = request.getParameter("publishDate");
+//        String publisher = request.getParameter("publisher");
+//        int price = Integer.parseInt(request.getParameter("price"));
+//
+//        // Book 객체 생성 후 데이터 삽입
+//        Book book = new Book();
+//        book.setIsbn(isbn);
+//        book.setBookName(bookName);
+//        book.setAuthor(author);
+//        book.setPublishDate(publishDate);
+//        book.setPublisher(publisher);
+//        book.setPrice(price);
+//
+//        BookDAO dao = new BookDAO();
+//        dao.insertBook(book);
+//
+//        // 삽입 후 전체 도서 목록 페이지로 리다이렉트
+//        response.sendRedirect("view_books.jsp");
+//    }
+//}

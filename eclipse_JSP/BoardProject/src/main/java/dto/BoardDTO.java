@@ -1,5 +1,6 @@
 package dto;
 
+
 public class BoardDTO {
 	private int bno;
 	private String id;
@@ -9,8 +10,10 @@ public class BoardDTO {
 	private String writeUpdateDate;
 	private int bcount;
 	private String content;
-	private int blike;
-	private int bhate;
+	private String blike;
+	private String bhate;
+	
+	// 조회용 가져오는건 set, get만 만들어도 괜찮다.
 	public int getBno() {
 		return bno;
 	}
@@ -59,24 +62,24 @@ public class BoardDTO {
 	public void setContent(String content) {
 		this.content = content;
 	}
-	public int getBlike() {
+	public String getBlike() {
 		return blike;
 	}
-	public void setBlike(int blike) {
+	public void setBlike(String blike) {
 		this.blike = blike;
 	}
-	public int getBhate() {
+	public String getBhate() {
 		return bhate;
 	}
-	public void setBhate(int bhate) {
+	public void setBhate(String bhate) {
 		this.bhate = bhate;
 	}
-	@Override
-	public String toString() {
-		return "BoardDTO [bno=" + bno + ", id=" + id + ", nickName=" + nickName + ", title=" + title + ", writeDate="
-				+ writeDate + ", writeUpdateDate=" + writeUpdateDate + ", bcount=" + bcount + ", content=" + content
-				+ ", blike=" + blike + ", bhate=" + bhate + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "BoardDTO [bno=" + bno + ", id=" + id + ", nickName=" + nickName + ", title=" + title + ", writeDate="
+//				+ writeDate + ", writeUpdateDate=" + writeUpdateDate + ", bcount=" + bcount + ", content=" + content
+//				+ ", blike=" + blike + ", bhate=" + bhate + "]";
+//	}
 	
 	
 	
